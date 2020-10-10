@@ -1,4 +1,4 @@
-import { ensureFileSync, walkSync } from 'https://deno.land/std@0.74.0/fs/mod.ts';
+import { ensureDirSync, ensureFileSync, existsSync, walkSync } from 'https://deno.land/std@0.74.0/fs/mod.ts';
 
 // step one. construct the urls
 // step two. write all of the scripts and .d.ts files into one repo
@@ -39,7 +39,6 @@ const d3modules = [
 ]
 
 const d3Dir = "d3/"
-const d3ModuleScripts: {[index:string]:string[]} = {}
 
 // https://raw.githubusercontent.com/d3/d3-array/master/src/index.js <- export { default as x } from "./local/relative/path"
 // https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/d3-array/index.d.ts <- .d.ts file
@@ -98,10 +97,12 @@ function populateFromSource(src:string, modName:string) {
   }
 }
 
+ensureDirSync(d3Dir)
+
 d3modules.forEach(moduleName => {
   const srcURL = `https://raw.githubusercontent.com/d3/${moduleName}/master/src/index.js`
   const typesURL = `https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/${moduleName}/index.d.ts`
-  d3ModuleScripts[moduleName] = []
+  
   fetch(srcURL)
   .then((res) => {
     if (res.status == 200) {
@@ -134,39 +135,89 @@ d3modules.forEach(moduleName => {
 });
 
 // also need to walk through all of d3 looking for imports of .js files which didn't get exported in the main index.js file
+const missedFiles: string[] = []
 for (const entry of walkSync("d3")) {
   if (entry.isFile) {
     if (entry.name.endsWith('.js')) {
       // first sort out files which don't exist
-      const src = Deno.readTextFileSync(entry.path)
-      const matches = src.matchAll(/import .+ \.js/)
+      let src = Deno.readTextFileSync(entry.path)
+      const matches = src.matchAll(/import .+\.js/g)
       for (const match of matches) {
-        const x = match[0]
-        console.log(x);
+        const x = match[0].split("./")
+        const matchPath = x[x.length-1]
+        let relativePath = entry.path.split(entry.name)[0] + matchPath
         // if file doesn't already exist, fetch it and write it to file 
+        if (!existsSync(relativePath)) {
+          if (!relativePath.includes("mod.js")) {
+            // clean up the path before adding it to the list
+            relativePath = relativePath.slice(3)
+            relativePath = relativePath.replaceAll("\\", "/")
+            if (!missedFiles.includes(relativePath)) {
+              missedFiles.push(relativePath)
+            } 
+          }
+        }
       }
       // then sort out incomplete import urls
-      const matches2 = src.matchAll(/import .+ \.js/)
-      for (const match of matches2) {
-        const x = match[0]
-        console.log(x);
-      }
+      src = src.replaceAll(/import .+? from "d3-.+?"/g, (match) => {
+        if (!match.includes("mod")) {
+          let newValue = match.replace(/"d3-/g, '"../d3-')
+          newValue = newValue.replace(/"$/g, '/mod.js"')
+          return newValue 
+        } else {
+          return match
+        }
+      })
+      // write the new urls to write
+      Deno.writeTextFileSync(entry.path, src)
     }
   }
 }
 
+// then fetch all of the missing scripts
+missedFiles.forEach(path => {
+  // // create the url
+  const moduleName = path.split("/")[0]
+  const relativePath = path.split(moduleName)[1]
+  const srcURL = `https://raw.githubusercontent.com/d3/${moduleName}/master/src${relativePath}`
+  
+  fetch(srcURL)
+  .then((res) => {
+    if (res.status == 200) {
+      // get the text
+      res.text()
+      .then((text) => {
+        // construct the path to write to.
+        const splitPath = srcURL.split("src/")
+        const relativePathJS = splitPath[splitPath.length-1].replace(/index\./g, "mod.")
+        
+        const path = `${d3Dir}${moduleName}/`
+
+        ensureFileSync(path + relativePathJS)
+
+        // add deno ref to dom
+        text = text.replace(/^/, `/// <reference lib="dom" />\n`)
+
+        Deno.writeTextFileSync(path + relativePathJS, text)
+      })
+    } else {
+      console.log(`Got a ${res.status} from: ${srcURL}`);
+    }
+  })
+});
+
 // create the mod.js and mod.d.ts files
-let modSRC = '/// <reference types="./mod.d.ts" />'
+let modSRC = '/// <reference types="./mod.d.ts" />\n/// <reference lib="dom" />\n'
 d3modules.forEach(name => {
-  modSRC += `export * from "./${name}/mod.js"`
+  modSRC += `export * from "./${name}/mod.js"\n`
 });
 Deno.writeTextFileSync(`${d3Dir}mod.js`, modSRC)
 
 let modTypes = ""
 d3modules.forEach(name => {
-  modTypes += `export * from "./${name}/mod.d.ts"`
+  modTypes += `export * from "./${name}/mod.d.ts"\n`
 });
-Deno.writeTextFileSync(`${d3Dir}mod.js`, modTypes)
+Deno.writeTextFileSync(`${d3Dir}mod.d.ts`, modTypes)
 
 // TODO-DefinitelyMaybe: what about external libraries? i.e. geojson
 
