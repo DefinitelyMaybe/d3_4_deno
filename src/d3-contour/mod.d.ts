@@ -12,7 +12,7 @@ import { MultiPolygon } from "geojson";
 import {
   ThresholdCountGenerator,
   ThresholdNumberArrayGenerator,
-} from "d3-array";
+} from "../d3-array/mod.js";
 
 /**
  * An extended GeoJSON MultiPolygon representing a contour.

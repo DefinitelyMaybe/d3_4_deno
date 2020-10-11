@@ -9,7 +9,7 @@
 
 // Last module patch version validated against: 2.1.0
 
-import { Selection, TransitionLike, ValueFn } from "d3-selection";
+import { Selection, TransitionLike, ValueFn } from "../d3-selection/mod.js";
 
 /**
  * Type alias for a BrushSelection. For a two-dimensional brush, it must be defined as [[x0, y0], [x1, y1]],
