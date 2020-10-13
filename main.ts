@@ -62,8 +62,11 @@ function identifyMissingFiles() {
       // match against .js imports
       const importMatches = src.matchAll(/import .+?\.js/gs); // maybe add regex 's' flag?
       for (const match of importMatches) {
-        // construct the path using the match
-        if (!match[0].includes("../") && !match[0].includes("https")) {
+        // try for down-one-dir first
+        if (match[0].includes("../")) {
+          console.log(`${entry.path} matched:\n${match[0]}`);
+        } else if (match[0].includes("./")) {
+          // construct the path using the match
           const x = match[0].split("./");
           const matchPath = x[x.length - 1];
           let relativePath = entry.path.split(entry.name)[0] + matchPath;
@@ -81,10 +84,9 @@ function identifyMissingFiles() {
               missedFiles.push(relativePath);
             }
           }
-        } else if (match[0].includes("../") && !match[0].includes("https")) {
-          console.log(`${entry.path} matched:\n${match[0]}`);
         } else {
-          // console.log(`${entry.path} matched:\n${match[0]}`);
+          console.log("WHAT?");
+          console.log(`${entry.path} matched:\n${match[0]}`);
         }
       }
       // match against .js imports
@@ -245,10 +247,14 @@ let missing = identifyMissingFiles();
 
 while (missing.length != 0) {
   // console.log(`round ${c}: ${missing.length} missing files`);
+  // make a list of promises
+  const files = []
   for (let index = 0; index < missing.length; index++) {
     const path = missing[index];
-    await fetchFile(path)
+    files.push(fetchFile(path))
   }
+  // wait for all the promises to resolve
+  await Promise.all(files)
   c += 1
   missing = identifyMissingFiles()
 }
