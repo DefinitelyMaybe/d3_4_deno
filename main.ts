@@ -79,7 +79,10 @@ function identifyMissingFiles() {
             // we only want unique entries within the list
             if (!missedFiles.includes(relativePath)) {
               // console.log(`found import from: ${entry.path}\t\t\t${relativePath}`);
-              missedFiles.push(relativePath);
+              // ignore mod.js urls on re-runs
+              if (!relativePath.includes("mod.js")) {
+                missedFiles.push(relativePath); 
+              }
             }
           }
 
@@ -171,6 +174,13 @@ function adjustscriptURLS(path:string) {
   src = src.replaceAll(/import .+? from ("|')d3-.+?("|')/g, (m) => {
     return changeImportURL(m);
   });
+  // single edge case for this multiline import
+  src = src.replaceAll(/import {.+? from ("|')d3-.+?("|')/gs, (m)=> {
+    console.log(m);
+    m = m.replace(/d3-/g, "../d3-")
+    m = m.replace(/"$/g, '/mod.js"')
+    return m
+  })
   // write the new urls to write
   Deno.writeTextFileSync(path, src);
 }
@@ -261,7 +271,7 @@ let c = 1
 let missing = identifyMissingFiles();
 
 while (missing.length != 0) {
-  // console.log(`round ${c}: ${missing.length} missing files`);
+  console.log(`round ${c}: collecting ${missing.length} files`);
   // make a list of promises
   const files = []
   for (let index = 0; index < missing.length; index++) {
@@ -275,15 +285,36 @@ while (missing.length != 0) {
 }
 
 // Once the loop finishes we can walk through the dir and update the d3 urls
-// for (const entry of walkSync(d3Dir)) {
-//   if (entry.isFile) {
-//     adjustscriptURLS(entry.path)
-//   }
-// }
+for (const entry of walkSync(d3Dir)) {
+  if (entry.isFile) {
+    adjustscriptURLS(entry.path)
+  }
+}
 
-// TODO-DefinitelyMaybe: what about external libraries? i.e. geojson
-// d3-geo and d3-contour need geojson urls
-// geojson https://raw.githubusercontent.com/eugeneYWang/GeoJSON.ts/master/geojson.ts
+// lastly adjust specific files
+const geoJsonURL = `https://raw.githubusercontent.com/eugeneYWang/GeoJSON.ts/master/geojson.ts`
+const delaunayURL = `https://raw.githubusercontent.com/mapbox/delaunator/master/index.js url change`
+const d3geoFile = "d3/d3-geo/mod.d.ts"
+const d3contourFile = "d3/d3-contour/mod.d.ts"
+const delaunayFile = "d3/d3-delaunay/delaunay.js"
+let src = Deno.readTextFileSync(d3geoFile)
+src = src.replace(/import \* as GeoJSON from 'geojson';/g, (m)=> {
+  return m.replace(/'geojson'/g, `'${geoJsonURL}'`)
+})
 
-// d3-delaunay\delaunay.js
-// https://raw.githubusercontent.com/mapbox/delaunator/master/index.js url change
+Deno.writeTextFileSync(d3geoFile, src)
+
+src = Deno.readTextFileSync(d3contourFile)
+src = src.replace(/import { MultiPolygon } from 'geojson';/g, (m)=> {
+  return m.replace(/'geojson'/g, `'${geoJsonURL}'`)
+})
+Deno.writeTextFileSync(d3contourFile, src)
+
+src = Deno.readTextFileSync(delaunayFile)
+src = src.replace(/import Delaunator from "delaunator";/g, (m)=> {
+  return m.replace(/"delaunator"/g, `"${delaunayURL}"`)
+})
+Deno.writeTextFileSync(delaunayFile, src)
+
+// There are some arrays which need ../../ that have been missed
+// i.e. d3\d3-geo\clip\rectangle.js
