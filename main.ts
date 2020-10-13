@@ -64,7 +64,25 @@ function identifyMissingFiles() {
       for (const match of importMatches) {
         // try for down-one-dir first
         if (match[0].includes("../")) {
-          console.log(`${entry.path} matched:\n${match[0]}`);
+          // construct the path using the match
+          const x = match[0].split("../");
+          const matchPath = x[x.length - 1];
+          const splitPath = entry.path.split("\\")
+          
+          let relativePath = `${d3Dir}${splitPath[splitPath.length-3]}/${matchPath}`;
+          
+          // if file doesn't already exist, add it to the list
+          if (!existsSync(relativePath)) {
+            // clean up the path before adding it to the list
+            relativePath = relativePath.slice(3);
+            relativePath = relativePath.replaceAll("\\", "/");
+            // we only want unique entries within the list
+            if (!missedFiles.includes(relativePath)) {
+              // console.log(`found import from: ${entry.path}\t\t\t${relativePath}`);
+              missedFiles.push(relativePath);
+            }
+          }
+
         } else if (match[0].includes("./")) {
           // construct the path using the match
           const x = match[0].split("./");
@@ -84,9 +102,6 @@ function identifyMissingFiles() {
               missedFiles.push(relativePath);
             }
           }
-        } else {
-          console.log("WHAT?");
-          console.log(`${entry.path} matched:\n${match[0]}`);
         }
       }
       // match against .js imports
