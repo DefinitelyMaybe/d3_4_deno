@@ -319,5 +319,5 @@ src = src.replace(/import Delaunator from "delaunator";/g, (m)=> {
 })
 Deno.writeTextFileSync(delaunayFile, src)
 
-// There are some arrays which need ../../ that have been missed
-// i.e. d3\d3-geo\clip\rectangle.js
+// DONE!
+// later on I shall deal with the now onto type errors
