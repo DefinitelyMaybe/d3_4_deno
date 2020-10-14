@@ -170,14 +170,16 @@ function fetchFile(path:string) {
 
 function adjustscriptURLS(path:string) {
   let src = Deno.readTextFileSync(path)
+  
+  const scriptDepth = path.split("/").length;
 
   src = src.replaceAll(/import .+? from ("|')d3-.+?("|')/g, (m) => {
-    return changeImportURL(m);
+    return changeImportURL(m, scriptDepth);
   });
   // single edge case for this multiline import
   src = src.replaceAll(/import {.+? from ("|')d3-.+?("|')/gs, (m)=> {
-    console.log(m);
-    m = m.replace(/d3-/g, "../d3-")
+    // 4 needs to have depth of 2 i.e. ../../
+    m = m.replace(/d3-/g, `../d3-`)
     m = m.replace(/"$/g, '/mod.js"')
     return m
   })
@@ -230,14 +232,14 @@ function initIndex(moduleName: string) {
     });
 }
 
-function changeImportURL(match: string) {
+function changeImportURL(match: string, depth:number) {
   if (!match.includes("mod.js")) {
     if (match.includes("'")) {
-      let newValue = match.replace(/'d3-/g, "'../d3-");
+      let newValue = match.replace(/'d3-/g, `'${"../".repeat(depth-2)}d3-`);
       newValue = newValue.replace(/'$/g, "/mod.js'");
       return newValue;
     } else {
-      let newValue = match.replace(/"d3-/g, '"../d3-');
+      let newValue = match.replace(/"d3-/g, `"${"../".repeat(depth-2)}d3-`);
       newValue = newValue.replace(/"$/g, '/mod.js"');
       return newValue;
     }
@@ -287,13 +289,14 @@ while (missing.length != 0) {
 // Once the loop finishes we can walk through the dir and update the d3 urls
 for (const entry of walkSync(d3Dir)) {
   if (entry.isFile) {
-    adjustscriptURLS(entry.path)
+    // I like to replace the backslashes for working with strings
+    adjustscriptURLS(entry.path.replaceAll(/\\/g, "/"))
   }
 }
 
 // lastly adjust specific files
 const geoJsonURL = `https://raw.githubusercontent.com/eugeneYWang/GeoJSON.ts/master/geojson.ts`
-const delaunayURL = `https://raw.githubusercontent.com/mapbox/delaunator/master/index.js url change`
+const delaunayURL = `https://raw.githubusercontent.com/mapbox/delaunator/master/index.js`
 const d3geoFile = "d3/d3-geo/mod.d.ts"
 const d3contourFile = "d3/d3-contour/mod.d.ts"
 const delaunayFile = "d3/d3-delaunay/delaunay.js"
