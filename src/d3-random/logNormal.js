@@ -7,7 +7,7 @@ export default (function sourceRandomLogNormal(source) {
 
   function randomLogNormal() {
     var randomNormal = N.apply(this, arguments);
-    return function () {
+    return function() {
       return Math.exp(randomNormal());
     };
   }

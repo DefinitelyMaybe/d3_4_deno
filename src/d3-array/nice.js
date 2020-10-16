@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-import { tickIncrement } from "./ticks.js";
+import {tickIncrement} from "./ticks.js";
 
 export default function nice(start, stop, count) {
   let prestep;

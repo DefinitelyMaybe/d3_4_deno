@@ -1,14 +1,14 @@
 /// <reference lib="dom" />
 import interval from "./interval.js";
-import { durationSecond } from "./duration.js";
+import {durationSecond} from "./duration.js";
 
-var second = interval(function (date) {
+var second = interval(function(date) {
   date.setTime(date - date.getMilliseconds());
-}, function (date, step) {
+}, function(date, step) {
   date.setTime(+date + step * durationSecond);
-}, function (start, end) {
+}, function(start, end) {
   return (end - start) / durationSecond;
-}, function (date) {
+}, function(date) {
   return date.getUTCSeconds();
 });
 

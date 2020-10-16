@@ -1,18 +1,11 @@
 /// <reference lib="dom" />
-import { color } from "../d3-color/mod.js";
-import {
-  interpolateNumber,
-  interpolateRgb,
-  interpolateString,
-} from "../d3-interpolate/mod.js";
+import {color} from "../../d3-color/mod.js";
+import {interpolateNumber, interpolateRgb, interpolateString} from "../../d3-interpolate/mod.js";
 
-export default function (a, b) {
+export default function(a, b) {
   var c;
-  return (typeof b === "number"
-    ? interpolateNumber
-    : b instanceof color
-    ? interpolateRgb
-    : (c = color(b))
-    ? (b = c, interpolateRgb)
-    : interpolateString)(a, b);
+  return (typeof b === "number" ? interpolateNumber
+      : b instanceof color ? interpolateRgb
+      : (c = color(b)) ? (b = c, interpolateRgb)
+      : interpolateString)(a, b);
 }

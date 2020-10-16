@@ -13,23 +13,23 @@ function ClassList(node) {
 }
 
 ClassList.prototype = {
-  add: function (name) {
+  add: function(name) {
     var i = this._names.indexOf(name);
     if (i < 0) {
       this._names.push(name);
       this._node.setAttribute("class", this._names.join(" "));
     }
   },
-  remove: function (name) {
+  remove: function(name) {
     var i = this._names.indexOf(name);
     if (i >= 0) {
       this._names.splice(i, 1);
       this._node.setAttribute("class", this._names.join(" "));
     }
   },
-  contains: function (name) {
+  contains: function(name) {
     return this._names.indexOf(name) >= 0;
-  },
+  }
 };
 
 function classedAdd(node, names) {
@@ -43,24 +43,24 @@ function classedRemove(node, names) {
 }
 
 function classedTrue(names) {
-  return function () {
+  return function() {
     classedAdd(this, names);
   };
 }
 
 function classedFalse(names) {
-  return function () {
+  return function() {
     classedRemove(this, names);
   };
 }
 
 function classedFunction(names, value) {
-  return function () {
+  return function() {
     (value.apply(this, arguments) ? classedAdd : classedRemove)(this, names);
   };
 }
 
-export default function (name, value) {
+export default function(name, value) {
   var names = classArray(name + "");
 
   if (arguments.length < 2) {
@@ -69,11 +69,8 @@ export default function (name, value) {
     return true;
   }
 
-  return this.each(
-    (typeof value === "function"
-      ? classedFunction
-      : value
+  return this.each((typeof value === "function"
+      ? classedFunction : value
       ? classedTrue
-      : classedFalse)(names, value),
-  );
+      : classedFalse)(names, value));
 }

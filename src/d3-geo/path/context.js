@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-import { tau } from "../math.js";
+import {tau} from "../math.js";
 import noop from "../noop.js";
 
 export default function PathContext(context) {
@@ -8,23 +8,23 @@ export default function PathContext(context) {
 
 PathContext.prototype = {
   _radius: 4.5,
-  pointRadius: function (_) {
+  pointRadius: function(_) {
     return this._radius = _, this;
   },
-  polygonStart: function () {
+  polygonStart: function() {
     this._line = 0;
   },
-  polygonEnd: function () {
+  polygonEnd: function() {
     this._line = NaN;
   },
-  lineStart: function () {
+  lineStart: function() {
     this._point = 0;
   },
-  lineEnd: function () {
+  lineEnd: function() {
     if (this._line === 0) this._context.closePath();
     this._point = NaN;
   },
-  point: function (x, y) {
+  point: function(x, y) {
     switch (this._point) {
       case 0: {
         this._context.moveTo(x, y);
@@ -42,5 +42,5 @@ PathContext.prototype = {
       }
     }
   },
-  result: noop,
+  result: noop
 };

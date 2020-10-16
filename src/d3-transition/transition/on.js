@@ -1,8 +1,8 @@
 /// <reference lib="dom" />
-import { get, init, set } from "./schedule.js";
+import {get, set, init} from "./schedule.js";
 
 function start(name) {
-  return (name + "").trim().split(/^|\s+/).every(function (t) {
+  return (name + "").trim().split(/^|\s+/).every(function(t) {
     var i = t.indexOf(".");
     if (i >= 0) t = t.slice(0, i);
     return !t || t === "start";
@@ -11,9 +11,9 @@ function start(name) {
 
 function onFunction(id, name, listener) {
   var on0, on1, sit = start(name) ? init : set;
-  return function () {
+  return function() {
     var schedule = sit(this, id),
-      on = schedule.on;
+        on = schedule.on;
 
     // If this node shared a dispatch with the previous node,
     // just assign the updated shared dispatch and we’re done!
@@ -24,10 +24,10 @@ function onFunction(id, name, listener) {
   };
 }
 
-export default function (name, listener) {
+export default function(name, listener) {
   var id = this._id;
 
   return arguments.length < 2
-    ? get(this.node(), id).on.on(name)
-    : this.each(onFunction(id, name, listener));
+      ? get(this.node(), id).on.on(name)
+      : this.each(onFunction(id, name, listener));
 }

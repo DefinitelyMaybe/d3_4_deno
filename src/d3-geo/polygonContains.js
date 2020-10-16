@@ -1,40 +1,22 @@
 /// <reference lib="dom" />
-import { Adder } from "../d3-array/mod.js";
-import {
-  cartesian,
-  cartesianCross,
-  cartesianNormalizeInPlace,
-} from "./cartesian.js";
-import {
-  abs,
-  asin,
-  atan2,
-  cos,
-  epsilon,
-  epsilon2,
-  halfPi,
-  pi,
-  quarterPi,
-  sign,
-  sin,
-  tau,
-} from "./math.js";
+import {Adder} from "../d3-array/mod.js";
+import {cartesian, cartesianCross, cartesianNormalizeInPlace} from "./cartesian.js";
+import {abs, asin, atan2, cos, epsilon, epsilon2, halfPi, pi, quarterPi, sign, sin, tau} from "./math.js";
 
 function longitude(point) {
-  if (abs(point[0]) <= pi) {
+  if (abs(point[0]) <= pi)
     return point[0];
-  } else {
+  else
     return sign(point[0]) * ((abs(point[0]) + pi) % tau - pi);
-  }
 }
 
-export default function (polygon, point) {
+export default function(polygon, point) {
   var lambda = longitude(point),
-    phi = point[1],
-    sinPhi = sin(phi),
-    normal = [sin(lambda), -cos(lambda), 0],
-    angle = 0,
-    winding = 0;
+      phi = point[1],
+      sinPhi = sin(phi),
+      normal = [sin(lambda), -cos(lambda), 0],
+      angle = 0,
+      winding = 0;
 
   var sum = new Adder();
 
@@ -44,36 +26,26 @@ export default function (polygon, point) {
   for (var i = 0, n = polygon.length; i < n; ++i) {
     if (!(m = (ring = polygon[i]).length)) continue;
     var ring,
-      m,
-      point0 = ring[m - 1],
-      lambda0 = longitude(point0),
-      phi0 = point0[1] / 2 + quarterPi,
-      sinPhi0 = sin(phi0),
-      cosPhi0 = cos(phi0);
+        m,
+        point0 = ring[m - 1],
+        lambda0 = longitude(point0),
+        phi0 = point0[1] / 2 + quarterPi,
+        sinPhi0 = sin(phi0),
+        cosPhi0 = cos(phi0);
 
-    for (
-      var j = 0;
-      j < m;
-      ++j,
-        lambda0 = lambda1,
-        sinPhi0 = sinPhi1,
-        cosPhi0 = cosPhi1,
-        point0 = point1
-    ) {
+    for (var j = 0; j < m; ++j, lambda0 = lambda1, sinPhi0 = sinPhi1, cosPhi0 = cosPhi1, point0 = point1) {
       var point1 = ring[j],
-        lambda1 = longitude(point1),
-        phi1 = point1[1] / 2 + quarterPi,
-        sinPhi1 = sin(phi1),
-        cosPhi1 = cos(phi1),
-        delta = lambda1 - lambda0,
-        sign = delta >= 0 ? 1 : -1,
-        absDelta = sign * delta,
-        antimeridian = absDelta > pi,
-        k = sinPhi0 * sinPhi1;
+          lambda1 = longitude(point1),
+          phi1 = point1[1] / 2 + quarterPi,
+          sinPhi1 = sin(phi1),
+          cosPhi1 = cos(phi1),
+          delta = lambda1 - lambda0,
+          sign = delta >= 0 ? 1 : -1,
+          absDelta = sign * delta,
+          antimeridian = absDelta > pi,
+          k = sinPhi0 * sinPhi1;
 
-      sum.add(
-        atan2(k * sign * sin(absDelta), cosPhi0 * cosPhi1 + k * cos(absDelta)),
-      );
+      sum.add(atan2(k * sign * sin(absDelta), cosPhi0 * cosPhi1 + k * cos(absDelta)));
       angle += antimeridian ? delta + sign * tau : delta;
 
       // Are the longitudes either side of the point’s meridian (lambda),
@@ -83,8 +55,7 @@ export default function (polygon, point) {
         cartesianNormalizeInPlace(arc);
         var intersection = cartesianCross(normal, arc);
         cartesianNormalizeInPlace(intersection);
-        var phiArc = (antimeridian ^ delta >= 0 ? -1 : 1) *
-          asin(intersection[2]);
+        var phiArc = (antimeridian ^ delta >= 0 ? -1 : 1) * asin(intersection[2]);
         if (phi > phiArc || phi === phiArc && (arc[0] || arc[1])) {
           winding += antimeridian ^ delta >= 0 ? 1 : -1;
         }
@@ -103,6 +74,5 @@ export default function (polygon, point) {
   // from the point to the South pole.  If it is zero, then the point is the
   // same side as the South pole.
 
-  return (angle < -epsilon || angle < epsilon && sum < -epsilon2) ^
-    (winding & 1);
+  return (angle < -epsilon || angle < epsilon && sum < -epsilon2) ^ (winding & 1);
 }

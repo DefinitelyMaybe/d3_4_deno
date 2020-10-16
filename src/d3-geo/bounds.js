@@ -1,39 +1,30 @@
 /// <reference lib="dom" />
-import { Adder } from "../d3-array/mod.js";
-import { areaRingSum, areaStream } from "./area.js";
-import {
-  cartesian,
-  cartesianCross,
-  cartesianNormalizeInPlace,
-  spherical,
-} from "./cartesian.js";
-import { abs, degrees, epsilon, radians } from "./math.js";
+import {Adder} from "../d3-array/mod.js";
+import {areaStream, areaRingSum} from "./area.js";
+import {cartesian, cartesianCross, cartesianNormalizeInPlace, spherical} from "./cartesian.js";
+import {abs, degrees, epsilon, radians} from "./math.js";
 import stream from "./stream.js";
 
-var lambda0,
-  phi0,
-  lambda1,
-  phi1, // bounds
-  lambda2, // previous lambda-coordinate
-  lambda00,
-  phi00, // first point
-  p0, // previous 3D point
-  deltaSum,
-  ranges,
-  range;
+var lambda0, phi0, lambda1, phi1, // bounds
+    lambda2, // previous lambda-coordinate
+    lambda00, phi00, // first point
+    p0, // previous 3D point
+    deltaSum,
+    ranges,
+    range;
 
 var boundsStream = {
   point: boundsPoint,
   lineStart: boundsLineStart,
   lineEnd: boundsLineEnd,
-  polygonStart: function () {
+  polygonStart: function() {
     boundsStream.point = boundsRingPoint;
     boundsStream.lineStart = boundsRingStart;
     boundsStream.lineEnd = boundsRingEnd;
     deltaSum = new Adder();
     areaStream.polygonStart();
   },
-  polygonEnd: function () {
+  polygonEnd: function() {
     areaStream.polygonEnd();
     boundsStream.point = boundsPoint;
     boundsStream.lineStart = boundsLineStart;
@@ -43,9 +34,9 @@ var boundsStream = {
     else if (deltaSum < -epsilon) phi0 = -90;
     range[0] = lambda0, range[1] = lambda1;
   },
-  sphere: function () {
+  sphere: function() {
     lambda0 = -(lambda1 = 180), phi0 = -(phi1 = 90);
-  },
+  }
 };
 
 function boundsPoint(lambda, phi) {
@@ -58,22 +49,19 @@ function linePoint(lambda, phi) {
   var p = cartesian([lambda * radians, phi * radians]);
   if (p0) {
     var normal = cartesianCross(p0, p),
-      equatorial = [normal[1], -normal[0], 0],
-      inflection = cartesianCross(equatorial, normal);
+        equatorial = [normal[1], -normal[0], 0],
+        inflection = cartesianCross(equatorial, normal);
     cartesianNormalizeInPlace(inflection);
     inflection = spherical(inflection);
     var delta = lambda - lambda2,
-      sign = delta > 0 ? 1 : -1,
-      lambdai = inflection[0] * degrees * sign,
-      phii,
-      antimeridian = abs(delta) > 180;
+        sign = delta > 0 ? 1 : -1,
+        lambdai = inflection[0] * degrees * sign,
+        phii,
+        antimeridian = abs(delta) > 180;
     if (antimeridian ^ (sign * lambda2 < lambdai && lambdai < sign * lambda)) {
       phii = inflection[1] * degrees;
       if (phii > phi1) phi1 = phii;
-    } else if (
-      lambdai = (lambdai + 360) % 360 - 180,
-        antimeridian ^ (sign * lambda2 < lambdai && lambdai < sign * lambda)
-    ) {
+    } else if (lambdai = (lambdai + 360) % 360 - 180, antimeridian ^ (sign * lambda2 < lambdai && lambdai < sign * lambda)) {
       phii = -inflection[1] * degrees;
       if (phii < phi0) phi0 = phii;
     } else {
@@ -92,13 +80,9 @@ function linePoint(lambda, phi) {
         if (lambda > lambda1) lambda1 = lambda;
       } else {
         if (lambda > lambda2) {
-          if (angle(lambda0, lambda) > angle(lambda0, lambda1)) {
-            lambda1 = lambda;
-          }
+          if (angle(lambda0, lambda) > angle(lambda0, lambda1)) lambda1 = lambda;
         } else {
-          if (angle(lambda, lambda1) > angle(lambda0, lambda1)) {
-            lambda0 = lambda;
-          }
+          if (angle(lambda, lambda1) > angle(lambda0, lambda1)) lambda0 = lambda;
         }
       }
     }
@@ -155,12 +139,10 @@ function rangeCompare(a, b) {
 }
 
 function rangeContains(range, x) {
-  return range[0] <= range[1]
-    ? range[0] <= x && x <= range[1]
-    : x < range[0] || range[1] < x;
+  return range[0] <= range[1] ? range[0] <= x && x <= range[1] : x < range[0] || range[1] < x;
 }
 
-export default function (feature) {
+export default function(feature) {
   var i, n, a, b, merged, deltaMax, delta;
 
   phi1 = lambda1 = -(lambda0 = phi0 = Infinity);
@@ -184,21 +166,15 @@ export default function (feature) {
 
     // Finally, find the largest gap between the merged ranges.
     // The final bounding box will be the inverse of this gap.
-    for (
-      deltaMax = -Infinity, n = merged.length - 1, i = 0, a = merged[n];
-      i <= n;
-      a = b, ++i
-    ) {
+    for (deltaMax = -Infinity, n = merged.length - 1, i = 0, a = merged[n]; i <= n; a = b, ++i) {
       b = merged[i];
-      if ((delta = angle(a[1], b[0])) > deltaMax) {
-        deltaMax = delta, lambda0 = b[0], lambda1 = a[1];
-      }
+      if ((delta = angle(a[1], b[0])) > deltaMax) deltaMax = delta, lambda0 = b[0], lambda1 = a[1];
     }
   }
 
   ranges = range = null;
 
   return lambda0 === Infinity || phi0 === Infinity
-    ? [[NaN, NaN], [NaN, NaN]]
-    : [[lambda0, phi0], [lambda1, phi1]];
+      ? [[NaN, NaN], [NaN, NaN]]
+      : [[lambda0, phi0], [lambda1, phi1]];
 }

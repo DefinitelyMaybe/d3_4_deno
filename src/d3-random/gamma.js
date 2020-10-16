@@ -14,20 +14,17 @@ export default (function sourceRandomGamma(source) {
     if (k === 1) return () => -Math.log1p(-source()) * theta;
 
     var d = (k < 1 ? k + 1 : k) - 1 / 3,
-      c = 1 / (3 * Math.sqrt(d)),
-      multiplier = k < 1 ? () => Math.pow(source(), 1 / k) : () => 1;
-    return function () {
+        c = 1 / (3 * Math.sqrt(d)),
+        multiplier = k < 1 ? () => Math.pow(source(), 1 / k) : () => 1;
+    return function() {
       do {
         do {
           var x = randomNormal(),
-            v = 1 + c * x;
+              v = 1 + c * x;
         } while (v <= 0);
         v *= v * v;
         var u = 1 - source();
-      } while (
-        u >= 1 - 0.0331 * x * x * x * x &&
-        Math.log(u) >= 0.5 * x * x + d * (1 - v + Math.log(v))
-      );
+      } while (u >= 1 - 0.0331 * x * x * x * x && Math.log(u) >= 0.5 * x * x + d * (1 - v + Math.log(v)));
       return d * v * multiplier() * theta;
     };
   }

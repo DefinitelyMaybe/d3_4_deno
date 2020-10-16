@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-export default function (values, valueof) {
+export default function(values, valueof) {
   let min;
   let max;
   if (valueof === undefined) {

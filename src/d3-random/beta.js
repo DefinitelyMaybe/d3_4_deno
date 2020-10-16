@@ -7,8 +7,8 @@ export default (function sourceRandomBeta(source) {
 
   function randomBeta(alpha, beta) {
     var X = G(alpha),
-      Y = G(beta);
-    return function () {
+        Y = G(beta);
+    return function() {
       var x = X();
       return x === 0 ? 0 : x / (x + Y());
     };

@@ -1,7 +1,7 @@
 /// <reference lib="dom" />
 import sourceEvent from "./sourceEvent.js";
 
-export default function (event, node) {
+export default function(event, node) {
   event = sourceEvent(event);
   if (node === undefined) node = event.currentTarget;
   if (node) {
@@ -14,10 +14,7 @@ export default function (event, node) {
     }
     if (node.getBoundingClientRect) {
       var rect = node.getBoundingClientRect();
-      return [
-        event.clientX - rect.left - node.clientLeft,
-        event.clientY - rect.top - node.clientTop,
-      ];
+      return [event.clientX - rect.left - node.clientLeft, event.clientY - rect.top - node.clientTop];
     }
   }
   return [event.pageX, event.pageY];

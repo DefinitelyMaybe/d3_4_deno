@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-import { Node } from "./hierarchy/index.js";
+import {Node} from "./hierarchy/index.js";
 
 function defaultSeparation(a, b) {
   return a.parent === b.parent ? 1 : 2;
@@ -40,10 +40,10 @@ function moveSubtree(wm, wp, shift) {
 // change(w+), shift(w+), and change(w-).
 function executeShifts(v) {
   var shift = 0,
-    change = 0,
-    children = v.children,
-    i = children.length,
-    w;
+      change = 0,
+      children = v.children,
+      i = children.length,
+      w;
   while (--i >= 0) {
     w = children[i];
     w.z += shift;
@@ -76,12 +76,12 @@ TreeNode.prototype = Object.create(Node.prototype);
 
 function treeRoot(root) {
   var tree = new TreeNode(root, 0),
-    node,
-    nodes = [tree],
-    child,
-    children,
-    i,
-    n;
+      node,
+      nodes = [tree],
+      child,
+      children,
+      i,
+      n;
 
   while (node = nodes.pop()) {
     if (children = node._.children) {
@@ -98,11 +98,11 @@ function treeRoot(root) {
 }
 
 // Node-link tree diagram using the Reingold-Tilford "tidy" algorithm
-export default function () {
+export default function() {
   var separation = defaultSeparation,
-    dx = 1,
-    dy = 1,
-    nodeSize = null;
+      dx = 1,
+      dy = 1,
+      nodeSize = null;
 
   function tree(root) {
     var t = treeRoot(root);
@@ -113,22 +113,23 @@ export default function () {
 
     // If a fixed node size is specified, scale x and y.
     if (nodeSize) root.eachBefore(sizeNode);
+
     // If a fixed tree size is specified, scale x and y based on the extent.
     // Compute the left-most, right-most, and depth-most nodes for extents.
     else {
       var left = root,
-        right = root,
-        bottom = root;
-      root.eachBefore(function (node) {
+          right = root,
+          bottom = root;
+      root.eachBefore(function(node) {
         if (node.x < left.x) left = node;
         if (node.x > right.x) right = node;
         if (node.depth > bottom.depth) bottom = node;
       });
       var s = left === right ? 1 : separation(left, right) / 2,
-        tx = s - left.x,
-        kx = dx / (right.x + s + tx),
-        ky = dy / (bottom.depth || 1);
-      root.eachBefore(function (node) {
+          tx = s - left.x,
+          kx = dx / (right.x + s + tx),
+          ky = dy / (bottom.depth || 1);
+      root.eachBefore(function(node) {
         node.x = (node.x + tx) * kx;
         node.y = node.depth * ky;
       });
@@ -143,8 +144,8 @@ export default function () {
   // node v is placed to the midpoint of its outermost children.
   function firstWalk(v) {
     var children = v.children,
-      siblings = v.parent.children,
-      w = v.i ? siblings[v.i - 1] : null;
+        siblings = v.parent.children,
+        w = v.i ? siblings[v.i - 1] : null;
     if (children) {
       executeShifts(v);
       var midpoint = (children[0].z + children[children.length - 1].z) / 2;
@@ -180,14 +181,14 @@ export default function () {
   function apportion(v, w, ancestor) {
     if (w) {
       var vip = v,
-        vop = v,
-        vim = w,
-        vom = vip.parent.children[0],
-        sip = vip.m,
-        sop = vop.m,
-        sim = vim.m,
-        som = vom.m,
-        shift;
+          vop = v,
+          vim = w,
+          vom = vip.parent.children[0],
+          sip = vip.m,
+          sop = vop.m,
+          sim = vim.m,
+          som = vom.m,
+          shift;
       while (vim = nextRight(vim), vip = nextLeft(vip), vim && vip) {
         vom = nextLeft(vom);
         vop = nextRight(vop);
@@ -221,20 +222,16 @@ export default function () {
     node.y = node.depth * dy;
   }
 
-  tree.separation = function (x) {
+  tree.separation = function(x) {
     return arguments.length ? (separation = x, tree) : separation;
   };
 
-  tree.size = function (x) {
-    return arguments.length
-      ? (nodeSize = false, dx = +x[0], dy = +x[1], tree)
-      : (nodeSize ? null : [dx, dy]);
+  tree.size = function(x) {
+    return arguments.length ? (nodeSize = false, dx = +x[0], dy = +x[1], tree) : (nodeSize ? null : [dx, dy]);
   };
 
-  tree.nodeSize = function (x) {
-    return arguments.length
-      ? (nodeSize = true, dx = +x[0], dy = +x[1], tree)
-      : (nodeSize ? [dx, dy] : null);
+  tree.nodeSize = function(x) {
+    return arguments.length ? (nodeSize = true, dx = +x[0], dy = +x[1], tree) : (nodeSize ? [dx, dy] : null);
   };
 
   return tree;

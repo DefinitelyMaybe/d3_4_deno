@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for D3JS d3-quadtree module 2.0
 // Project: https://github.com/d3/d3-quadtree/, https://d3js.org/d3-quadtree
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>
@@ -14,20 +15,20 @@
  * Leaf node of the quadtree.
  */
 export interface QuadtreeLeaf<T> {
-  /**
+    /**
      * The data associated with this point, as passed to quadtree.add.
      */
-  data: T;
+    data: T;
 
-  /**
+    /**
      * The next datum in this leaf, if any.
      */
-  next?: QuadtreeLeaf<T>;
+    next?: QuadtreeLeaf<T>;
 
-  /**
+    /**
      * The length property may be used to distinguish leaf nodes from internal nodes: it is undefined for leaf nodes, and 4 for internal nodes.
      */
-  length?: undefined;
+    length?: undefined;
 }
 
 /**
@@ -40,54 +41,53 @@ export interface QuadtreeLeaf<T> {
  *
  * A child quadrant may be undefined if it is empty.
  */
-export interface QuadtreeInternalNode<T>
-  extends Array<QuadtreeInternalNode<T> | QuadtreeLeaf<T> | undefined> {
-  /**
+export interface QuadtreeInternalNode<T> extends Array<QuadtreeInternalNode<T> | QuadtreeLeaf<T> | undefined> {
+    /**
      * The length property may be used to distinguish leaf nodes from internal nodes: it is undefined for leaf nodes, and 4 for internal nodes.
      */
-  length: 4;
+    length: 4;
 }
 
 export interface Quadtree<T> {
-  /**
+    /**
      * Returns the current x-accessor, which defaults to: `x(d) => d[0]`.
      */
-  x(): (d: T) => number;
-  /**
+    x(): (d: T) => number;
+    /**
      * Sets the current x-coordinate accessor and returns the quadtree.
      * The x-accessors must be consistent, returning the same value given the same input.
      *
      * @param x The x-coordinate accessor.
      */
-  x(x: (d: T) => number): this;
+    x(x: (d: T) => number): this;
 
-  /**
+    /**
      * Returns the current y-accessor, which defaults to: `y(d) => d[1]`.
      */
-  y(): (d: T) => number;
-  /**
+    y(): (d: T) => number;
+    /**
      * Sets the current y-coordinate accessor and returns the quadtree.
      * The y-accessors must be consistent, returning the same value given the same input.
      *
      * @param y The y-coordinate accessor.
      */
-  y(y: (d: T) => number): this;
+    y(y: (d: T) => number): this;
 
-  /**
+    /**
      * Returns the quadtree's current extent `[[x0, y0], [x1, y1]]`,
      * where `x0` and `y0` are the inclusive lower bounds and `x1` and `y1` are the inclusive upper bounds,
      * or `undefined` if the quadtree has no extent.
      */
-  extent(): [[number, number], [number, number]] | undefined;
-  /**
+    extent(): [[number, number], [number, number]] | undefined;
+    /**
      * Expands the quadtree to cover the specified points `[[x0, y0], [x1, y1]]` and returns the quadtree.
      * The extent may also be expanded by calling `quadtree.cover` or `quadtree.add`.
      *
      * @param extend The specified points to cover.
      */
-  extent(extend: [[number, number], [number, number]]): this;
+    extent(extend: [[number, number], [number, number]]): this;
 
-  /**
+    /**
      * Expands the quadtree to cover the specified point ⟨x,y⟩, and returns the quadtree.
      * * If the quadtree’s extent already covers the specified point, this method does nothing.
      * * If the quadtree has an extent, the extent is repeatedly doubled to cover the specified point, wrapping the root node as necessary.
@@ -97,63 +97,63 @@ export interface Quadtree<T> {
      * @param x The x-coordinate for the specified point to cover.
      * @param y The y-coordinate for the specified point to cover.
      */
-  cover(x: number, y: number): this;
+    cover(x: number, y: number): this;
 
-  /**
+    /**
      * Adds the specified datum to the quadtree, deriving its coordinates ⟨x,y⟩ using the current x- and y-accessors, and returns the quadtree.
      * If the new point is outside the current extent of the quadtree, the quadtree is automatically expanded to cover the new point.
      *
      * @param datum The specified datum to add.
      */
-  add(datum: T): this;
+    add(datum: T): this;
 
-  /**
+    /**
      * Adds the specified array of data to the quadtree, deriving each element’s coordinates ⟨x,y⟩ using the current x- and y-accessors, and return this quadtree.
      * This is approximately equivalent to calling quadtree.add repeatedly.
      * However, this method results in a more compact quadtree because the extent of the data is computed first before adding the data.
      *
      * @param data The specified array of data to add.
      */
-  addAll(data: T[]): this;
+    addAll(data: T[]): this;
 
-  /**
+    /**
      * Removes the specified datum to the quadtree, deriving its coordinates ⟨x,y⟩ using the current x- and y-accessors, and returns the quadtree.
      * If the specified datum does not exist in this quadtree, this method does nothing.
      *
      * @param datum The specified datum to remove.
      */
-  remove(datum: T): this;
+    remove(datum: T): this;
 
-  /**
+    /**
      * Removes the specified data to the quadtree, deriving their coordinates ⟨x,y⟩ using the current x- and y-accessors, and returns the quadtree.
      * If a specified datum does not exist in this quadtree, it is ignored.
      *
      * @param data The specified array of data to remove.
      */
-  removeAll(data: T[]): this;
+    removeAll(data: T[]): this;
 
-  /**
+    /**
      * Returns a copy of the quadtree. All nodes in the returned quadtree are identical copies of the corresponding node in the quadtree;
      * however, any data in the quadtree is shared by reference and not copied.
      */
-  copy(): Quadtree<T>;
+    copy(): Quadtree<T>;
 
-  /**
+    /**
      * Returns the root node of the quadtree.
      */
-  root(): QuadtreeInternalNode<T> | QuadtreeLeaf<T>;
+    root(): QuadtreeInternalNode<T> | QuadtreeLeaf<T>;
 
-  /**
+    /**
      * Returns an array of all data in the quadtree.
      */
-  data(): T[];
+    data(): T[];
 
-  /**
+    /**
      * Returns the total number of data in the quadtree.
      */
-  size(): number;
+    size(): number;
 
-  /**
+    /**
      * Returns the datum closest to the position ⟨x,y⟩ with the given search radius. If radius is not specified, it defaults to infinity.
      * If there is no datum within the search area, returns undefined.
      *
@@ -161,9 +161,9 @@ export interface Quadtree<T> {
      * @param y The y-coordinate for the search position.
      * @param radius The optional search radius.
      */
-  find(x: number, y: number, radius?: number): T | undefined;
+    find(x: number, y: number, radius?: number): T | undefined;
 
-  /**
+    /**
      * Visits each node in the quadtree in pre-order traversal, invoking the specified callback with arguments `node`, `x0`, `y0`, `x1`, `y1` for each node,
      * where `node` is the node being visited, ⟨x0, y0⟩ are the lower bounds of the node, and ⟨x1, y1⟩ are the upper bounds, and returns the quadtree.
      *
@@ -174,31 +174,15 @@ export interface Quadtree<T> {
      *
      * @param callback The callback invoked for each node.
      */
-  visit(
-    callback: (
-      node: QuadtreeInternalNode<T> | QuadtreeLeaf<T>,
-      x0: number,
-      y0: number,
-      x1: number,
-      y1: number,
-    ) => void | boolean,
-  ): this;
+    visit(callback: (node: QuadtreeInternalNode<T> | QuadtreeLeaf<T>, x0: number, y0: number, x1: number, y1: number) => void | boolean): this;
 
-  /**
+    /**
      * Visits each node in the quadtree in post-order traversal, invoking the specified callback with arguments `node`, `x0`, `y0`, `x1`, `y1` for each node,
      * where `node` is the node being visited, ⟨x0, y0⟩ are the lower bounds of the node, and ⟨x1, y1⟩ are the upper bounds, and returns the quadtree.
      *
      * @param callback The callback invoked for each node.
      */
-  visitAfter(
-    callback: (
-      node: QuadtreeInternalNode<T> | QuadtreeLeaf<T>,
-      x0: number,
-      y0: number,
-      x1: number,
-      y1: number,
-    ) => void,
-  ): this;
+    visitAfter(callback: (node: QuadtreeInternalNode<T> | QuadtreeLeaf<T>, x0: number, y0: number, x1: number, y1: number) => void): this;
 }
 
 /**
@@ -223,8 +207,4 @@ export function quadtree<T = [number, number]>(): Quadtree<T>;
  * @param x The x-coordinate accessor.
  * @param y The y-coordinate accessor.
  */
-export function quadtree<T = [number, number]>(
-  data: T[],
-  x?: (d: T) => number,
-  y?: (d: T) => number,
-): Quadtree<T>;
+export function quadtree<T = [number, number]>(data: T[], x?: (d: T) => number, y?: (d: T) => number): Quadtree<T>;

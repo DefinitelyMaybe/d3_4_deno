@@ -1,6 +1,6 @@
 /// <reference lib="dom" />
-import { atan, cos, sin } from "../math.js";
-import { azimuthalInvert } from "./azimuthal.js";
+import {atan, cos, sin} from "../math.js";
+import {azimuthalInvert} from "./azimuthal.js";
 import projection from "./index.js";
 
 export function stereographicRaw(x, y) {
@@ -8,12 +8,12 @@ export function stereographicRaw(x, y) {
   return [cy * sin(x) / k, sin(y) / k];
 }
 
-stereographicRaw.invert = azimuthalInvert(function (z) {
+stereographicRaw.invert = azimuthalInvert(function(z) {
   return 2 * atan(z);
 });
 
-export default function () {
+export default function() {
   return projection(stereographicRaw)
-    .scale(250)
-    .clipAngle(142);
+      .scale(250)
+      .clipAngle(142);
 }

@@ -1,13 +1,13 @@
 /// <reference lib="dom" />
-import { Adder } from "../d3-array/mod.js";
-import { abs, atan2, cos, radians, sin, sqrt } from "./math.js";
+import {Adder} from "../d3-array/mod.js";
+import {abs, atan2, cos, radians, sin, sqrt} from "./math.js";
 import noop from "./noop.js";
 import stream from "./stream.js";
 
 var lengthSum,
-  lambda0,
-  sinPhi0,
-  cosPhi0;
+    lambda0,
+    sinPhi0,
+    cosPhi0;
 
 var lengthStream = {
   sphere: noop,
@@ -15,7 +15,7 @@ var lengthStream = {
   lineStart: lengthLineStart,
   lineEnd: noop,
   polygonStart: noop,
-  polygonEnd: noop,
+  polygonEnd: noop
 };
 
 function lengthLineStart() {
@@ -36,18 +36,18 @@ function lengthPointFirst(lambda, phi) {
 function lengthPoint(lambda, phi) {
   lambda *= radians, phi *= radians;
   var sinPhi = sin(phi),
-    cosPhi = cos(phi),
-    delta = abs(lambda - lambda0),
-    cosDelta = cos(delta),
-    sinDelta = sin(delta),
-    x = cosPhi * sinDelta,
-    y = cosPhi0 * sinPhi - sinPhi0 * cosPhi * cosDelta,
-    z = sinPhi0 * sinPhi + cosPhi0 * cosPhi * cosDelta;
+      cosPhi = cos(phi),
+      delta = abs(lambda - lambda0),
+      cosDelta = cos(delta),
+      sinDelta = sin(delta),
+      x = cosPhi * sinDelta,
+      y = cosPhi0 * sinPhi - sinPhi0 * cosPhi * cosDelta,
+      z = sinPhi0 * sinPhi + cosPhi0 * cosPhi * cosDelta;
   lengthSum.add(atan2(sqrt(x * x + y * y), z));
   lambda0 = lambda, sinPhi0 = sinPhi, cosPhi0 = cosPhi;
 }
 
-export default function (object) {
+export default function(object) {
   lengthSum = new Adder();
   stream(object, lengthStream);
   return +lengthSum;

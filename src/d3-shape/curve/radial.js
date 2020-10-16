@@ -8,24 +8,25 @@ function Radial(curve) {
 }
 
 Radial.prototype = {
-  areaStart: function () {
+  areaStart: function() {
     this._curve.areaStart();
   },
-  areaEnd: function () {
+  areaEnd: function() {
     this._curve.areaEnd();
   },
-  lineStart: function () {
+  lineStart: function() {
     this._curve.lineStart();
   },
-  lineEnd: function () {
+  lineEnd: function() {
     this._curve.lineEnd();
   },
-  point: function (a, r) {
+  point: function(a, r) {
     this._curve.point(r * Math.sin(a), r * -Math.cos(a));
-  },
+  }
 };
 
 export default function curveRadial(curve) {
+
   function radial(context) {
     return new Radial(curve(context));
   }

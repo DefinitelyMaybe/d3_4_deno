@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-export default function (constructor, factory, prototype) {
+export default function(constructor, factory, prototype) {
   constructor.prototype = factory.prototype = prototype;
   prototype.constructor = constructor;
 }

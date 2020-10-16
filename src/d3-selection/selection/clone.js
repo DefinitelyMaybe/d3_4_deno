@@ -9,6 +9,6 @@ function selection_cloneDeep() {
   return parent ? parent.insertBefore(clone, this.nextSibling) : clone;
 }
 
-export default function (deep) {
+export default function(deep) {
   return this.select(deep ? selection_cloneDeep : selection_cloneShallow);
 }

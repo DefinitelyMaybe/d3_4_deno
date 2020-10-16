@@ -1,7 +1,7 @@
 /// <reference lib="dom" />
 import sparse from "./sparse.js";
-import { Selection } from "./index.js";
+import {Selection} from "./index.js";
 
-export default function () {
+export default function() {
   return new Selection(this._exit || this._groups.map(sparse), this._parents);
 }

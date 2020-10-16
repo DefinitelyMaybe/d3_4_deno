@@ -1,8 +1,8 @@
 /// <reference lib="dom" />
 import interrupt from "../interrupt.js";
 
-export default function (name) {
-  return this.each(function () {
+export default function(name) {
+  return this.each(function() {
     interrupt(this, name);
   });
 }

@@ -1,6 +1,6 @@
 /// <reference lib="dom" />
 var pi = Math.PI,
-  halfPi = pi / 2;
+    halfPi = pi / 2;
 
 export function sinIn(t) {
   return (+t === 1) ? 1 : 1 - Math.cos(t * halfPi);

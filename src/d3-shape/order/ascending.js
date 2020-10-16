@@ -1,11 +1,9 @@
 /// <reference lib="dom" />
 import none from "./none.js";
 
-export default function (series) {
+export default function(series) {
   var sums = series.map(sum);
-  return none(series).sort(function (a, b) {
-    return sums[a] - sums[b];
-  });
+  return none(series).sort(function(a, b) { return sums[a] - sums[b]; });
 }
 
 export function sum(series) {

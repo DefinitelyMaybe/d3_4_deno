@@ -1,10 +1,8 @@
 /// <reference lib="dom" />
-export default function (parent, x0, y0, x1, y1) {
+export default function(parent, x0, y0, x1, y1) {
   var nodes = parent.children,
-    i,
-    n = nodes.length,
-    sum,
-    sums = new Array(n + 1);
+      i, n = nodes.length,
+      sum, sums = new Array(n + 1);
 
   for (sums[0] = sum = i = 0; i < n; ++i) {
     sums[i + 1] = sum += nodes[i].value;
@@ -21,9 +19,9 @@ export default function (parent, x0, y0, x1, y1) {
     }
 
     var valueOffset = sums[i],
-      valueTarget = (value / 2) + valueOffset,
-      k = i + 1,
-      hi = j - 1;
+        valueTarget = (value / 2) + valueOffset,
+        k = i + 1,
+        hi = j - 1;
 
     while (k < hi) {
       var mid = k + hi >>> 1;
@@ -34,7 +32,7 @@ export default function (parent, x0, y0, x1, y1) {
     if ((valueTarget - sums[k - 1]) < (sums[k] - valueTarget) && i + 1 < k) --k;
 
     var valueLeft = sums[k] - valueOffset,
-      valueRight = value - valueLeft;
+        valueRight = value - valueLeft;
 
     if ((x1 - x0) > (y1 - y0)) {
       var xk = value ? (x0 * valueRight + x1 * valueLeft) / value : x1;

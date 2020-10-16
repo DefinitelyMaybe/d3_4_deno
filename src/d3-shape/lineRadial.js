@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-import curveRadial, { curveRadialLinear } from "./curve/radial.js";
+import curveRadial, {curveRadialLinear} from "./curve/radial.js";
 import line from "./line.js";
 
 export function lineRadial(l) {
@@ -8,13 +8,13 @@ export function lineRadial(l) {
   l.angle = l.x, delete l.x;
   l.radius = l.y, delete l.y;
 
-  l.curve = function (_) {
+  l.curve = function(_) {
     return arguments.length ? c(curveRadial(_)) : c()._curve;
   };
 
   return l;
 }
 
-export default function () {
+export default function() {
   return lineRadial(line().curve(curveRadialLinear));
 }

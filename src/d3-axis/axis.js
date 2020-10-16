@@ -1,12 +1,12 @@
 /// <reference lib="dom" />
-import { slice } from "./array.js";
+import {slice} from "./array.js";
 import identity from "./identity.js";
 
 var top = 1,
-  right = 2,
-  bottom = 3,
-  left = 4,
-  epsilon = 1e-6;
+    right = 2,
+    bottom = 3,
+    left = 4,
+    epsilon = 1e-6;
 
 function translateX(x) {
   return "translate(" + (x + 0.5) + ",0)";
@@ -17,13 +17,13 @@ function translateY(y) {
 }
 
 function number(scale) {
-  return (d) => +scale(d);
+  return d => +scale(d);
 }
 
 function center(scale) {
   var offset = Math.max(0, scale.bandwidth() - 1) / 2; // Adjust for 0.5px offset.
   if (scale.round()) offset = Math.round(offset);
-  return function (d) {
+  return function(d) {
     return +scale(d) + offset;
   };
 }
@@ -34,64 +34,45 @@ function entering() {
 
 function axis(orient, scale) {
   var tickArguments = [],
-    tickValues = null,
-    tickFormat = null,
-    tickSizeInner = 6,
-    tickSizeOuter = 6,
-    tickPadding = 3,
-    k = orient === top || orient === left ? -1 : 1,
-    x = orient === left || orient === right ? "x" : "y",
-    transform = orient === top || orient === bottom ? translateX : translateY;
+      tickValues = null,
+      tickFormat = null,
+      tickSizeInner = 6,
+      tickSizeOuter = 6,
+      tickPadding = 3,
+      k = orient === top || orient === left ? -1 : 1,
+      x = orient === left || orient === right ? "x" : "y",
+      transform = orient === top || orient === bottom ? translateX : translateY;
 
   function axis(context) {
-    var values = tickValues == null
-        ? (scale.ticks
-          ? scale.ticks.apply(scale, tickArguments)
-          : scale.domain())
-        : tickValues,
-      format = tickFormat == null
-        ? (scale.tickFormat
-          ? scale.tickFormat.apply(scale, tickArguments)
-          : identity)
-        : tickFormat,
-      spacing = Math.max(tickSizeInner, 0) + tickPadding,
-      range = scale.range(),
-      range0 = +range[0] + 0.5,
-      range1 = +range[range.length - 1] + 0.5,
-      position = (scale.bandwidth ? center : number)(scale.copy()),
-      selection = context.selection ? context.selection() : context,
-      path = selection.selectAll(".domain").data([null]),
-      tick = selection.selectAll(".tick").data(values, scale).order(),
-      tickExit = tick.exit(),
-      tickEnter = tick.enter().append("g").attr("class", "tick"),
-      line = tick.select("line"),
-      text = tick.select("text");
+    var values = tickValues == null ? (scale.ticks ? scale.ticks.apply(scale, tickArguments) : scale.domain()) : tickValues,
+        format = tickFormat == null ? (scale.tickFormat ? scale.tickFormat.apply(scale, tickArguments) : identity) : tickFormat,
+        spacing = Math.max(tickSizeInner, 0) + tickPadding,
+        range = scale.range(),
+        range0 = +range[0] + 0.5,
+        range1 = +range[range.length - 1] + 0.5,
+        position = (scale.bandwidth ? center : number)(scale.copy()),
+        selection = context.selection ? context.selection() : context,
+        path = selection.selectAll(".domain").data([null]),
+        tick = selection.selectAll(".tick").data(values, scale).order(),
+        tickExit = tick.exit(),
+        tickEnter = tick.enter().append("g").attr("class", "tick"),
+        line = tick.select("line"),
+        text = tick.select("text");
 
-    path = path.merge(
-      path.enter().insert("path", ".tick")
+    path = path.merge(path.enter().insert("path", ".tick")
         .attr("class", "domain")
-        .attr("stroke", "currentColor"),
-    );
+        .attr("stroke", "currentColor"));
 
     tick = tick.merge(tickEnter);
 
-    line = line.merge(
-      tickEnter.append("line")
+    line = line.merge(tickEnter.append("line")
         .attr("stroke", "currentColor")
-        .attr(x + "2", k * tickSizeInner),
-    );
+        .attr(x + "2", k * tickSizeInner));
 
-    text = text.merge(
-      tickEnter.append("text")
+    text = text.merge(tickEnter.append("text")
         .attr("fill", "currentColor")
         .attr(x, k * spacing)
-        .attr(
-          "dy",
-          orient === top ? "0em" : orient === bottom
-            ? "0.71em"
-            : "0.32em",
-        ),
-    );
+        .attr("dy", orient === top ? "0em" : orient === bottom ? "0.71em" : "0.32em"));
 
     if (context !== selection) {
       path = path.transition(context);
@@ -100,104 +81,75 @@ function axis(orient, scale) {
       text = text.transition(context);
 
       tickExit = tickExit.transition(context)
-        .attr("opacity", epsilon)
-        .attr("transform", function (d) {
-          return isFinite(d = position(d))
-            ? transform(d)
-            : this.getAttribute("transform");
-        });
+          .attr("opacity", epsilon)
+          .attr("transform", function(d) { return isFinite(d = position(d)) ? transform(d) : this.getAttribute("transform"); });
 
       tickEnter
-        .attr("opacity", epsilon)
-        .attr("transform", function (d) {
-          var p = this.parentNode.__axis;
-          return transform(p && isFinite(p = p(d)) ? p : position(d));
-        });
+          .attr("opacity", epsilon)
+          .attr("transform", function(d) { var p = this.parentNode.__axis; return transform(p && isFinite(p = p(d)) ? p : position(d)); });
     }
 
     tickExit.remove();
 
     path
-      .attr(
-        "d",
-        orient === left || orient == right
-          ? (tickSizeOuter
-            ? "M" + k * tickSizeOuter + "," + range0 + "H0.5V" + range1 + "H" +
-              k * tickSizeOuter
-            : "M0.5," + range0 + "V" + range1)
-          : (tickSizeOuter
-            ? "M" + range0 + "," + k * tickSizeOuter + "V0.5H" + range1 + "V" +
-              k * tickSizeOuter
-            : "M" + range0 + ",0.5H" + range1),
-      );
+        .attr("d", orient === left || orient == right
+            ? (tickSizeOuter ? "M" + k * tickSizeOuter + "," + range0 + "H0.5V" + range1 + "H" + k * tickSizeOuter : "M0.5," + range0 + "V" + range1)
+            : (tickSizeOuter ? "M" + range0 + "," + k * tickSizeOuter + "V0.5H" + range1 + "V" + k * tickSizeOuter : "M" + range0 + ",0.5H" + range1));
 
     tick
-      .attr("opacity", 1)
-      .attr("transform", function (d) {
-        return transform(position(d));
-      });
+        .attr("opacity", 1)
+        .attr("transform", function(d) { return transform(position(d)); });
 
     line
-      .attr(x + "2", k * tickSizeInner);
+        .attr(x + "2", k * tickSizeInner);
 
     text
-      .attr(x, k * spacing)
-      .text(format);
+        .attr(x, k * spacing)
+        .text(format);
 
     selection.filter(entering)
-      .attr("fill", "none")
-      .attr("font-size", 10)
-      .attr("font-family", "sans-serif")
-      .attr(
-        "text-anchor",
-        orient === right ? "start" : orient === left ? "end" : "middle",
-      );
+        .attr("fill", "none")
+        .attr("font-size", 10)
+        .attr("font-family", "sans-serif")
+        .attr("text-anchor", orient === right ? "start" : orient === left ? "end" : "middle");
 
     selection
-      .each(function () {
-        this.__axis = position;
-      });
+        .each(function() { this.__axis = position; });
   }
 
-  axis.scale = function (_) {
+  axis.scale = function(_) {
     return arguments.length ? (scale = _, axis) : scale;
   };
 
-  axis.ticks = function () {
+  axis.ticks = function() {
     return tickArguments = slice.call(arguments), axis;
   };
 
-  axis.tickArguments = function (_) {
-    return arguments.length
-      ? (tickArguments = _ == null ? [] : slice.call(_), axis)
-      : tickArguments.slice();
+  axis.tickArguments = function(_) {
+    return arguments.length ? (tickArguments = _ == null ? [] : slice.call(_), axis) : tickArguments.slice();
   };
 
-  axis.tickValues = function (_) {
-    return arguments.length
-      ? (tickValues = _ == null ? null : slice.call(_), axis)
-      : tickValues && tickValues.slice();
+  axis.tickValues = function(_) {
+    return arguments.length ? (tickValues = _ == null ? null : slice.call(_), axis) : tickValues && tickValues.slice();
   };
 
-  axis.tickFormat = function (_) {
+  axis.tickFormat = function(_) {
     return arguments.length ? (tickFormat = _, axis) : tickFormat;
   };
 
-  axis.tickSize = function (_) {
-    return arguments.length
-      ? (tickSizeInner = tickSizeOuter = +_, axis)
-      : tickSizeInner;
+  axis.tickSize = function(_) {
+    return arguments.length ? (tickSizeInner = tickSizeOuter = +_, axis) : tickSizeInner;
   };
 
-  axis.tickSizeInner = function (_) {
+  axis.tickSizeInner = function(_) {
     return arguments.length ? (tickSizeInner = +_, axis) : tickSizeInner;
   };
 
-  axis.tickSizeOuter = function (_) {
+  axis.tickSizeOuter = function(_) {
     return arguments.length ? (tickSizeOuter = +_, axis) : tickSizeOuter;
   };
 
-  axis.tickPadding = function (_) {
+  axis.tickPadding = function(_) {
     return arguments.length ? (tickPadding = +_, axis) : tickPadding;
   };
 

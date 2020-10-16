@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-export default function (x) {
+export default function(x) {
   return x === null ? NaN : +x;
 }
 
@@ -13,10 +13,7 @@ export function* numbers(values, valueof) {
   } else {
     let index = -1;
     for (let value of values) {
-      if (
-        (value = valueof(value, ++index, values)) != null &&
-        (value = +value) >= value
-      ) {
+      if ((value = valueof(value, ++index, values)) != null && (value = +value) >= value) {
         yield value;
       }
     }

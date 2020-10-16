@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for d3JS d3-time-format module 3.0
 // Project: https://github.com/d3/d3-time-format/, https://d3js.org/d3-time-format
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>
@@ -12,64 +13,38 @@
  * Specification of time locale to use when creating a new TimeLocaleObject
  */
 export interface TimeLocaleDefinition {
-  /**
+    /**
      * The date and time (%c) format specifier (e.g., "%a %b %e %X %Y").
      */
-  dateTime: string;
-  /**
+    dateTime: string;
+    /**
      * The date (%x) format specifier (e.g., "%m/%d/%Y").
      */
-  date: string;
-  /**
+    date: string;
+    /**
      *  The time (%X) format specifier (e.g., "%H:%M:%S").
      */
-  time: string;
-  /**
+    time: string;
+    /**
      * The A.M. and P.M. equivalents (e.g., ["AM", "PM"]).
      */
-  periods: [string, string];
-  /**
+    periods: [string, string];
+    /**
      * The full names of the weekdays, starting with Sunday.
      */
-  days: [string, string, string, string, string, string, string];
-  /**
+    days: [string, string, string, string, string, string, string];
+    /**
      * The abbreviated names of the weekdays, starting with Sunday.
      */
-  shortDays: [string, string, string, string, string, string, string];
-  /**
+    shortDays: [string, string, string, string, string, string, string];
+    /**
      * The full names of the months (starting with January).
      */
-  months: [
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-  ];
-  /**
+    months: [string, string, string, string, string, string, string, string, string, string, string, string];
+    /**
      * the abbreviated names of the months (starting with January).
      */
-  shortMonths: [
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-  ];
+    shortMonths: [string, string, string, string, string, string, string, string, string, string, string, string];
 }
 
 /**
@@ -77,7 +52,7 @@ export interface TimeLocaleDefinition {
  * methods for a specified locale definition.
  */
 export interface TimeLocaleObject {
-  /**
+    /**
      * Returns a new formatter for the given string specifier. The specifier string may contain the following directives:
      * - %a - abbreviated weekday name.*
      * - %A - full weekday name.*
@@ -138,8 +113,8 @@ export interface TimeLocaleObject {
      *
      * @param specifier A specifier string for the date format.
      */
-  format(specifier: string): (date: Date) => string;
-  /**
+    format(specifier: string): (date: Date) => string;
+    /**
      * Returns a new parser for the given string specifier. The specifier string may contain the same directives as locale.format (TimeLocaleObject.format).
      * The %d and %e directives are considered equivalent for parsing.
      *
@@ -152,19 +127,19 @@ export interface TimeLocaleObject {
      *
      * @param specifier A specifier string for the date format.
      */
-  parse(specifier: string): (dateString: string) => (Date | null);
-  /**
+    parse(specifier: string): (dateString: string) => (Date | null);
+    /**
      * Equivalent to locale.format (TimeLocaleObject.format), except all directives are interpreted as Coordinated Universal Time (UTC) rather than local time.
      *
      * @param specifier A specifier string for the date format.
      */
-  utcFormat(specifier: string): (date: Date) => string;
-  /**
+    utcFormat(specifier: string): (date: Date) => string;
+    /**
      * Equivalent to locale.parse (TimeLocaleObject.parse), except all directives are interpreted as Coordinated Universal Time (UTC) rather than local time.
      *
      * @param specifier A specifier string for the date format.
      */
-  utcParse(specifier: string): (dateString: string) => (Date | null);
+    utcParse(specifier: string): (dateString: string) => (Date | null);
 }
 
 /**
@@ -173,9 +148,7 @@ export interface TimeLocaleObject {
  *
  * @param definition A time locale definition.
  */
-export function timeFormatLocale(
-  definition: TimeLocaleDefinition,
-): TimeLocaleObject;
+export function timeFormatLocale(definition: TimeLocaleDefinition): TimeLocaleObject;
 
 /**
  * Create a new time-locale-based object which exposes time-formatting
@@ -184,9 +157,7 @@ export function timeFormatLocale(
  *
  * @param definition A time locale definition.
  */
-export function timeFormatDefaultLocale(
-  definition: TimeLocaleDefinition,
-): TimeLocaleObject;
+export function timeFormatDefaultLocale(definition: TimeLocaleDefinition): TimeLocaleObject;
 
 /**
  * Returns a new formatter for the given string specifier. The returned function formats a specified date, returning the corresponding string.
@@ -204,9 +175,7 @@ export function timeFormat(specifier: string): (date: Date) => string;
  *
  * @param specifier A specifier string for the date format.
  */
-export function timeParse(
-  specifier: string,
-): (dateString: string) => (Date | null);
+export function timeParse(specifier: string): (dateString: string) => (Date | null);
 
 /**
  * Equivalent to timeFormat, except all directives are interpreted as Coordinated Universal Time (UTC) rather than local time.
@@ -224,9 +193,7 @@ export function utcFormat(specifier: string): (date: Date) => string;
  *
  * @param specifier A specifier string for the date format.
  */
-export function utcParse(
-  specifier: string,
-): (dateString: string) => (Date | null);
+export function utcParse(specifier: string): (dateString: string) => (Date | null);
 
 /**
  * The full ISO 8601 UTC time formatter. Where available, this method will use Date.toISOString to format.

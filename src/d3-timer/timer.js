@@ -1,21 +1,15 @@
 /// <reference lib="dom" />
 var frame = 0, // is an animation frame pending?
-  timeout = 0, // is a timeout pending?
-  interval = 0, // are any timers active?
-  pokeDelay = 1000, // how frequently we check for clock skew
-  taskHead,
-  taskTail,
-  clockLast = 0,
-  clockNow = 0,
-  clockSkew = 0,
-  clock = typeof performance === "object" && performance.now
-    ? performance
-    : Date,
-  setFrame = typeof window === "object" && window.requestAnimationFrame
-    ? window.requestAnimationFrame.bind(window)
-    : function (f) {
-      setTimeout(f, 17);
-    };
+    timeout = 0, // is a timeout pending?
+    interval = 0, // are any timers active?
+    pokeDelay = 1000, // how frequently we check for clock skew
+    taskHead,
+    taskTail,
+    clockLast = 0,
+    clockNow = 0,
+    clockSkew = 0,
+    clock = typeof performance === "object" && performance.now ? performance : Date,
+    setFrame = typeof window === "object" && window.requestAnimationFrame ? window.requestAnimationFrame.bind(window) : function(f) { setTimeout(f, 17); };
 
 export function now() {
   return clockNow || (setFrame(clearNow), clockNow = clock.now() + clockSkew);
@@ -26,15 +20,15 @@ function clearNow() {
 }
 
 export function Timer() {
-  this._call = this._time = this._next = null;
+  this._call =
+  this._time =
+  this._next = null;
 }
 
 Timer.prototype = timer.prototype = {
   constructor: Timer,
-  restart: function (callback, delay, time) {
-    if (typeof callback !== "function") {
-      throw new TypeError("callback is not a function");
-    }
+  restart: function(callback, delay, time) {
+    if (typeof callback !== "function") throw new TypeError("callback is not a function");
     time = (time == null ? now() : +time) + (delay == null ? 0 : +delay);
     if (!this._next && taskTail !== this) {
       if (taskTail) taskTail._next = this;
@@ -45,17 +39,17 @@ Timer.prototype = timer.prototype = {
     this._time = time;
     sleep();
   },
-  stop: function () {
+  stop: function() {
     if (this._call) {
       this._call = null;
       this._time = Infinity;
       sleep();
     }
-  },
+  }
 };
 
 export function timer(callback, delay, time) {
-  var t = new Timer();
+  var t = new Timer;
   t.restart(callback, delay, time);
   return t;
 }
@@ -108,14 +102,10 @@ function sleep(time) {
   if (timeout) timeout = clearTimeout(timeout);
   var delay = time - clockNow; // Strictly less than if we recomputed clockNow.
   if (delay > 24) {
-    if (time < Infinity) {
-      timeout = setTimeout(wake, time - clock.now() - clockSkew);
-    }
+    if (time < Infinity) timeout = setTimeout(wake, time - clock.now() - clockSkew);
     if (interval) interval = clearInterval(interval);
   } else {
-    if (!interval) {
-      clockLast = clock.now(), interval = setInterval(poke, pokeDelay);
-    }
+    if (!interval) clockLast = clock.now(), interval = setInterval(poke, pokeDelay);
     frame = 1, setFrame(wake);
   }
 }

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for D3JS d3-time module 2.0
 // Project: https://github.com/d3/d3-time/, https://d3js.org/d3-time
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>
@@ -17,7 +18,7 @@
  * A D3 Time Interval
  */
 export interface TimeInterval {
-  /**
+    /**
      * Returns a new date representing the latest interval boundary date before or equal to date.
      * Equivalent to interval.floor, except it date is not specified, it defaults to the current time.
      * For example, d3.timeYear(date) and d3.timeYear.floor(date) are equivalent.
@@ -37,9 +38,9 @@ export interface TimeInterval {
      *
      * @param date A date object.
      */
-  (date?: Date): Date;
+    (date?: Date): Date;
 
-  /**
+    /**
      * Returns a new date representing the latest interval boundary date before or equal to date.
      *
      * For example, timeDay.floor(date) typically returns 12:00 AM local time on the given date.
@@ -57,9 +58,9 @@ export interface TimeInterval {
      *
      * @param date A date object.
      */
-  floor(date: Date): Date;
+    floor(date: Date): Date;
 
-  /**
+    /**
      * Returns a new date representing the closest interval boundary date to date.
      *
      * For example, timeDay.round(date) typically returns 12:00 AM local time on the given date if it is on or before noon,
@@ -69,9 +70,9 @@ export interface TimeInterval {
      *
      * @param date A date object.
      */
-  round(date: Date): Date;
+    round(date: Date): Date;
 
-  /**
+    /**
      * Returns a new date representing the earliest interval boundary date after or equal to date.
      *
      * For example, timeDay.ceil(date) typically returns 12:00 AM local time on the date following the given date.
@@ -83,9 +84,9 @@ export interface TimeInterval {
      *
      * @param date A date object.
      */
-  ceil(date: Date): Date;
+    ceil(date: Date): Date;
 
-  /**
+    /**
      * Returns a new date equal to date plus step intervals.
      *
      * If step is not specified it defaults to 1.
@@ -98,9 +99,9 @@ export interface TimeInterval {
      * If step is negative, then the returned date will be before the specified date;
      * if step is zero, then a copy of the specified date is returned; if step is not an integer, it is floored.
      */
-  offset(date: Date, step?: number): Date;
+    offset(date: Date, step?: number): Date;
 
-  /**
+    /**
      * Returns an array of dates representing every interval boundary after or equal to start (inclusive) and before stop (exclusive).
      *
      * If step is specified, then every step-th boundary will be returned; for example,
@@ -117,22 +118,22 @@ export interface TimeInterval {
      * @param stop A stop date object for the range.
      * @param step An optional number of steps to apply when calculating the dates in the range.
      */
-  range(start: Date, stop: Date, step?: number): Date[];
+    range(start: Date, stop: Date, step?: number): Date[];
 
-  /**
+    /**
      * Returns a new interval that is a filtered subset of this interval using the specified test function.
      *
      * @param test A test function which is passed a date and should return true if and only if
      * the specified date should be considered part of the interval.
      */
-  filter(test: (date: Date) => boolean): TimeInterval;
+    filter(test: (date: Date) => boolean): TimeInterval;
 }
 
 /**
  * A D3 Countable Time Interval
  */
 export interface CountableTimeInterval extends TimeInterval {
-  /**
+    /**
      * Returns the number of interval boundaries after start (exclusive) and before or equal to end (inclusive).
      *
      * Note that this behavior is slightly different than interval.range,
@@ -141,8 +142,8 @@ export interface CountableTimeInterval extends TimeInterval {
      * @param start A start date object.
      * @param end An end date object.
      */
-  count(start: Date, end: Date): number;
-  /**
+    count(start: Date, end: Date): number;
+    /**
      * Returns a filtered view of this interval representing every stepth date.
      *
      * The meaning of step is dependent on this interval’s parent interval as defined by the field function.
@@ -160,7 +161,7 @@ export interface CountableTimeInterval extends TimeInterval {
      *
      * @param step Number of steps.
      */
-  every(step: number): TimeInterval | null;
+    every(step: number): TimeInterval | null;
 }
 
 // ---------------------------------------------------------------
@@ -177,8 +178,8 @@ export interface CountableTimeInterval extends TimeInterval {
  * the specified date by the specified number of boundaries; the step may be positive, negative or zero.
  */
 export function timeInterval(
-  floor: (date: Date) => void,
-  offset: (date: Date, step: number) => void,
+    floor: (date: Date) => void,
+    offset: (date: Date, step: number) => void,
 ): TimeInterval;
 /**
  * Constructs a new custom interval given the specified floor, offset and count functions.
@@ -201,10 +202,10 @@ export function timeInterval(
  * the UNIX epoch of January 1, 1970 UTC. The field function defines the behavior of interval.every.
  */
 export function timeInterval(
-  floor: (date: Date) => void,
-  offset: (date: Date, step: number) => void,
-  count: (start: Date, end: Date) => number,
-  field?: (date: Date) => number,
+    floor: (date: Date) => void,
+    offset: (date: Date, step: number) => void,
+    count: (start: Date, end: Date) => number,
+    field?: (date: Date) => number
 ): CountableTimeInterval;
 
 // ---------------------------------------------------------------
@@ -225,11 +226,7 @@ export const timeMillisecond: CountableTimeInterval;
  * @param stop A stop date object for the range.
  * @param step An optional number of steps to apply when calculating the dates in the range.
  */
-export function timeMilliseconds(
-  start: Date,
-  stop: Date,
-  step?: number,
-): Date[];
+export function timeMilliseconds(start: Date, stop: Date, step?: number): Date[];
 
 /**
  * Seconds Interval in Local Time; seconds (e.g., 01:23:45.0000 AM); 1,000 milliseconds.

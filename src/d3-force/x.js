@@ -1,11 +1,11 @@
 /// <reference lib="dom" />
 import constant from "./constant.js";
 
-export default function (x) {
+export default function(x) {
   var strength = constant(0.1),
-    nodes,
-    strengths,
-    xz;
+      nodes,
+      strengths,
+      xz;
 
   if (typeof x !== "function") x = constant(x == null ? 0 : +x);
 
@@ -21,29 +21,21 @@ export default function (x) {
     strengths = new Array(n);
     xz = new Array(n);
     for (i = 0; i < n; ++i) {
-      strengths[i] = isNaN(xz[i] = +x(nodes[i], i, nodes))
-        ? 0
-        : +strength(nodes[i], i, nodes);
+      strengths[i] = isNaN(xz[i] = +x(nodes[i], i, nodes)) ? 0 : +strength(nodes[i], i, nodes);
     }
   }
 
-  force.initialize = function (_) {
+  force.initialize = function(_) {
     nodes = _;
     initialize();
   };
 
-  force.strength = function (_) {
-    return arguments.length
-      ? (strength = typeof _ === "function" ? _ : constant(+_),
-        initialize(),
-        force)
-      : strength;
+  force.strength = function(_) {
+    return arguments.length ? (strength = typeof _ === "function" ? _ : constant(+_), initialize(), force) : strength;
   };
 
-  force.x = function (_) {
-    return arguments.length
-      ? (x = typeof _ === "function" ? _ : constant(+_), initialize(), force)
-      : x;
+  force.x = function(_) {
+    return arguments.length ? (x = typeof _ === "function" ? _ : constant(+_), initialize(), force) : x;
   };
 
   return force;

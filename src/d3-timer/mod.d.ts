@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for d3JS d3-timer module 2.0
 // Project: https://github.com/d3/d3-timer/, https://d3js.org/d3-timer
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>
@@ -18,7 +19,7 @@
 export function now(): number;
 
 export interface Timer {
-  /**
+    /**
      * Restart a timer with the specified callback and optional delay and time.
      * This is equivalent to stopping this timer and creating a new timer with the specified arguments,
      * although this timer retains the original invocation priority.
@@ -28,16 +29,12 @@ export interface Timer {
      * @param delay An optional numeric delay in milliseconds (default = 0) relative to time.
      * @param time An optional time in milliseconds relative to which the delay is calculated (default = now).
      */
-  restart(
-    callbackFn: (elapsed: number) => void,
-    delay?: number,
-    time?: number,
-  ): void;
+    restart(callbackFn: (elapsed: number) => void, delay?: number, time?: number): void;
 
-  /**
+    /**
      * Stop the timer.
      */
-  stop(): void;
+    stop(): void;
 }
 
 /**
@@ -49,11 +46,7 @@ export interface Timer {
  * @param delay An optional numeric delay in milliseconds (default = 0) relative to time.
  * @param time An optional time in milliseconds relative to which the delay is calculated (default = now).
  */
-export function timer(
-  callback: (elapsed: number) => void,
-  delay?: number,
-  time?: number,
-): Timer;
+export function timer(callback: (elapsed: number) => void, delay?: number, time?: number): Timer;
 
 /**
  * Immediately invoke any eligible timer callbacks.
@@ -69,11 +62,7 @@ export function timerFlush(): void;
  * @param delay An optional numeric delay in milliseconds (default = 0) relative to time.
  * @param time An optional time in milliseconds relative to which the delay is calculated (default = now).
  */
-export function timeout(
-  callback: (elapsed: number) => void,
-  delay?: number,
-  time?: number,
-): Timer;
+export function timeout(callback: (elapsed: number) => void, delay?: number, time?: number): Timer;
 
 /**
  * Schedules and returns a new timer, invoking the specified callback repeatedly every 'delay' milliseconds
@@ -86,8 +75,4 @@ export function timeout(
  * If not specified, the interval timer behaves like the regular timer.
  * @param time An optional time in milliseconds relative to which the initial delay is calculated (default = now).
  */
-export function interval(
-  callback: (elapsed: number) => void,
-  delay?: number,
-  time?: number,
-): Timer;
+export function interval(callback: (elapsed: number) => void, delay?: number, time?: number): Timer;

@@ -1,9 +1,9 @@
 /// <reference lib="dom" />
-export default function () {
+export default function() {
   var root = this, links = [];
-  root.each(function (node) {
+  root.each(function(node) {
     if (node !== root) { // Don’t include the root’s parent, if any.
-      links.push({ source: node.parent, target: node });
+      links.push({source: node.parent, target: node});
     }
   });
   return links;

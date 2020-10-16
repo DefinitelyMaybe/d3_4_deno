@@ -1,19 +1,15 @@
 /// <reference lib="dom" />
-import { set } from "./schedule.js";
+import {set} from "./schedule.js";
 
-export default function () {
+export default function() {
   var on0, on1, that = this, id = that._id, size = that.size();
-  return new Promise(function (resolve, reject) {
-    var cancel = { value: reject },
-      end = {
-        value: function () {
-          if (--size === 0) resolve();
-        },
-      };
+  return new Promise(function(resolve, reject) {
+    var cancel = {value: reject},
+        end = {value: function() { if (--size === 0) resolve(); }};
 
-    that.each(function () {
+    that.each(function() {
       var schedule = set(this, id),
-        on = schedule.on;
+          on = schedule.on;
 
       // If this node shared a dispatch with the previous node,
       // just assign the updated shared dispatch and we’re done!

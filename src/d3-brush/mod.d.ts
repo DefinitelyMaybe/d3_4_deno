@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for D3JS d3-brush module 2.1
 // Project: https://github.com/d3/d3-brush/, https://d3js.org/d3-brush
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>
@@ -9,17 +10,14 @@
 
 // Last module patch version validated against: 2.1.0
 
-import { Selection, TransitionLike, ValueFn } from "../d3-selection/mod.js";
+import { Selection, TransitionLike, ValueFn } from '../d3-selection/mod.js';
 
 /**
  * Type alias for a BrushSelection. For a two-dimensional brush, it must be defined as [[x0, y0], [x1, y1]],
  * where x0 is the minimum x-value, y0 is the minimum y-value, x1 is the maximum x-value, and y1 is the maximum y-value.
  * For an x-brush, it must be defined as [x0, x1]; for a y-brush, it must be defined as [y0, y1].
  */
-export type BrushSelection = [[number, number], [number, number]] | [
-  number,
-  number,
-];
+export type BrushSelection = [[number, number], [number, number]] | [number, number];
 
 /**
  * A D3 brush behavior
@@ -27,7 +25,7 @@ export type BrushSelection = [[number, number], [number, number]] | [
  * The generic refers to the type of the datum for the group element on which brush behavior is defined.
  */
 export interface BrushBehavior<Datum> {
-  /**
+    /**
      * Applies the brush to the specified group, which must be a selection of SVG G elements.
      * This function is typically not invoked directly, and is instead invoked via selection.call.
      *
@@ -36,15 +34,15 @@ export interface BrushBehavior<Datum> {
      * @param group A D3 selection of SVG G elements.
      * @param args Optional arguments to be passed in.
      */
-  (group: Selection<SVGGElement, Datum, any, any>, ...args: any[]): void;
-  /**
+    (group: Selection<SVGGElement, Datum, any, any>, ...args: any[]): void;
+    /**
      * Clear the active selection of the brush on the specified SVG G element(s) selection.
      *
      * @param group A D3 selection of SVG G elements.
      * @param selection Use null to clear the active brush selection.
      */
-  move(group: Selection<SVGGElement, Datum, any, any>, selection: null): void;
-  /**
+    move(group: Selection<SVGGElement, Datum, any, any>, selection: null): void;
+    /**
      * Sets the active selection of the brush on the specified SVG G element(s) selection
      * to the provided array.
      *
@@ -54,11 +52,8 @@ export interface BrushBehavior<Datum> {
      * x1 is the maximum x-value, and y1 is the maximum y-value. For an x-brush, it must be defined as [x0, x1];
      * for a y-brush, it must be defined as [y0, y1].
      */
-  move(
-    group: Selection<SVGGElement, Datum, any, any>,
-    selection: BrushSelection,
-  ): void;
-  /**
+    move(group: Selection<SVGGElement, Datum, any, any>, selection: BrushSelection): void;
+    /**
      * Sets the active selection of the brush on the specified SVG G element(s) selection
      * based on the array returned by a value function invoked for each selection element.
      *
@@ -70,18 +65,15 @@ export interface BrushBehavior<Datum> {
      * x1 is the maximum x-value, and y1 is the maximum y-value. For an x-brush, it must be defined as [x0, x1];
      * for a y-brush, it must be defined as [y0, y1].
      */
-  move(
-    group: Selection<SVGGElement, Datum, any, any>,
-    selection: ValueFn<SVGGElement, Datum, BrushSelection>,
-  ): void;
-  /**
+    move(group: Selection<SVGGElement, Datum, any, any>, selection: ValueFn<SVGGElement, Datum, BrushSelection>): void;
+    /**
      * Clear the active selection of the brush on the specified SVG G element(s) transition.
      *
      * @param group A D3 transition on SVG G elements.
      * @param selection Use null to clear the active brush selection.
      */
-  move(group: Selection<SVGGElement, Datum, any, any>, selection: null): void;
-  /**
+    move(group: Selection<SVGGElement, Datum, any, any>, selection: null): void;
+    /**
      * Sets the active selection of the brush on the specified SVG G element(s) transition
      * to the provided array.
      *
@@ -91,11 +83,8 @@ export interface BrushBehavior<Datum> {
      * x1 is the maximum x-value, and y1 is the maximum y-value. For an x-brush, it must be defined as [x0, x1];
      * for a y-brush, it must be defined as [y0, y1].
      */
-  move(
-    group: TransitionLike<SVGGElement, Datum>,
-    selection: BrushSelection,
-  ): void;
-  /**
+    move(group: TransitionLike<SVGGElement, Datum>, selection: BrushSelection): void;
+    /**
      * Sets the active selection of the brush on the specified SVG G element(s) transition
      * based on the array returned by a value function invoked for each transitioning element.
      *
@@ -107,23 +96,20 @@ export interface BrushBehavior<Datum> {
      * x1 is the maximum x-value, and y1 is the maximum y-value. For an x-brush, it must be defined as [x0, x1];
      * for a y-brush, it must be defined as [y0, y1].
      */
-  move(
-    group: TransitionLike<SVGGElement, Datum>,
-    selection: ValueFn<SVGGElement, Datum, BrushSelection>,
-  ): void;
+    move(group: TransitionLike<SVGGElement, Datum>, selection: ValueFn<SVGGElement, Datum, BrushSelection>): void;
 
-  /**
+    /**
      * Clear the active selection of the brush on the specified SVG G element(s) selection.
      *
      * @param group A D3 selection of SVG G elements.
      */
-  clear(group: Selection<SVGGElement, Datum, any, any>): void;
+    clear(group: Selection<SVGGElement, Datum, any, any>): void;
 
-  /**
+    /**
      * Returns the current extent accessor.
      */
-  extent(): ValueFn<SVGGElement, Datum, [[number, number], [number, number]]>;
-  /**
+    extent(): ValueFn<SVGGElement, Datum, [[number, number], [number, number]]>;
+    /**
      * Set the brushable extent to the specified array of points and returns this brush.
      *
      * The brush extent determines the size of the invisible overlay and also constrains the brush selection;
@@ -132,8 +118,8 @@ export interface BrushBehavior<Datum> {
      * @param extent array of points [[x0, y0], [x1, y1]], where [x0, y0] is the top-left corner
      * and [x1, y1] is the bottom-right corner.
      */
-  extent(extent: [[number, number], [number, number]]): this;
-  /**
+    extent(extent: [[number, number], [number, number]]): this;
+    /**
      * Set the brushable extent to the specified array of points returned by the accessor function
      * evaluated for each element in the selection/transition and returns this brush.
      *
@@ -145,15 +131,13 @@ export interface BrushBehavior<Datum> {
      * with this as the current DOM element. The function returns an array of points [[x0, y0], [x1, y1]],
      * where [x0, y0] is the top-left corner and [x1, y1] is the bottom-right corner.
      */
-  extent(
-    extent: ValueFn<SVGGElement, Datum, [[number, number], [number, number]]>,
-  ): this;
+    extent(extent: ValueFn<SVGGElement, Datum, [[number, number], [number, number]]>): this;
 
-  /**
+    /**
      * Returns the current filter function.
      */
-  filter(): (this: SVGGElement, event: any, d: Datum) => boolean;
-  /**
+    filter(): (this: SVGGElement, event: any, d: Datum) => boolean;
+    /**
      * Sets the filter to the specified filter function and returns the brush.
      *
      * If the filter returns falsey, the initiating event is ignored and no brush gesture is started.
@@ -164,14 +148,14 @@ export interface BrushBehavior<Datum> {
      * in order, being passed the current event `event` and datum `d`, with the `this` context as the current DOM element.
      * The function returns a boolean value.
      */
-  filter(filterFn: (this: SVGGElement, event: any, d: Datum) => boolean): this;
+    filter(filterFn: (this: SVGGElement, event: any, d: Datum) => boolean): this;
 
-  /**
+    /**
      * Returns the current touch support detector, which defaults to a function returning true,
      * if the "ontouchstart" event is supported on the current element.
      */
-  touchable(): ValueFn<SVGGElement, Datum, boolean>;
-  /**
+    touchable(): ValueFn<SVGGElement, Datum, boolean>;
+    /**
      * Sets the touch support detector to the specified boolean value and returns the brush.
      *
      * Touch event listeners are only registered if the detector returns truthy for the corresponding element when the brush is applied.
@@ -180,8 +164,8 @@ export interface BrushBehavior<Datum> {
      *
      * @param touchable A boolean value. true when touch event listeners should be applied to the corresponding element, otherwise false.
      */
-  touchable(touchable: boolean): this;
-  /**
+    touchable(touchable: boolean): this;
+    /**
      * Sets the touch support detector to the specified function and returns the drag behavior.
      *
      * Touch event listeners are only registered if the detector returns truthy for the corresponding element when the brush is applied.
@@ -192,13 +176,13 @@ export interface BrushBehavior<Datum> {
      * The function is evaluated for each selected element to which the brush was applied, in order, being passed the current datum (d),
      * the current index (i), and the current group (nodes), with this as the current DOM element. The function returns a boolean value.
      */
-  touchable(touchable: ValueFn<SVGGElement, Datum, boolean>): this;
+    touchable(touchable: ValueFn<SVGGElement, Datum, boolean>): this;
 
-  /**
+    /**
      * Returns the current key modifiers flag.
      */
-  keyModifiers(): boolean;
-  /**
+    keyModifiers(): boolean;
+    /**
      * Sets the key modifiers flag and returns the brush.
      *
      * The key modifiers flag determines whether the brush listens to key events during brushing.
@@ -206,13 +190,13 @@ export interface BrushBehavior<Datum> {
      *
      * @param modifiers New value for key modifiers flag.
      */
-  keyModifiers(modifiers: boolean): this;
+    keyModifiers(modifiers: boolean): this;
 
-  /**
+    /**
      * Returns the current handle size, which defaults to six.
      */
-  handleSize(): number;
-  /**
+    handleSize(): number;
+    /**
      * Sets the size of the brush handles to the specified number and returns the brush.
      *
      * This method must be called before applying the brush to a selection;
@@ -221,9 +205,9 @@ export interface BrushBehavior<Datum> {
      *
      * @param size Size of the handle.
      */
-  handleSize(size: number): this;
+    handleSize(size: number): this;
 
-  /**
+    /**
      * Returns the first currently-assigned listener matching the specified typenames, if any.
      *
      * @param typenames The typenames is a string containing one or more typename separated by whitespace.
@@ -232,10 +216,8 @@ export interface BrushBehavior<Datum> {
      * start (at the start of a brush gesture, such as on mousedown), brush (when the brush moves, such as on mousemove), or
      * end (at the end of a brush gesture, such as on mouseup.)
      */
-  on(
-    typenames: string,
-  ): ((this: SVGGElement, event: any, d: Datum) => void) | undefined;
-  /**
+    on(typenames: string): ((this: SVGGElement, event: any, d: Datum) => void) | undefined;
+    /**
      * Removes the current event listeners for the specified typenames, if any.
      *
      * @param typenames The typenames is a string containing one or more typename separated by whitespace.
@@ -245,8 +227,8 @@ export interface BrushBehavior<Datum> {
      * end (at the end of a brush gesture, such as on mouseup.)
      * @param listener Use null to remove the listener.
      */
-  on(typenames: string, listener: null): this;
-  /**
+    on(typenames: string, listener: null): this;
+    /**
      * Sets the event listener for the specified typenames and returns the brush.
      * If an event listener was already registered for the same type and name,
      * the existing listener is removed before the new listener is added.
@@ -260,10 +242,7 @@ export interface BrushBehavior<Datum> {
      * @param listener An event listener function which is evaluated for each selected element,
      * in order, being passed the current event `event` and datum `d`, with the `this` context as the current DOM element.
      */
-  on(
-    typenames: string,
-    listener: (this: SVGGElement, event: any, d: Datum) => void,
-  ): this;
+    on(typenames: string, listener: (this: SVGGElement, event: any, d: Datum) => void): this;
 }
 
 /**
@@ -303,25 +282,25 @@ export function brushSelection(node: SVGGElement): BrushSelection | null;
  * The generic refers to the type of the datum for the group element on which brush was defined.
  */
 export interface D3BrushEvent<Datum> {
-  /**
+    /**
      * The BrushBehavior associated with the event
      */
-  target: BrushBehavior<Datum>;
-  /**
+    target: BrushBehavior<Datum>;
+    /**
      * The event type for the BrushEvent
      */
-  type: "start" | "brush" | "end" | string; // Leave failsafe string type for cases like 'brush.foo'
-  /**
+    type: 'start' | 'brush' | 'end' | string; // Leave failsafe string type for cases like 'brush.foo'
+    /**
      * The current brush selection associated with the event.
      * This is null when the selection is empty.
      */
-  selection: BrushSelection | null;
-  /**
+    selection: BrushSelection | null;
+    /**
      * The underlying input event, such as mousemove or touchmove.
      */
-  sourceEvent: any;
-  /**
+    sourceEvent: any;
+    /**
      * The mode of the brush.
      */
-  mode: "drag" | "space" | "handle" | "center";
+    mode: 'drag' | 'space' | 'handle' | 'center';
 }

@@ -85,7 +85,7 @@ Selection.prototype = selection.prototype = {
   datum: selection_datum,
   on: selection_on,
   dispatch: selection_dispatch,
-  [Symbol.iterator]: selection_iterator,
+  [Symbol.iterator]: selection_iterator
 };
 
 export default selection;

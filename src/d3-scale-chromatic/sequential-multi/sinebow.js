@@ -1,11 +1,11 @@
 /// <reference lib="dom" />
-import { rgb } from "../d3-color/mod.js";
+import {rgb} from "../../d3-color/mod.js";
 
 var c = rgb(),
-  pi_1_3 = Math.PI / 3,
-  pi_2_3 = Math.PI * 2 / 3;
+    pi_1_3 = Math.PI / 3,
+    pi_2_3 = Math.PI * 2 / 3;
 
-export default function (t) {
+export default function(t) {
   var x;
   t = (0.5 - t) * Math.PI;
   c.r = 255 * (x = Math.sin(t)) * x;

@@ -1,14 +1,12 @@
 /// <reference lib="dom" />
 import clip from "./index.js";
-import { abs, atan, cos, epsilon, halfPi, pi, sin } from "../math.js";
+import {abs, atan, cos, epsilon, halfPi, pi, sin} from "../math.js";
 
 export default clip(
-  function () {
-    return true;
-  },
+  function() { return true; },
   clipAntimeridianLine,
   clipAntimeridianInterpolate,
-  [-pi, -halfPi],
+  [-pi, -halfPi]
 );
 
 // Takes a line and cuts into visible segments. Return values: 0 - there were
@@ -16,18 +14,18 @@ export default clip(
 // intersections, and the first and last segments should be rejoined.
 function clipAntimeridianLine(stream) {
   var lambda0 = NaN,
-    phi0 = NaN,
-    sign0 = NaN,
-    clean; // no intersections
+      phi0 = NaN,
+      sign0 = NaN,
+      clean; // no intersections
 
   return {
-    lineStart: function () {
+    lineStart: function() {
       stream.lineStart();
       clean = 1;
     },
-    point: function (lambda1, phi1) {
+    point: function(lambda1, phi1) {
       var sign1 = lambda1 > 0 ? pi : -pi,
-        delta = abs(lambda1 - lambda0);
+          delta = abs(lambda1 - lambda0);
       if (abs(delta - pi) < epsilon) { // line crosses a pole
         stream.point(lambda0, phi0 = (phi0 + phi1) / 2 > 0 ? halfPi : -halfPi);
         stream.point(sign0, phi0);
@@ -49,27 +47,25 @@ function clipAntimeridianLine(stream) {
       stream.point(lambda0 = lambda1, phi0 = phi1);
       sign0 = sign1;
     },
-    lineEnd: function () {
+    lineEnd: function() {
       stream.lineEnd();
       lambda0 = phi0 = NaN;
     },
-    clean: function () {
+    clean: function() {
       return 2 - clean; // if intersections, rejoin first and last segments
-    },
+    }
   };
 }
 
 function clipAntimeridianIntersect(lambda0, phi0, lambda1, phi1) {
   var cosPhi0,
-    cosPhi1,
-    sinLambda0Lambda1 = sin(lambda0 - lambda1);
+      cosPhi1,
+      sinLambda0Lambda1 = sin(lambda0 - lambda1);
   return abs(sinLambda0Lambda1) > epsilon
-    ? atan(
-      (sin(phi0) * (cosPhi1 = cos(phi1)) * sin(lambda1) -
-        sin(phi1) * (cosPhi0 = cos(phi0)) * sin(lambda0)) /
-        (cosPhi0 * cosPhi1 * sinLambda0Lambda1),
-    )
-    : (phi0 + phi1) / 2;
+      ? atan((sin(phi0) * (cosPhi1 = cos(phi1)) * sin(lambda1)
+          - sin(phi1) * (cosPhi0 = cos(phi0)) * sin(lambda0))
+          / (cosPhi0 * cosPhi1 * sinLambda0Lambda1))
+      : (phi0 + phi1) / 2;
 }
 
 function clipAntimeridianInterpolate(from, to, direction, stream) {

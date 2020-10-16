@@ -1,4 +1,4 @@
 /// <reference lib="dom" />
-export default function (d) {
+export default function(d) {
   return d;
 }

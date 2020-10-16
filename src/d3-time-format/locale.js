@@ -1,16 +1,16 @@
 /// <reference lib="dom" />
 import {
   timeDay,
-  timeMonday,
   timeSunday,
+  timeMonday,
   timeThursday,
   timeYear,
   utcDay,
-  utcMonday,
   utcSunday,
+  utcMonday,
   utcThursday,
-  utcYear,
-} from "d3-time";
+  utcYear
+} from "../d3-time/mod.js";
 
 function localDate(d) {
   if (0 <= d.y && d.y < 100) {
@@ -31,29 +31,29 @@ function utcDate(d) {
 }
 
 function newDate(y, m, d) {
-  return { y: y, m: m, d: d, H: 0, M: 0, S: 0, L: 0 };
+  return {y: y, m: m, d: d, H: 0, M: 0, S: 0, L: 0};
 }
 
 export default function formatLocale(locale) {
   var locale_dateTime = locale.dateTime,
-    locale_date = locale.date,
-    locale_time = locale.time,
-    locale_periods = locale.periods,
-    locale_weekdays = locale.days,
-    locale_shortWeekdays = locale.shortDays,
-    locale_months = locale.months,
-    locale_shortMonths = locale.shortMonths;
+      locale_date = locale.date,
+      locale_time = locale.time,
+      locale_periods = locale.periods,
+      locale_weekdays = locale.days,
+      locale_shortWeekdays = locale.shortDays,
+      locale_months = locale.months,
+      locale_shortMonths = locale.shortMonths;
 
   var periodRe = formatRe(locale_periods),
-    periodLookup = formatLookup(locale_periods),
-    weekdayRe = formatRe(locale_weekdays),
-    weekdayLookup = formatLookup(locale_weekdays),
-    shortWeekdayRe = formatRe(locale_shortWeekdays),
-    shortWeekdayLookup = formatLookup(locale_shortWeekdays),
-    monthRe = formatRe(locale_months),
-    monthLookup = formatLookup(locale_months),
-    shortMonthRe = formatRe(locale_shortMonths),
-    shortMonthLookup = formatLookup(locale_shortMonths);
+      periodLookup = formatLookup(locale_periods),
+      weekdayRe = formatRe(locale_weekdays),
+      weekdayLookup = formatLookup(locale_weekdays),
+      shortWeekdayRe = formatRe(locale_shortWeekdays),
+      shortWeekdayLookup = formatLookup(locale_shortWeekdays),
+      monthRe = formatRe(locale_months),
+      monthLookup = formatLookup(locale_months),
+      shortMonthRe = formatRe(locale_shortMonths),
+      shortMonthLookup = formatLookup(locale_shortMonths);
 
   var formats = {
     "a": formatShortWeekday,
@@ -87,7 +87,7 @@ export default function formatLocale(locale) {
     "y": formatYear,
     "Y": formatFullYear,
     "Z": formatZone,
-    "%": formatLiteralPercent,
+    "%": formatLiteralPercent
   };
 
   var utcFormats = {
@@ -122,7 +122,7 @@ export default function formatLocale(locale) {
     "y": formatUTCYear,
     "Y": formatUTCFullYear,
     "Z": formatUTCZone,
-    "%": formatLiteralPercent,
+    "%": formatLiteralPercent
   };
 
   var parses = {
@@ -157,7 +157,7 @@ export default function formatLocale(locale) {
     "y": parseYear,
     "Y": parseFullYear,
     "Z": parseZone,
-    "%": parseLiteralPercent,
+    "%": parseLiteralPercent
   };
 
   // These recursive directive definitions must be deferred.
@@ -169,23 +169,22 @@ export default function formatLocale(locale) {
   utcFormats.c = newFormat(locale_dateTime, utcFormats);
 
   function newFormat(specifier, formats) {
-    return function (date) {
+    return function(date) {
       var string = [],
-        i = -1,
-        j = 0,
-        n = specifier.length,
-        c,
-        pad,
-        format;
+          i = -1,
+          j = 0,
+          n = specifier.length,
+          c,
+          pad,
+          format;
 
       if (!(date instanceof Date)) date = new Date(+date);
 
       while (++i < n) {
         if (specifier.charCodeAt(i) === 37) {
           string.push(specifier.slice(j, i));
-          if ((pad = pads[c = specifier.charAt(++i)]) != null) {
-            c = specifier.charAt(++i);
-          } else pad = c === "e" ? " " : "0";
+          if ((pad = pads[c = specifier.charAt(++i)]) != null) c = specifier.charAt(++i);
+          else pad = c === "e" ? " " : "0";
           if (format = formats[c]) c = format(date, pad);
           string.push(c);
           j = i + 1;
@@ -198,11 +197,10 @@ export default function formatLocale(locale) {
   }
 
   function newParse(specifier, Z) {
-    return function (string) {
+    return function(string) {
       var d = newDate(1900, undefined, 1),
-        i = parseSpecifier(d, specifier, string += "", 0),
-        week,
-        day;
+          i = parseSpecifier(d, specifier, string += "", 0),
+          week, day;
       if (i != string.length) return null;
 
       // If a UNIX timestamp is specified, return it.
@@ -231,9 +229,7 @@ export default function formatLocale(locale) {
           d.d = week.getUTCDate() + (d.w + 6) % 7;
         } else {
           week = localDate(newDate(d.y, 0, 1)), day = week.getDay();
-          week = day > 4 || day === 0
-            ? timeMonday.ceil(week)
-            : timeMonday(week);
+          week = day > 4 || day === 0 ? timeMonday.ceil(week) : timeMonday(week);
           week = timeDay.offset(week, (d.V - 1) * 7);
           d.y = week.getFullYear();
           d.m = week.getMonth();
@@ -241,13 +237,9 @@ export default function formatLocale(locale) {
         }
       } else if ("W" in d || "U" in d) {
         if (!("w" in d)) d.w = "u" in d ? d.u % 7 : "W" in d ? 1 : 0;
-        day = "Z" in d
-          ? utcDate(newDate(d.y, 0, 1)).getUTCDay()
-          : localDate(newDate(d.y, 0, 1)).getDay();
+        day = "Z" in d ? utcDate(newDate(d.y, 0, 1)).getUTCDay() : localDate(newDate(d.y, 0, 1)).getDay();
         d.m = 0;
-        d.d = "W" in d
-          ? (d.w + 6) % 7 + d.W * 7 - (day + 5) % 7
-          : d.w + d.U * 7 - (day + 6) % 7;
+        d.d = "W" in d ? (d.w + 6) % 7 + d.W * 7 - (day + 5) % 7 : d.w + d.U * 7 - (day + 6) % 7;
       }
 
       // If a time zone is specified, all fields are interpreted as UTC and then
@@ -265,10 +257,10 @@ export default function formatLocale(locale) {
 
   function parseSpecifier(d, specifier, string, j) {
     var i = 0,
-      n = specifier.length,
-      m = string.length,
-      c,
-      parse;
+        n = specifier.length,
+        m = string.length,
+        c,
+        parse;
 
     while (i < n) {
       if (j >= m) return -1;
@@ -287,37 +279,27 @@ export default function formatLocale(locale) {
 
   function parsePeriod(d, string, i) {
     var n = periodRe.exec(string.slice(i));
-    return n
-      ? (d.p = periodLookup.get(n[0].toLowerCase()), i + n[0].length)
-      : -1;
+    return n ? (d.p = periodLookup.get(n[0].toLowerCase()), i + n[0].length) : -1;
   }
 
   function parseShortWeekday(d, string, i) {
     var n = shortWeekdayRe.exec(string.slice(i));
-    return n
-      ? (d.w = shortWeekdayLookup.get(n[0].toLowerCase()), i + n[0].length)
-      : -1;
+    return n ? (d.w = shortWeekdayLookup.get(n[0].toLowerCase()), i + n[0].length) : -1;
   }
 
   function parseWeekday(d, string, i) {
     var n = weekdayRe.exec(string.slice(i));
-    return n
-      ? (d.w = weekdayLookup.get(n[0].toLowerCase()), i + n[0].length)
-      : -1;
+    return n ? (d.w = weekdayLookup.get(n[0].toLowerCase()), i + n[0].length) : -1;
   }
 
   function parseShortMonth(d, string, i) {
     var n = shortMonthRe.exec(string.slice(i));
-    return n
-      ? (d.m = shortMonthLookup.get(n[0].toLowerCase()), i + n[0].length)
-      : -1;
+    return n ? (d.m = shortMonthLookup.get(n[0].toLowerCase()), i + n[0].length) : -1;
   }
 
   function parseMonth(d, string, i) {
     var n = monthRe.exec(string.slice(i));
-    return n
-      ? (d.m = monthLookup.get(n[0].toLowerCase()), i + n[0].length)
-      : -1;
+    return n ? (d.m = monthLookup.get(n[0].toLowerCase()), i + n[0].length) : -1;
   }
 
   function parseLocaleDateTime(d, string, i) {
@@ -381,50 +363,39 @@ export default function formatLocale(locale) {
   }
 
   return {
-    format: function (specifier) {
+    format: function(specifier) {
       var f = newFormat(specifier += "", formats);
-      f.toString = function () {
-        return specifier;
-      };
+      f.toString = function() { return specifier; };
       return f;
     },
-    parse: function (specifier) {
+    parse: function(specifier) {
       var p = newParse(specifier += "", false);
-      p.toString = function () {
-        return specifier;
-      };
+      p.toString = function() { return specifier; };
       return p;
     },
-    utcFormat: function (specifier) {
+    utcFormat: function(specifier) {
       var f = newFormat(specifier += "", utcFormats);
-      f.toString = function () {
-        return specifier;
-      };
+      f.toString = function() { return specifier; };
       return f;
     },
-    utcParse: function (specifier) {
+    utcParse: function(specifier) {
       var p = newParse(specifier += "", true);
-      p.toString = function () {
-        return specifier;
-      };
+      p.toString = function() { return specifier; };
       return p;
-    },
+    }
   };
 }
 
-var pads = { "-": "", "_": " ", "0": "0" },
-  numberRe = /^\s*\d+/, // note: ignores next directive
-  percentRe = /^%/,
-  requoteRe = /[\\^$*+?|[\]().{}]/g;
+var pads = {"-": "", "_": " ", "0": "0"},
+    numberRe = /^\s*\d+/, // note: ignores next directive
+    percentRe = /^%/,
+    requoteRe = /[\\^$*+?|[\]().{}]/g;
 
 function pad(value, fill, width) {
   var sign = value < 0 ? "-" : "",
-    string = (sign ? -value : value) + "",
-    length = string.length;
-  return sign +
-    (length < width
-      ? new Array(width - length + 1).join(fill) + string
-      : string);
+      string = (sign ? -value : value) + "",
+      length = string.length;
+  return sign + (length < width ? new Array(width - length + 1).join(fill) + string : string);
 }
 
 function requote(s) {
@@ -591,11 +562,7 @@ function dISO(d) {
 
 function formatWeekNumberISO(d, p) {
   d = dISO(d);
-  return pad(
-    timeThursday.count(timeYear(d), d) + (timeYear(d).getDay() === 4),
-    p,
-    2,
-  );
+  return pad(timeThursday.count(timeYear(d), d) + (timeYear(d).getDay() === 4), p, 2);
 }
 
 function formatWeekdayNumberSunday(d) {
@@ -627,9 +594,9 @@ function formatFullYearISO(d, p) {
 
 function formatZone(d) {
   var z = d.getTimezoneOffset();
-  return (z > 0 ? "-" : (z *= -1, "+")) +
-    pad(z / 60 | 0, "0", 2) +
-    pad(z % 60, "0", 2);
+  return (z > 0 ? "-" : (z *= -1, "+"))
+      + pad(z / 60 | 0, "0", 2)
+      + pad(z % 60, "0", 2);
 }
 
 function formatUTCDayOfMonth(d, p) {
@@ -684,11 +651,7 @@ function UTCdISO(d) {
 
 function formatUTCWeekNumberISO(d, p) {
   d = UTCdISO(d);
-  return pad(
-    utcThursday.count(utcYear(d), d) + (utcYear(d).getUTCDay() === 4),
-    p,
-    2,
-  );
+  return pad(utcThursday.count(utcYear(d), d) + (utcYear(d).getUTCDay() === 4), p, 2);
 }
 
 function formatUTCWeekdayNumberSunday(d) {

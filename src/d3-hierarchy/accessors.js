@@ -4,6 +4,6 @@ export function optional(f) {
 }
 
 export function required(f) {
-  if (typeof f !== "function") throw new Error();
+  if (typeof f !== "function") throw new Error;
   return f;
 }

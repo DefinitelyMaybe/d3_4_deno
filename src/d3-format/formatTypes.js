@@ -16,5 +16,5 @@ export default {
   "r": formatRounded,
   "s": formatPrefixAuto,
   "X": (x) => Math.round(x).toString(16).toUpperCase(),
-  "x": (x) => Math.round(x).toString(16),
+  "x": (x) => Math.round(x).toString(16)
 };

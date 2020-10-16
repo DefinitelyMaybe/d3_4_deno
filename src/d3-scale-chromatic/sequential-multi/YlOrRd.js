@@ -9,7 +9,7 @@ export var scheme = new Array(3).concat(
   "ffffb2fed976feb24cfd8d3cf03b20bd0026",
   "ffffb2fed976feb24cfd8d3cfc4e2ae31a1cb10026",
   "ffffccffeda0fed976feb24cfd8d3cfc4e2ae31a1cb10026",
-  "ffffccffeda0fed976feb24cfd8d3cfc4e2ae31a1cbd0026800026",
+  "ffffccffeda0fed976feb24cfd8d3cfc4e2ae31a1cbd0026800026"
 ).map(colors);
 
 export default ramp(scheme);

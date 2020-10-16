@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for D3JS d3-force module 2.1
 // Project: https://github.com/d3/d3-force/, https://d3js.org/d3-force
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>
@@ -26,34 +27,34 @@
  * if the node's position has been fixed.
  */
 export interface SimulationNodeDatum {
-  /**
+    /**
      * Node’s zero-based index into nodes array. This property is set during the initialization process of a simulation.
      */
-  index?: number;
-  /**
+    index?: number;
+    /**
      * Node’s current x-position
      */
-  x?: number;
-  /**
+    x?: number;
+    /**
      * Node’s current y-position
      */
-  y?: number;
-  /**
+    y?: number;
+    /**
      * Node’s current x-velocity
      */
-  vx?: number;
-  /**
+    vx?: number;
+    /**
      * Node’s current y-velocity
      */
-  vy?: number;
-  /**
+    vy?: number;
+    /**
      * Node’s fixed x-position (if position was fixed)
      */
-  fx?: number | null;
-  /**
+    fx?: number | null;
+    /**
      * Node’s fixed y-position (if position was fixed)
      */
-  fy?: number | null;
+    fy?: number | null;
 }
 
 /**
@@ -68,26 +69,26 @@ export interface SimulationNodeDatum {
  * ForceLink.id(...) accessor function.)
  */
 export interface SimulationLinkDatum<NodeDatum extends SimulationNodeDatum> {
-  /**
+    /**
      * Link’s source node.
      * For convenience, a link’s source and target properties may be initialized using numeric or string identifiers rather than object references; see link.id.
      * When the link force is initialized (or re-initialized, as when the nodes or links change), any link.source or link.target property which is not an object
      * is replaced by an object reference to the corresponding node with the given identifier.
      * After initialization, the source property represents the source node object.
      */
-  source: NodeDatum | string | number;
-  /**
+    source: NodeDatum | string | number;
+    /**
      * Link’s source link
      * For convenience, a link’s source and target properties may be initialized using numeric or string identifiers rather than object references; see link.id.
      * When the link force is initialized (or re-initialized, as when the nodes or links change), any link.source or link.target property which is not an object
      * is replaced by an object reference to the corresponding node with the given identifier.
      * After initialization, the target property represents the target node object.
      */
-  target: NodeDatum | string | number;
-  /**
+    target: NodeDatum | string | number;
+    /**
      * The zero-based index into the links array. Internally generated when calling ForceLink.links(...)
      */
-  index?: number;
+    index?: number;
 }
 
 /**
@@ -97,24 +98,21 @@ export interface SimulationLinkDatum<NodeDatum extends SimulationNodeDatum> {
  * The second generic refers to the type of the datum associated with a link in the simulation, if applicable.
  *
  */
-export interface Simulation<
-  NodeDatum extends SimulationNodeDatum,
-  LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,
-> {
-  /**
+export interface Simulation<NodeDatum extends SimulationNodeDatum, LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined> {
+    /**
      * Restart the simulation’s internal timer and return the simulation.
      * In conjunction with simulation.alphaTarget or simulation.alpha, this method can be used to “reheat” the simulation during interaction,
      * such as when dragging a node, or to resume the simulation after temporarily pausing it with simulation.stop.
      */
-  restart(): this;
+    restart(): this;
 
-  /**
+    /**
      * Stop the simulation’s internal timer, if it is running, and return the simulation. If the timer is already stopped, this method does nothing.
      * This method is useful for running the simulation manually; see simulation.tick.
      */
-  stop(): this;
+    stop(): this;
 
-  /**
+    /**
      * Manually steps the simulation by the specified number of *iterations*, and returns the simulation. If *iterations* is not specified, it defaults to 1 (single step).
      *
      * For each iteration, it increments the current alpha by (alphaTarget - alpha) × alphaDecay; then invokes each registered force, passing the new alpha;
@@ -124,13 +122,13 @@ export interface Simulation<
      * creation or by calling simulation.restart. The natural number of ticks when the simulation is started is
      * ⌈log(alphaMin) / log(1 - alphaDecay)⌉; by default, this is 300.
      */
-  tick(iterations?: number): void;
+    tick(iterations?: number): void;
 
-  /**
+    /**
      * Returns the simulation’s array of nodes as specified to the constructor.
      */
-  nodes(): NodeDatum[];
-  /**
+    nodes(): NodeDatum[];
+    /**
      * Set the simulation’s nodes to the specified array of objects, initialize their positions and velocities if necessary,
      * and then re-initialize any bound forces; Returns the simulation.
      *
@@ -157,17 +155,17 @@ export interface Simulation<
      * this method must be called again with the new (or changed) array to notify the simulation and bound forces of the change;
      * the simulation does not make a defensive copy of the specified array.
      */
-  nodes(nodesData: NodeDatum[]): this;
+    nodes(nodesData: NodeDatum[]): this;
 
-  /**
+    /**
      * Return the current alpha of the simulation, which defaults to 1.
      *
      * alpha is roughly analogous to temperature in simulated annealing.
      * It decreases over time as the simulation “cools down”.
      * When alpha reaches alphaMin, the simulation stops; see simulation.restart.
      */
-  alpha(): number;
-  /**
+    alpha(): number;
+    /**
      * Set the current alpha to the specified number in the range [0,1] and return this simulation.
      * The default is 1.
      *
@@ -177,26 +175,26 @@ export interface Simulation<
      *
      * @param alpha Current alpha of simulation.
      */
-  alpha(alpha: number): this;
+    alpha(alpha: number): this;
 
-  /**
+    /**
      * Return the current minimum alpha value, which defaults to 0.001.
      */
-  alphaMin(): number;
-  /**
+    alphaMin(): number;
+    /**
      * Set the minimum alpha to the specified number in the range [0,1] and return this simulation.
      * The default is 0.001. The simulation’s internal timer stops when the current alpha is less than the minimum alpha.
      * The default alpha decay rate of ~0.0228 corresponds to 300 iterations.
      *
      * @param min Minimum alpha of simulation.
      */
-  alphaMin(min: number): this;
+    alphaMin(min: number): this;
 
-  /**
+    /**
      * Return the current alpha decay rate, which defaults to 0.0228… = 1 - pow(0.001, 1 / 300) where 0.001 is the default minimum alpha.
      */
-  alphaDecay(): number;
-  /**
+    alphaDecay(): number;
+    /**
      * Set the alpha decay rate to the specified number in the range [0,1] and return this simulation.
      * The default is 0.0228… = 1 - pow(0.001, 1 / 300) where 0.001 is the default minimum alpha.
      *
@@ -209,25 +207,25 @@ export interface Simulation<
      *
      * @param decay Alpha decay rate.
      */
-  alphaDecay(decay: number): this;
+    alphaDecay(decay: number): this;
 
-  /**
+    /**
      * Returns the current target alpha value, which defaults to 0.
      */
-  alphaTarget(): number;
-  /**
+    alphaTarget(): number;
+    /**
      * Set the current target alpha to the specified number in the range [0,1] and return this simulation.
      * The default is 0.
      *
      * @param target Alpha target value.
      */
-  alphaTarget(target: number): this;
+    alphaTarget(target: number): this;
 
-  /**
+    /**
      * Return the current target alpha value, which defaults to 0.4.
      */
-  velocityDecay(): number;
-  /**
+    velocityDecay(): number;
+    /**
      * Set the velocity decay factor to the specified number in the range [0,1] and return this simulation.
      * The default is 0.4.
      *
@@ -237,9 +235,9 @@ export interface Simulation<
      *
      * @param decay Velocity Decay.
      */
-  velocityDecay(decay: number): this;
+    velocityDecay(decay: number): this;
 
-  /**
+    /**
      * Return the force with the specified name, or undefined if there is no such force.
      * (By default, new simulations have no forces.)
      *
@@ -248,24 +246,24 @@ export interface Simulation<
      *
      * @param name Name of the registered force.
      */
-  force<F extends Force<NodeDatum, LinkDatum>>(name: string): F | undefined;
-  /**
+    force<F extends Force<NodeDatum, LinkDatum>>(name: string): F| undefined;
+    /**
      * Remove a previously registered force.
      *
      * @param name Name of the registered force.
      * @param force Use null to remove force.
      */
-  force(name: string, force: null): this;
-  /**
+    force(name: string, force: null): this;
+    /**
      * Assign the force for the specified name and return this simulation.
      * (By default, new simulations have no forces.)
      *
      * @param name Name to register the force under.
      * @param force A force to use with the simulation.
      */
-  force(name: string, force: Force<NodeDatum, LinkDatum>): this;
+    force(name: string, force: Force<NodeDatum, LinkDatum>): this;
 
-  /**
+    /**
      * Return the node closest to the position [x,y] with the given search radius.
      * If radius is not specified, it defaults to infinity.
      * If there is no node within the search area, returns undefined.
@@ -274,21 +272,21 @@ export interface Simulation<
      * @param y y-coordinate
      * @param radius Optional search radius. Defaults to infinity.
      */
-  find(x: number, y: number, radius?: number): NodeDatum | undefined;
+    find(x: number, y: number, radius?: number): NodeDatum | undefined;
 
-  /**
+    /**
      * Returns this simulation’s current random source which defaults to a fixed-seed linear congruential generator.
      * See also random.source.
      */
-  randomSource(): () => number;
-  /**
+    randomSource(): () => number;
+    /**
      * Sets the function used to generate random numbers; this should be a function that returns a number between 0 (inclusive) and 1 (exclusive).
      *
      * @param source The function used to generate random numbers.
      */
-  randomSource(source: () => number): this;
+    randomSource(source: () => number): this;
 
-  /**
+    /**
      * Return the first currently-assigned listener matching the specified typenames, if any.
      *
      * @param typenames The typenames is a string containing one or more typename separated by whitespace. Each typename is a type,
@@ -296,10 +294,8 @@ export interface Simulation<
      * The type must be one of the following: "tick" (after each tick of the simulation’s internal timer) or
      * "end" (after the simulation’s timer stops when alpha < alphaMin).
      */
-  on(
-    typenames: "tick" | "end" | string,
-  ): ((this: Simulation<NodeDatum, LinkDatum>) => void) | undefined;
-  /**
+    on(typenames: 'tick' | 'end' | string): ((this: Simulation<NodeDatum, LinkDatum>) => void) | undefined;
+    /**
      * Remove the current event listeners for the specified typenames, if any, return the simulation.
      *
      * @param typenames The typenames is a string containing one or more typename separated by whitespace. Each typename is a type,
@@ -308,8 +304,8 @@ export interface Simulation<
      * "end" (after the simulation’s timer stops when alpha < alphaMin).
      * @param listener Use null to remove the listener.
      */
-  on(typenames: "tick" | "end" | string, listener: null): this;
-  /**
+    on(typenames: 'tick' | 'end' | string, listener: null): this;
+    /**
      * Set the event listener for the specified typenames and return this simulation.
      * If an event listener was already registered for the same type and name,
      * the existing listener is removed before the new listener is added.
@@ -329,7 +325,7 @@ export interface Simulation<
      * "end" (after the simulation’s timer stops when alpha < alphaMin).
      * @param listener An event listener function which is invoked with the this context of the simulation.
      */
-  on(typenames: "tick" | "end" | string, listener: (this: this) => void): this;
+    on(typenames: 'tick' | 'end' | string, listener: (this: this) => void): this;
 }
 
 /**
@@ -344,9 +340,7 @@ export interface Simulation<
  *
  * @param nodesData Optional array of nodes data, defaults to empty array.
  */
-export function forceSimulation<NodeDatum extends SimulationNodeDatum>(
-  nodesData?: NodeDatum[],
-): Simulation<NodeDatum, undefined>;
+export function forceSimulation<NodeDatum extends SimulationNodeDatum>(nodesData?: NodeDatum[]): Simulation<NodeDatum, undefined>;
 /**
  * Create a new simulation with the specified array of nodes and no forces.
  * If nodes is not specified, it defaults to the empty array.
@@ -360,10 +354,7 @@ export function forceSimulation<NodeDatum extends SimulationNodeDatum>(
  *
  * @param nodesData Optional array of nodes data, defaults to empty array.
  */
-export function forceSimulation<
-  NodeDatum extends SimulationNodeDatum,
-  LinkDatum extends SimulationLinkDatum<NodeDatum>,
->(nodesData?: NodeDatum[]): Simulation<NodeDatum, LinkDatum>;
+export function forceSimulation<NodeDatum extends SimulationNodeDatum, LinkDatum extends SimulationLinkDatum<NodeDatum>>(nodesData?: NodeDatum[]): Simulation<NodeDatum, LinkDatum>;
 
 // ----------------------------------------------------------------------
 // Forces
@@ -379,24 +370,21 @@ export function forceSimulation<
  *
  * Forces may optionally implement force.initialize to receive the simulation’s array of nodes.
  */
-export interface Force<
-  NodeDatum extends SimulationNodeDatum,
-  LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined,
-> {
-  /**
+export interface Force<NodeDatum extends SimulationNodeDatum, LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined> {
+    /**
      * Apply this force, optionally observing the specified alpha.
      * Typically, the force is applied to the array of nodes previously passed to force.initialize,
      * however, some forces may apply to a subset of nodes, or behave differently.
      * For example, d3.forceLink applies to the source and target of each link.
      */
-  (alpha: number): void;
-  /**
+    (alpha: number): void;
+    /**
      * Supplies the array of nodes and random source to this force. This method is called when a force is bound to a simulation via simulation.force
      * and when the simulation’s nodes change via simulation.nodes.
      *
      * A force may perform necessary work during initialization, such as evaluating per-node parameters, to avoid repeatedly performing work during each application of the force.
      */
-  initialize?(nodes: NodeDatum[], random: () => number): void;
+    initialize?(nodes: NodeDatum[], random: () => number): void;
 }
 
 // Centering ------------------------------------------------------------
@@ -411,49 +399,48 @@ export interface Force<
  *
  * The generic refers to the type of data for a node.
  */
-export interface ForceCenter<NodeDatum extends SimulationNodeDatum>
-  extends Force<NodeDatum, any> {
-  /**
+export interface ForceCenter<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
+    /**
      * Supplies the array of nodes and random source to this force. This method is called when a force is bound to a simulation via simulation.force
      * and when the simulation’s nodes change via simulation.nodes.
      *
      * A force may perform necessary work during initialization, such as evaluating per-node parameters, to avoid repeatedly performing work during each application of the force.
      */
-  initialize(nodes: NodeDatum[], random: () => number): void;
+    initialize(nodes: NodeDatum[], random: () => number): void;
 
-  /**
+    /**
      * Return the current x-coordinate of the centering position, which defaults to zero.
      */
-  x(): number;
-  /**
+    x(): number;
+    /**
      * Set the x-coordinate of the centering position.
      *
      * @param x x-coordinate.
      */
-  x(x: number): this;
+    x(x: number): this;
 
-  /**
+    /**
      * Return the current y-coordinate of the centering position, which defaults to zero.
      */
-  y(): number;
-  /**
+    y(): number;
+    /**
      * Set the y-coordinate of the centering position.
      *
      * @param y y-coordinate.
      */
-  y(y: number): this;
+    y(y: number): this;
 
-  /**
+    /**
      * Returns the force’s current strength, which defaults to 1.
      */
-  strength(): number;
+    strength(): number;
 
-  /**
+    /**
      * Sets the centering force’s strength.
      * A reduced strength of e.g. 0.05 softens the movements on interactive graphs in which new nodes enter or exit the graph.
      * @param strength The centering force's strength.
      */
-  strength(strength: number): this;
+    strength(strength: number): this;
 }
 
 /**
@@ -472,10 +459,7 @@ export interface ForceCenter<NodeDatum extends SimulationNodeDatum>
  * @param x An optional x-coordinate for the centering position, defaults to 0.
  * @param y An optional y-coordinate for the centering position, defaults to 0.
  */
-export function forceCenter<NodeDatum extends SimulationNodeDatum>(
-  x?: number,
-  y?: number,
-): ForceCenter<NodeDatum>;
+export function forceCenter<NodeDatum extends SimulationNodeDatum>(x?: number, y?: number): ForceCenter<NodeDatum>;
 
 // Collision ------------------------------------------------------------
 
@@ -486,21 +470,20 @@ export function forceCenter<NodeDatum extends SimulationNodeDatum>(
  *
  * The generic refers to the type of data for a node.
  */
-export interface ForceCollide<NodeDatum extends SimulationNodeDatum>
-  extends Force<NodeDatum, any> {
-  /**
+export interface ForceCollide<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
+    /**
      * Supplies the array of nodes and random source to this force. This method is called when a force is bound to a simulation via simulation.force
      * and when the simulation’s nodes change via simulation.nodes.
      *
      * A force may perform necessary work during initialization, such as evaluating per-node parameters, to avoid repeatedly performing work during each application of the force.
      */
-  initialize(nodes: NodeDatum[], random: () => number): void;
+    initialize(nodes: NodeDatum[], random: () => number): void;
 
-  /**
+    /**
      * Returns the current radius accessor function.
      */
-  radius(): (node: NodeDatum, i: number, nodes: NodeDatum[]) => number;
-  /**
+    radius(): (node: NodeDatum, i: number, nodes: NodeDatum[]) => number;
+    /**
      * Set the radius used in collision detection to a constant number for each node.
      *
      * The constant is internally wrapped into a radius accessor function.
@@ -511,8 +494,8 @@ export interface ForceCollide<NodeDatum extends SimulationNodeDatum>
      *
      * @param radius A constant radius for each node.
      */
-  radius(radius: number): this;
-  /**
+    radius(radius: number): this;
+    /**
      * Set the radius accessor function determining the radius for each node in collision detection.
      *
      * The radius accessor is invoked for each node in the simulation, being passed the node, its zero-based index and the complete array of nodes.
@@ -522,15 +505,13 @@ export interface ForceCollide<NodeDatum extends SimulationNodeDatum>
      * @param radius A radius accessor function which is invoked for each node in the simulation, being passed the node, its zero-based index and the complete array of nodes.
      * The function returns a radius.
      */
-  radius(
-    radius: (node: NodeDatum, i: number, nodes: NodeDatum[]) => number,
-  ): this;
+    radius(radius: (node: NodeDatum, i: number, nodes: NodeDatum[]) => number): this;
 
-  /**
+    /**
      * Return the current strength, which defaults to 1.
      */
-  strength(): number;
-  /**
+    strength(): number;
+    /**
      * Set the force strength to the specified number in the range [0,1] and return this force.
      * The default strength is 0.7.
      *
@@ -541,13 +522,13 @@ export interface ForceCollide<NodeDatum extends SimulationNodeDatum>
      *
      * @param strength Strength.
      */
-  strength(strength: number): this;
+    strength(strength: number): this;
 
-  /**
+    /**
      * Return the current iteration count which defaults to 1.
      */
-  iterations(): number;
-  /**
+    iterations(): number;
+    /**
      * Sets the number of iterations per application to the specified number and return this force.
      *
      * Increasing the number of iterations greatly increases the rigidity of the constraint and avoids partial overlap of nodes,
@@ -555,7 +536,7 @@ export interface ForceCollide<NodeDatum extends SimulationNodeDatum>
      *
      * @param iterations Number of iterations.
      */
-  iterations(iterations: number): this;
+    iterations(iterations: number): this;
 }
 
 /**
@@ -567,9 +548,7 @@ export interface ForceCollide<NodeDatum extends SimulationNodeDatum>
  *
  * The generic refers to the type of data for a node.
  */
-export function forceCollide<
-  NodeDatum extends SimulationNodeDatum,
->(): ForceCollide<NodeDatum>;
+export function forceCollide<NodeDatum extends SimulationNodeDatum>(): ForceCollide<NodeDatum>;
 /**
  * Create a new circle collision force with the specified constant radius for all nodes.
  *
@@ -581,9 +560,7 @@ export function forceCollide<
  *
  * @param radius A constant radius for each node.
  */
-export function forceCollide<NodeDatum extends SimulationNodeDatum>(
-  radius: number,
-): ForceCollide<NodeDatum>;
+export function forceCollide<NodeDatum extends SimulationNodeDatum>(radius: number): ForceCollide<NodeDatum>;
 /**
  * Creates a new circle collision force with the specified radius accessor function.
  *
@@ -598,9 +575,7 @@ export function forceCollide<NodeDatum extends SimulationNodeDatum>(
  * @param radius A radius accessor function which is invoked for each node in the simulation, being passed the node, its zero-based index and the complete array of nodes.
  * The function returns a radius.
  */
-export function forceCollide<NodeDatum extends SimulationNodeDatum>(
-  radius: (node: NodeDatum, i: number, nodes: NodeDatum[]) => number,
-): ForceCollide<NodeDatum>;
+export function forceCollide<NodeDatum extends SimulationNodeDatum>(radius: (node: NodeDatum, i: number, nodes: NodeDatum[]) => number): ForceCollide<NodeDatum>;
 
 // Link ----------------------------------------------------------------
 
@@ -611,24 +586,21 @@ export function forceCollide<NodeDatum extends SimulationNodeDatum>(
  * The first generic refers to the type of data for a node.
  * The second generic refers to the type of data for a link.
  */
-export interface ForceLink<
-  NodeDatum extends SimulationNodeDatum,
-  LinkDatum extends SimulationLinkDatum<NodeDatum>,
-> extends Force<NodeDatum, LinkDatum> {
-  /**
+export interface ForceLink<NodeDatum extends SimulationNodeDatum, LinkDatum extends SimulationLinkDatum<NodeDatum>> extends Force<NodeDatum, LinkDatum> {
+    /**
      * Supplies the array of nodes and random source to this force. This method is called when a force is bound to a simulation via simulation.force
      * and when the simulation’s nodes change via simulation.nodes.
      *
      * A force may perform necessary work during initialization, such as evaluating per-node parameters, to avoid repeatedly performing work during each application of the force.
      */
-  initialize(nodes: NodeDatum[], random: () => number): void;
+    initialize(nodes: NodeDatum[], random: () => number): void;
 
-  /**
+    /**
      * Return the current array of links, which defaults to the empty array.
      *
      */
-  links(): LinkDatum[];
-  /**
+    links(): LinkDatum[];
+    /**
      * Set the array of links associated with this force, recompute the distance and strength parameters for each link, and return this force.
      *
      * Each link is an object with the following properties:
@@ -645,17 +617,13 @@ export interface ForceLink<
      *
      * @param links An array of link data.
      */
-  links(links: LinkDatum[]): this;
+    links(links: LinkDatum[]): this;
 
-  /**
+    /**
      * Return the current node id accessor, which defaults to the numeric node.index.
      */
-  id(): (
-    node: NodeDatum,
-    i: number,
-    nodesData: NodeDatum[],
-  ) => (string | number);
-  /**
+    id(): (node: NodeDatum, i: number, nodesData: NodeDatum[]) => (string | number);
+    /**
      * Set the node id accessor to the specified function and return this force.
      *
      * The default id accessor allows each link’s source and target to be specified as a zero-based index
@@ -668,13 +636,13 @@ export interface ForceLink<
      * being passed the node, the zero-based index of the node in the node array, and the node array. It returns a string to represent the node id which can be used
      * for matching link source and link target strings during the ForceLink initialization.
      */
-  id(id: (node: NodeDatum, i: number, nodesData: NodeDatum[]) => string): this;
+    id(id: (node: NodeDatum, i: number, nodesData: NodeDatum[]) => string): this;
 
-  /**
+    /**
      * Return the current distance accessor, which defaults to implying a default distance of 30.
      */
-  distance(): (link: LinkDatum, i: number, links: LinkDatum[]) => number;
-  /**
+    distance(): (link: LinkDatum, i: number, links: LinkDatum[]) => number;
+    /**
      * Set the distance accessor to use the specified constant number for all links,
      * re-evaluates the distance accessor for each link, and returns this force.
      *
@@ -686,8 +654,8 @@ export interface ForceLink<
      *
      * @param distance The constant distance to be used for all links.
      */
-  distance(distance: number): this;
-  /**
+    distance(distance: number): this;
+    /**
      * Set the distance accessor to use the specified function,
      * re-evaluates the distance accessor for each link, and returns this force.
      *
@@ -698,16 +666,14 @@ export interface ForceLink<
      * @param distance A distance accessor function which is invoked for each link being passed the link,
      * its zero-based index and the complete array of links. It returns the distance.
      */
-  distance(
-    distance: (link: LinkDatum, i: number, links: LinkDatum[]) => number,
-  ): this;
+    distance(distance: (link: LinkDatum, i: number, links: LinkDatum[]) => number): this;
 
-  /**
+    /**
      * Return the current strength accessor.
      * For details regarding the default behavior see: {@link https://github.com/d3/d3-force#link_strength}
      */
-  strength(): (link: LinkDatum, i: number, links: LinkDatum[]) => number;
-  /**
+    strength(): (link: LinkDatum, i: number, links: LinkDatum[]) => number;
+    /**
      * Set the strength accessor to use the specified constant number for all links,
      * re-evaluates the strength accessor for each link, and returns this force.
      *
@@ -719,8 +685,8 @@ export interface ForceLink<
      *
      * @param strength The constant strength to be used for all links.
      */
-  strength(strength: number): this;
-  /**
+    strength(strength: number): this;
+    /**
      * Set the strength accessor to use the specified function,
      * re-evaluates the strength accessor for each link, and returns this force.
      *
@@ -731,15 +697,13 @@ export interface ForceLink<
      * @param strength A distance accessor function which is invoked for each link being passed the link,
      * its zero-based index and the complete array of links. It returns the strength.
      */
-  strength(
-    strength: (link: LinkDatum, i: number, links: LinkDatum[]) => number,
-  ): this;
+    strength(strength: (link: LinkDatum, i: number, links: LinkDatum[]) => number): this;
 
-  /**
+    /**
      * Return the current iteration count which defaults to 1.
      */
-  iterations(): number;
-  /**
+    iterations(): number;
+    /**
      * Sets the number of iterations per application to the specified number and return this force.
      *
      * Increasing the number of iterations greatly increases the rigidity of the constraint and is useful for complex structures such as lattices,
@@ -747,7 +711,7 @@ export interface ForceLink<
      *
      * @param iterations Number of iterations.
      */
-  iterations(iterations: number): this;
+    iterations(iterations: number): this;
 }
 
 /**
@@ -759,10 +723,7 @@ export interface ForceLink<
  * The first generic refers to the type of data for a node.
  * The second generic refers to the type of data for a link.
  */
-export function forceLink<
-  NodeDatum extends SimulationNodeDatum,
-  LinksDatum extends SimulationLinkDatum<NodeDatum>,
->(): ForceLink<NodeDatum, LinksDatum>;
+export function forceLink<NodeDatum extends SimulationNodeDatum, LinksDatum extends SimulationLinkDatum<NodeDatum>>(): ForceLink<NodeDatum, LinksDatum>;
 /**
  * Creates a new link force with the specified links array.
  *
@@ -774,10 +735,7 @@ export function forceLink<
  *
  * @param links An array of link data.
  */
-export function forceLink<
-  NodeDatum extends SimulationNodeDatum,
-  LinksDatum extends SimulationLinkDatum<NodeDatum>,
->(links: LinksDatum[]): ForceLink<NodeDatum, LinksDatum>;
+export function forceLink<NodeDatum extends SimulationNodeDatum, LinksDatum extends SimulationLinkDatum<NodeDatum>>(links: LinksDatum[]): ForceLink<NodeDatum, LinksDatum>;
 
 // Many Body ----------------------------------------------------------------
 
@@ -790,23 +748,22 @@ export function forceLink<
  *
  * The generic refers to the type of data for a node.
  */
-export interface ForceManyBody<NodeDatum extends SimulationNodeDatum>
-  extends Force<NodeDatum, any> {
-  /**
+export interface ForceManyBody<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
+    /**
      * Supplies the array of nodes and random source to this force. This method is called when a force is bound to a simulation via simulation.force
      * and when the simulation’s nodes change via simulation.nodes.
      *
      * A force may perform necessary work during initialization, such as evaluating per-node parameters, to avoid repeatedly performing work during each application of the force.
      */
-  initialize(nodes: NodeDatum[], random: () => number): void;
+    initialize(nodes: NodeDatum[], random: () => number): void;
 
-  /**
+    /**
      * Return the current strength accessor.
      *
      * For details regarding the default behavior see: {@link https://github.com/d3/d3-force#manyBody_strength}
      */
-  strength(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
-  /**
+    strength(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
+    /**
      * Set the strength accessor to the specified constant strength for all nodes, re-evaluates the strength accessor for each node, and
      * returns this force.
      *
@@ -823,8 +780,8 @@ export interface ForceManyBody<NodeDatum extends SimulationNodeDatum>
      *
      * @param strength The constant strength to be used for all nodes.
      */
-  strength(strength: number): this;
-  /**
+    strength(strength: number): this;
+    /**
      * Set the strength accessor to the specified function, re-evaluates the strength accessor for each node, and
      * returns this force.
      *
@@ -840,15 +797,13 @@ export interface ForceManyBody<NodeDatum extends SimulationNodeDatum>
      * @param strength A strength accessor function which is invoked for each node in the simulation, being passed the node, its zero-based index and the complete array of nodes.
      * The function returns the strength.
      */
-  strength(
-    strength: (d: NodeDatum, i: number, data: NodeDatum[]) => number,
-  ): this;
+    strength(strength: (d: NodeDatum, i: number, data: NodeDatum[]) => number): this;
 
-  /**
+    /**
      * Return the current value of the Barnes–Hut approximation criterion , which defaults to 0.9
      */
-  theta(): number;
-  /**
+    theta(): number;
+    /**
      * Set the Barnes–Hut approximation criterion to the specified number and returns this force.
      *
      * To accelerate computation, this force implements the Barnes–Hut approximation which takes O(n log n) per application
@@ -863,13 +818,13 @@ export interface ForceManyBody<NodeDatum extends SimulationNodeDatum>
      *
      * @param theta Value for the theta parameter.
      */
-  theta(theta: number): this;
+    theta(theta: number): this;
 
-  /**
+    /**
      * Returns the current minimum distance over which this force is considered, which defaults to 1.
      */
-  distanceMin(): number;
-  /**
+    distanceMin(): number;
+    /**
      * Sets the minimum distance between nodes over which this force is considered.
      *
      * A minimum distance establishes an upper bound on the strength of the force between two nearby nodes, avoiding instability.
@@ -879,13 +834,13 @@ export interface ForceManyBody<NodeDatum extends SimulationNodeDatum>
      *
      * @param distance The minimum distance between nodes over which this force is considered.
      */
-  distanceMin(distance: number): this;
+    distanceMin(distance: number): this;
 
-  /**
+    /**
      * Returns the current maximum distance over which this force is considered, which defaults to infinity.
      */
-  distanceMax(): number;
-  /**
+    distanceMax(): number;
+    /**
      * Sets the maximum distance between nodes over which this force is considered.
      *
      * Specifying a finite maximum distance improves performance and produces a more localized layout.
@@ -894,7 +849,7 @@ export interface ForceManyBody<NodeDatum extends SimulationNodeDatum>
      *
      * @param distance The maximum distance between nodes over which this force is considered.
      */
-  distanceMax(distance: number): this;
+    distanceMax(distance: number): this;
 }
 
 /**
@@ -908,9 +863,7 @@ export interface ForceManyBody<NodeDatum extends SimulationNodeDatum>
  *
  * The generic refers to the type of data for a node.
  */
-export function forceManyBody<
-  NodeDatum extends SimulationNodeDatum,
->(): ForceManyBody<NodeDatum>;
+export function forceManyBody<NodeDatum extends SimulationNodeDatum>(): ForceManyBody<NodeDatum>;
 
 // Positioning ----------------------------------------------------------------
 
@@ -921,21 +874,20 @@ export function forceManyBody<
  *
  * The generic refers to the type of data for a node.
  */
-export interface ForceX<NodeDatum extends SimulationNodeDatum>
-  extends Force<NodeDatum, any> {
-  /**
+export interface ForceX<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
+    /**
      * Supplies the array of nodes and random source to this force. This method is called when a force is bound to a simulation via simulation.force
      * and when the simulation’s nodes change via simulation.nodes.
      *
      * A force may perform necessary work during initialization, such as evaluating per-node parameters, to avoid repeatedly performing work during each application of the force.
      */
-  initialize(nodes: NodeDatum[], random: () => number): void;
+    initialize(nodes: NodeDatum[], random: () => number): void;
 
-  /**
+    /**
      *  Returns the current strength accessor, which defaults to a constant strength for all nodes of 0.1.
      */
-  strength(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
-  /**
+    strength(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
+    /**
      * Set the strength accessor to the specified constant strength for all nodes, re-evaluates the strength accessor for each node, and returns this force.
      *
      * The strength determines how much to increment the node’s x-velocity: (x - node.x) × strength.
@@ -953,8 +905,8 @@ export interface ForceX<NodeDatum extends SimulationNodeDatum>
      *
      * @param strength Constant value of strength to be used for all nodes.
      */
-  strength(strength: number): this;
-  /**
+    strength(strength: number): this;
+    /**
      * Set the strength accessor to the specified function, re-evaluates the strength accessor for each node, and returns this force.
      *
      * The strength determines how much to increment the node’s x-velocity: (x - node.x) × strength.
@@ -971,15 +923,13 @@ export interface ForceX<NodeDatum extends SimulationNodeDatum>
      * @param strength A strength accessor function which is invoked for each node in the simulation, being passed the node, its zero-based index and the complete array of nodes.
      * The function returns the strength.
      */
-  strength(
-    strength: (d: NodeDatum, i: number, data: NodeDatum[]) => number,
-  ): this;
+    strength(strength: (d: NodeDatum, i: number, data: NodeDatum[]) => number): this;
 
-  /**
+    /**
      * Return the current x-accessor, which defaults to a function returning 0 for all nodes.
      */
-  x(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
-  /**
+    x(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
+    /**
      * Set the x-coordinate accessor to the specified number, re-evaluates the x-accessor for each node,
      * and returns this force.
      *
@@ -991,8 +941,8 @@ export interface ForceX<NodeDatum extends SimulationNodeDatum>
      *
      * @param x Constant x-coordinate to be used for all nodes.
      */
-  x(x: number): this;
-  /**
+    x(x: number): this;
+    /**
      * Set the x-coordinate accessor to the specified function, re-evaluates the x-accessor for each node,
      * and returns this force.
      *
@@ -1003,7 +953,7 @@ export interface ForceX<NodeDatum extends SimulationNodeDatum>
      * @param x A x-coordinate accessor function which is invoked for each node in the simulation, being passed the node, its zero-based index and the complete array of nodes.
      * The function returns the x-coordinate.
      */
-  x(x: (d: NodeDatum, i: number, data: NodeDatum[]) => number): this;
+    x(x: (d: NodeDatum, i: number, data: NodeDatum[]) => number): this;
 }
 
 /**
@@ -1015,9 +965,7 @@ export interface ForceX<NodeDatum extends SimulationNodeDatum>
  *
  * The generic refers to the type of data for a node.
  */
-export function forceX<NodeDatum extends SimulationNodeDatum>(): ForceX<
-  NodeDatum
->;
+export function forceX<NodeDatum extends SimulationNodeDatum>(): ForceX<NodeDatum>;
 /**
  * Create a new positioning force along the x-axis towards the given position x which is constant for all nodes.
  *
@@ -1029,9 +977,7 @@ export function forceX<NodeDatum extends SimulationNodeDatum>(): ForceX<
  *
  * @param x Constant x-coordinate to be used for all nodes.
  */
-export function forceX<NodeDatum extends SimulationNodeDatum>(
-  x: number,
-): ForceX<NodeDatum>;
+export function forceX<NodeDatum extends SimulationNodeDatum>(x: number): ForceX<NodeDatum>;
 /**
  * Create a new positioning force along the x-axis towards the position x given by evaluating the specified x-coordinate accessor
  * for each node.
@@ -1045,9 +991,7 @@ export function forceX<NodeDatum extends SimulationNodeDatum>(
  * @param x A x-coordinate accessor function which is invoked for each node in the simulation, being passed the node and its zero-based index.
  * The function returns the x-coordinate.
  */
-export function forceX<NodeDatum extends SimulationNodeDatum>(
-  x: (d: NodeDatum, i: number, data: NodeDatum[]) => number,
-): ForceX<NodeDatum>;
+export function forceX<NodeDatum extends SimulationNodeDatum>(x: (d: NodeDatum, i: number, data: NodeDatum[]) => number): ForceX<NodeDatum>;
 
 /**
  * The y-positioning force pushes nodes towards a desired position along the given dimension with a configurable strength.
@@ -1056,21 +1000,20 @@ export function forceX<NodeDatum extends SimulationNodeDatum>(
  *
  * The generic refers to the type of data for a node.
  */
-export interface ForceY<NodeDatum extends SimulationNodeDatum>
-  extends Force<NodeDatum, any> {
-  /**
+export interface ForceY<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
+    /**
      * Supplies the array of nodes and random source to this force. This method is called when a force is bound to a simulation via simulation.force
      * and when the simulation’s nodes change via simulation.nodes.
      *
      * A force may perform necessary work during initialization, such as evaluating per-node parameters, to avoid repeatedly performing work during each application of the force.
      */
-  initialize(nodes: NodeDatum[], random: () => number): void;
+    initialize(nodes: NodeDatum[], random: () => number): void;
 
-  /**
+    /**
      *  Returns the current strength accessor, which defaults to a constant strength for all nodes of 0.1.
      */
-  strength(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
-  /**
+    strength(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
+    /**
      * Set the strength accessor to the specified constant strength for all nodes, re-evaluates the strength accessor for each node, and returns this force.
      *
      * The strength determines how much to increment the node’s y-velocity: (y - node.y) × strength.
@@ -1088,8 +1031,8 @@ export interface ForceY<NodeDatum extends SimulationNodeDatum>
      *
      * @param strength Constant value of strength to be used for all nodes.
      */
-  strength(strength: number): this;
-  /**
+    strength(strength: number): this;
+    /**
      * Set the strength accessor to the specified function, re-evaluates the strength accessor for each node, and returns this force.
      *
      * The strength determines how much to increment the node’s y-velocity: (y - node.y) × strength.
@@ -1106,15 +1049,13 @@ export interface ForceY<NodeDatum extends SimulationNodeDatum>
      * @param strength A strength accessor function which is invoked for each node in the simulation, being passed the node, its zero-based index and the complete array of nodes.
      * The function returns the strength.
      */
-  strength(
-    strength: (d: NodeDatum, i: number, data: NodeDatum[]) => number,
-  ): this;
+    strength(strength: (d: NodeDatum, i: number, data: NodeDatum[]) => number): this;
 
-  /**
+    /**
      * Return the current y-accessor, which defaults to a function returning 0 for all nodes.
      */
-  y(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
-  /**
+    y(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
+    /**
      * Set the y-coordinate accessor to the specified number, re-evaluates the y-accessor for each node,
      * and returns this force.
      *
@@ -1126,8 +1067,8 @@ export interface ForceY<NodeDatum extends SimulationNodeDatum>
      *
      * @param y Constant y-coordinate to be used for all nodes.
      */
-  y(y: number): this;
-  /**
+    y(y: number): this;
+    /**
      * Set the y-coordinate accessor to the specified function, re-evaluates the y-accessor for each node,
      * and returns this force.
      *
@@ -1138,7 +1079,7 @@ export interface ForceY<NodeDatum extends SimulationNodeDatum>
      * @param y A y-coordinate accessor function which is invoked for each node in the simulation, being passed the node, its zero-based index and the complete array of nodes.
      * The function returns the y-coordinate.
      */
-  y(y: (d: NodeDatum, i: number, data: NodeDatum[]) => number): this;
+    y(y: (d: NodeDatum, i: number, data: NodeDatum[]) => number): this;
 }
 
 /**
@@ -1150,9 +1091,7 @@ export interface ForceY<NodeDatum extends SimulationNodeDatum>
  *
  * The generic refers to the type of data for a node.
  */
-export function forceY<NodeDatum extends SimulationNodeDatum>(): ForceY<
-  NodeDatum
->;
+export function forceY<NodeDatum extends SimulationNodeDatum>(): ForceY<NodeDatum>;
 /**
  * Create a new positioning force along the y-axis towards the given position y which is constant for all nodes.
  *
@@ -1164,9 +1103,7 @@ export function forceY<NodeDatum extends SimulationNodeDatum>(): ForceY<
  *
  * @param y Constant y-coordinate to be used for all nodes.
  */
-export function forceY<NodeDatum extends SimulationNodeDatum>(
-  y: number,
-): ForceY<NodeDatum>;
+export function forceY<NodeDatum extends SimulationNodeDatum>(y: number): ForceY<NodeDatum>;
 /**
  * Create a new positioning force along the y-axis towards the position y given by evaluating the specified y-coordinate accessor
  * for each node.
@@ -1180,9 +1117,7 @@ export function forceY<NodeDatum extends SimulationNodeDatum>(
  * @param y A y-coordinate accessor function which is invoked for each node in the simulation, being passed the node and its zero-based index.
  * The function returns the y-coordinate.
  */
-export function forceY<NodeDatum extends SimulationNodeDatum>(
-  y: (d: NodeDatum, i: number, data: NodeDatum[]) => number,
-): ForceY<NodeDatum>;
+export function forceY<NodeDatum extends SimulationNodeDatum>(y: (d: NodeDatum, i: number, data: NodeDatum[]) => number): ForceY<NodeDatum>;
 
 /**
  * The radial force is similar to the x- and y-positioning forces, except it pushes nodes towards the closest point on a given circle.
@@ -1192,21 +1127,20 @@ export function forceY<NodeDatum extends SimulationNodeDatum>(
  *
  * The generic refers to the type of data for a node.
  */
-export interface ForceRadial<NodeDatum extends SimulationNodeDatum>
-  extends Force<NodeDatum, any> {
-  /**
+export interface ForceRadial<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
+    /**
      * Assigns the array of nodes and random source to this force. This method is called when a force is bound to a simulation via simulation.force
      * and when the simulation’s nodes change via simulation.nodes.
      *
      * A force may perform necessary work during initialization, such as evaluating per-node parameters, to avoid repeatedly performing work during each application of the force.
      */
-  initialize(nodes: NodeDatum[], random: () => number): void;
+    initialize(nodes: NodeDatum[], random: () => number): void;
 
-  /**
+    /**
      *  Returns the current strength accessor, which defaults to a constant strength for all nodes of 0.1.
      */
-  strength(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
-  /**
+    strength(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
+    /**
      * Set the strength accessor to the specified constant strength for all nodes, re-evaluates the strength accessor for each node, and returns this force.
      *
      * The strength determines how much to increment the node’s x-velocity: (x - node.x) × strength.
@@ -1224,8 +1158,8 @@ export interface ForceRadial<NodeDatum extends SimulationNodeDatum>
      *
      * @param strength Constant value of strength to be used for all nodes.
      */
-  strength(strength: number): this;
-  /**
+    strength(strength: number): this;
+    /**
      * Set the strength accessor to the specified function, re-evaluates the strength accessor for each node, and returns this force.
      *
      * The strength determines how much to increment the node’s x-velocity: (x - node.x) × strength.
@@ -1242,15 +1176,13 @@ export interface ForceRadial<NodeDatum extends SimulationNodeDatum>
      * @param strength A strength accessor function which is invoked for each node in the simulation, being passed the node, its zero-based index and the complete array of nodes.
      * The function returns the strength.
      */
-  strength(
-    strength: (d: NodeDatum, i: number, data: NodeDatum[]) => number,
-  ): this;
+    strength(strength: (d: NodeDatum, i: number, data: NodeDatum[]) => number): this;
 
-  /**
+    /**
      * Return the current radius accessor for the circle.
      */
-  radius(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
-  /**
+    radius(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
+    /**
      * Set the radius accessor for the circle to the specified number, re-evaluates the radius accessor for each node,
      * and returns this force.
      *
@@ -1262,8 +1194,8 @@ export interface ForceRadial<NodeDatum extends SimulationNodeDatum>
      *
      * @param radius Constant radius of the circle to be used for all nodes.
      */
-  radius(radius: number): this;
-  /**
+    radius(radius: number): this;
+    /**
      * Set the radius accessor for the circle to the specified function, re-evaluates the radius accessor for each node,
      * and returns this force.
      *
@@ -1274,13 +1206,13 @@ export interface ForceRadial<NodeDatum extends SimulationNodeDatum>
      * @param radius A radius accessor function for the circle which is invoked for each node in the simulation, being passed the node, its zero-based index and the complete array of nodes.
      * The function returns the radius of the circle.
      */
-  radius(radius: (d: NodeDatum, i: number, data: NodeDatum[]) => number): this;
+    radius(radius: (d: NodeDatum, i: number, data: NodeDatum[]) => number): this;
 
-  /**
+    /**
      * Return the current x-accessor for the circle center, which defaults to a function returning 0 for all nodes.
      */
-  x(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
-  /**
+    x(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
+    /**
      * Set the x-coordinate accessor for the circle center to the specified number, re-evaluates the x-accessor for each node,
      * and returns this force.
      *
@@ -1292,8 +1224,8 @@ export interface ForceRadial<NodeDatum extends SimulationNodeDatum>
      *
      * @param x Constant x-coordinate of the circle center to be used for all nodes.
      */
-  x(x: number): this;
-  /**
+    x(x: number): this;
+    /**
      * Set the x-coordinate accessor to the specified function, re-evaluates the x-accessor for each node,
      * and returns this force.
      *
@@ -1304,13 +1236,13 @@ export interface ForceRadial<NodeDatum extends SimulationNodeDatum>
      * @param x A x-coordinate accessor function for the circle center which is invoked for each node in the simulation, being passed the node, its zero-based index and the complete array of nodes.
      * The function returns the x-coordinate of the circle center.
      */
-  x(x: (d: NodeDatum, i: number, data: NodeDatum[]) => number): this;
+    x(x: (d: NodeDatum, i: number, data: NodeDatum[]) => number): this;
 
-  /**
+    /**
      * Return the current y-accessor for the circle center, which defaults to a function returning 0 for all nodes.
      */
-  y(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
-  /**
+    y(): (d: NodeDatum, i: number, data: NodeDatum[]) => number;
+    /**
      * Set the y-coordinate accessor for the circle center to the specified number, re-evaluates the y-accessor for each node,
      * and returns this force.
      *
@@ -1322,8 +1254,8 @@ export interface ForceRadial<NodeDatum extends SimulationNodeDatum>
      *
      * @param y Constant y-coordinate of the circle center to be used for all nodes.
      */
-  y(y: number): this;
-  /**
+    y(y: number): this;
+    /**
      * Set the y-coordinate accessor to the specified function, re-evaluates the y-accessor for each node,
      * and returns this force.
      *
@@ -1334,7 +1266,7 @@ export interface ForceRadial<NodeDatum extends SimulationNodeDatum>
      * @param y A y-coordinate accessor function for the circle center which is invoked for each node in the simulation, being passed the node, its zero-based index and the complete array of nodes.
      * The function returns the y-coordinate of the circle center.
      */
-  y(y: (d: NodeDatum, i: number, data: NodeDatum[]) => number): this;
+    y(y: (d: NodeDatum, i: number, data: NodeDatum[]) => number): this;
 }
 
 /**
@@ -1346,8 +1278,5 @@ export interface ForceRadial<NodeDatum extends SimulationNodeDatum>
  *
  * The generic refers to the type of data for a node.
  */
-export function forceRadial<NodeDatum extends SimulationNodeDatum>(
-  radius: number | ((d: NodeDatum, i: number, data: NodeDatum[]) => number),
-  x?: number | ((d: NodeDatum, i: number, data: NodeDatum[]) => number),
-  y?: number | ((d: NodeDatum, i: number, data: NodeDatum[]) => number),
-): ForceRadial<NodeDatum>;
+export function forceRadial<NodeDatum extends SimulationNodeDatum>(radius: number | ((d: NodeDatum, i: number, data: NodeDatum[]) => number),
+    x?: number | ((d: NodeDatum, i: number, data: NodeDatum[]) => number), y?: number | ((d: NodeDatum, i: number, data: NodeDatum[]) => number)): ForceRadial<NodeDatum>;

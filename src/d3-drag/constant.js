@@ -1,2 +1,2 @@
 /// <reference lib="dom" />
-export default (x) => () => x;
+export default x => () => x;

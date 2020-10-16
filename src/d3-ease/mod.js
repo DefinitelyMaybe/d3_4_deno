@@ -1,66 +1,68 @@
 /// <reference types="./mod.d.ts" />
 /// <reference lib="dom" />
-export { linear as easeLinear } from "./linear.js";
+export {
+  linear as easeLinear
+} from "./linear.js";
 
 export {
-  quadIn as easeQuadIn,
   quadInOut as easeQuad,
-  quadInOut as easeQuadInOut,
+  quadIn as easeQuadIn,
   quadOut as easeQuadOut,
+  quadInOut as easeQuadInOut
 } from "./quad.js";
 
 export {
-  cubicIn as easeCubicIn,
   cubicInOut as easeCubic,
-  cubicInOut as easeCubicInOut,
+  cubicIn as easeCubicIn,
   cubicOut as easeCubicOut,
+  cubicInOut as easeCubicInOut
 } from "./cubic.js";
 
 export {
-  polyIn as easePolyIn,
   polyInOut as easePoly,
-  polyInOut as easePolyInOut,
+  polyIn as easePolyIn,
   polyOut as easePolyOut,
+  polyInOut as easePolyInOut
 } from "./poly.js";
 
 export {
-  sinIn as easeSinIn,
   sinInOut as easeSin,
-  sinInOut as easeSinInOut,
+  sinIn as easeSinIn,
   sinOut as easeSinOut,
+  sinInOut as easeSinInOut
 } from "./sin.js";
 
 export {
-  expIn as easeExpIn,
   expInOut as easeExp,
-  expInOut as easeExpInOut,
+  expIn as easeExpIn,
   expOut as easeExpOut,
+  expInOut as easeExpInOut
 } from "./exp.js";
 
 export {
-  circleIn as easeCircleIn,
   circleInOut as easeCircle,
-  circleInOut as easeCircleInOut,
+  circleIn as easeCircleIn,
   circleOut as easeCircleOut,
+  circleInOut as easeCircleInOut
 } from "./circle.js";
 
 export {
-  bounceIn as easeBounceIn,
-  bounceInOut as easeBounceInOut,
   bounceOut as easeBounce,
+  bounceIn as easeBounceIn,
   bounceOut as easeBounceOut,
+  bounceInOut as easeBounceInOut
 } from "./bounce.js";
 
 export {
-  backIn as easeBackIn,
   backInOut as easeBack,
-  backInOut as easeBackInOut,
+  backIn as easeBackIn,
   backOut as easeBackOut,
+  backInOut as easeBackInOut
 } from "./back.js";
 
 export {
-  elasticIn as easeElasticIn,
-  elasticInOut as easeElasticInOut,
   elasticOut as easeElastic,
+  elasticIn as easeElasticIn,
   elasticOut as easeElasticOut,
+  elasticInOut as easeElasticInOut
 } from "./elastic.js";

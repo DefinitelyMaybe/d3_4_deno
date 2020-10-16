@@ -4,7 +4,7 @@ export default function superset(values, other) {
   for (const o of other) {
     if (set.has(o)) continue;
     let value, done;
-    while (({ value, done } = iterator.next())) {
+    while (({value, done} = iterator.next())) {
       if (done) return false;
       set.add(value);
       if (Object.is(o, value)) break;

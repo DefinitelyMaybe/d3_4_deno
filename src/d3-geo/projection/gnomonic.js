@@ -1,6 +1,6 @@
 /// <reference lib="dom" />
-import { atan, cos, sin } from "../math.js";
-import { azimuthalInvert } from "./azimuthal.js";
+import {atan, cos, sin} from "../math.js";
+import {azimuthalInvert} from "./azimuthal.js";
 import projection from "./index.js";
 
 export function gnomonicRaw(x, y) {
@@ -10,8 +10,8 @@ export function gnomonicRaw(x, y) {
 
 gnomonicRaw.invert = azimuthalInvert(atan);
 
-export default function () {
+export default function() {
   return projection(gnomonicRaw)
-    .scale(144.049)
-    .clipAngle(60);
+      .scale(144.049)
+      .clipAngle(60);
 }

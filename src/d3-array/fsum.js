@@ -41,7 +41,7 @@ export class Adder {
   }
 }
 
-export default function (values, valueof) {
+export default function(values, valueof) {
   const adder = new Adder();
   if (valueof === undefined) {
     for (let value of values) {

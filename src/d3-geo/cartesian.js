@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-import { asin, atan2, cos, sin, sqrt } from "./math.js";
+import {asin, atan2, cos, sin, sqrt} from "./math.js";
 
 export function spherical(cartesian) {
   return [atan2(cartesian[1], cartesian[0]), asin(cartesian[2])];
@@ -15,11 +15,7 @@ export function cartesianDot(a, b) {
 }
 
 export function cartesianCross(a, b) {
-  return [
-    a[1] * b[2] - a[2] * b[1],
-    a[2] * b[0] - a[0] * b[2],
-    a[0] * b[1] - a[1] * b[0],
-  ];
+  return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
 }
 
 // TODO return a

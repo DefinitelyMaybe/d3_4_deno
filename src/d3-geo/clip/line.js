@@ -1,14 +1,14 @@
 /// <reference lib="dom" />
-export default function (a, b, x0, y0, x1, y1) {
+export default function(a, b, x0, y0, x1, y1) {
   var ax = a[0],
-    ay = a[1],
-    bx = b[0],
-    by = b[1],
-    t0 = 0,
-    t1 = 1,
-    dx = bx - ax,
-    dy = by - ay,
-    r;
+      ay = a[1],
+      bx = b[0],
+      by = b[1],
+      t0 = 0,
+      t1 = 1,
+      dx = bx - ax,
+      dy = by - ay,
+      r;
 
   r = x0 - ax;
   if (!dx && r > 0) return;

@@ -4,8 +4,8 @@
 // TODO Optimize arguments.
 export function blurX(source, target, r) {
   var n = source.width,
-    m = source.height,
-    w = (r << 1) + 1;
+      m = source.height,
+      w = (r << 1) + 1;
   for (var j = 0; j < m; ++j) {
     for (var i = 0, sr = 0; i < n + r; ++i) {
       if (i < n) {
@@ -26,8 +26,8 @@ export function blurX(source, target, r) {
 // TODO Optimize arguments.
 export function blurY(source, target, r) {
   var n = source.width,
-    m = source.height,
-    w = (r << 1) + 1;
+      m = source.height,
+      w = (r << 1) + 1;
   for (var i = 0; i < n; ++i) {
     for (var j = 0, sr = 0; j < m + r; ++j) {
       if (j < m) {

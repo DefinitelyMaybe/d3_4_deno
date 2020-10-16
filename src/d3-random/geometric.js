@@ -7,7 +7,7 @@ export default (function sourceRandomGeometric(source) {
     if (p === 0) return () => Infinity;
     if (p === 1) return () => 1;
     p = Math.log1p(-p);
-    return function () {
+    return function() {
       return 1 + Math.floor(Math.log1p(-source()) / p);
     };
   }

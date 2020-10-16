@@ -4,6 +4,6 @@ function remove() {
   if (parent) parent.removeChild(this);
 }
 
-export default function () {
+export default function() {
   return this.each(remove);
 }

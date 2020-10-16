@@ -7,7 +7,7 @@ export default (function sourceRandomUniform(source) {
     max = max == null ? 1 : +max;
     if (arguments.length === 1) max = min, min = 0;
     else max -= min;
-    return function () {
+    return function() {
       return source() * max + min;
     };
   }

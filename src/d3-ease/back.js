@@ -29,9 +29,7 @@ export var backInOut = (function custom(s) {
   s = +s;
 
   function backInOut(t) {
-    return ((t *= 2) < 1
-      ? t * t * ((s + 1) * t - s)
-      : (t -= 2) * t * ((s + 1) * t + s) + 2) / 2;
+    return ((t *= 2) < 1 ? t * t * ((s + 1) * t - s) : (t -= 2) * t * ((s + 1) * t + s) + 2) / 2;
   }
 
   backInOut.overshoot = custom;

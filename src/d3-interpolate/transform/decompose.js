@@ -7,16 +7,14 @@ export var identity = {
   rotate: 0,
   skewX: 0,
   scaleX: 1,
-  scaleY: 1,
+  scaleY: 1
 };
 
-export default function (a, b, c, d, e, f) {
+export default function(a, b, c, d, e, f) {
   var scaleX, scaleY, skewX;
   if (scaleX = Math.sqrt(a * a + b * b)) a /= scaleX, b /= scaleX;
   if (skewX = a * c + b * d) c -= a * skewX, d -= b * skewX;
-  if (scaleY = Math.sqrt(c * c + d * d)) {
-    c /= scaleY, d /= scaleY, skewX /= scaleY;
-  }
+  if (scaleY = Math.sqrt(c * c + d * d)) c /= scaleY, d /= scaleY, skewX /= scaleY;
   if (a * d < b * c) a = -a, b = -b, skewX = -skewX, scaleX = -scaleX;
   return {
     translateX: e,
@@ -24,6 +22,6 @@ export default function (a, b, c, d, e, f) {
     rotate: Math.atan2(b, a) * degrees,
     skewX: Math.atan(skewX) * degrees,
     scaleX: scaleX,
-    scaleY: scaleY,
+    scaleY: scaleY
   };
 }

@@ -1,19 +1,19 @@
 /// <reference lib="dom" />
-import { dispatch } from "../d3-dispatch/mod.js";
-import { dragDisable, dragEnable } from "../d3-drag/mod.js";
-import { interpolate } from "../d3-interpolate/mod.js";
-import { pointer, select } from "../d3-selection/mod.js";
-import { interrupt } from "../d3-transition/mod.js";
+import {dispatch} from "../d3-dispatch/mod.js";
+import {dragDisable, dragEnable} from "../d3-drag/mod.js";
+import {interpolate} from "../d3-interpolate/mod.js";
+import {pointer, select} from "../d3-selection/mod.js";
+import {interrupt} from "../d3-transition/mod.js";
 import constant from "./constant.js";
 import BrushEvent from "./event.js";
-import noevent, { nopropagation } from "./noevent.js";
+import noevent, {nopropagation} from "./noevent.js";
 
-var MODE_DRAG = { name: "drag" },
-  MODE_SPACE = { name: "space" },
-  MODE_HANDLE = { name: "handle" },
-  MODE_CENTER = { name: "center" };
+var MODE_DRAG = {name: "drag"},
+    MODE_SPACE = {name: "space"},
+    MODE_HANDLE = {name: "handle"},
+    MODE_CENTER = {name: "center"};
 
-const { abs, max, min } = Math;
+const {abs, max, min} = Math;
 
 function number1(e) {
   return [+e[0], +e[1]];
@@ -26,34 +26,22 @@ function number2(e) {
 var X = {
   name: "x",
   handles: ["w", "e"].map(type),
-  input: function (x, e) {
-    return x == null ? null : [[+x[0], e[0][1]], [+x[1], e[1][1]]];
-  },
-  output: function (xy) {
-    return xy && [xy[0][0], xy[1][0]];
-  },
+  input: function(x, e) { return x == null ? null : [[+x[0], e[0][1]], [+x[1], e[1][1]]]; },
+  output: function(xy) { return xy && [xy[0][0], xy[1][0]]; }
 };
 
 var Y = {
   name: "y",
   handles: ["n", "s"].map(type),
-  input: function (y, e) {
-    return y == null ? null : [[e[0][0], +y[0]], [e[1][0], +y[1]]];
-  },
-  output: function (xy) {
-    return xy && [xy[0][1], xy[1][1]];
-  },
+  input: function(y, e) { return y == null ? null : [[e[0][0], +y[0]], [e[1][0], +y[1]]]; },
+  output: function(xy) { return xy && [xy[0][1], xy[1][1]]; }
 };
 
 var XY = {
   name: "xy",
   handles: ["n", "w", "e", "s", "nw", "ne", "sw", "se"].map(type),
-  input: function (xy) {
-    return xy == null ? null : number2(xy);
-  },
-  output: function (xy) {
-    return xy;
-  },
+  input: function(xy) { return xy == null ? null : number2(xy); },
+  output: function(xy) { return xy; }
 };
 
 var cursors = {
@@ -66,7 +54,7 @@ var cursors = {
   nw: "nwse-resize",
   ne: "nesw-resize",
   se: "nwse-resize",
-  sw: "nesw-resize",
+  sw: "nesw-resize"
 };
 
 var flipX = {
@@ -75,7 +63,7 @@ var flipX = {
   nw: "ne",
   ne: "nw",
   se: "sw",
-  sw: "se",
+  sw: "se"
 };
 
 var flipY = {
@@ -84,7 +72,7 @@ var flipY = {
   nw: "sw",
   ne: "se",
   se: "ne",
-  sw: "nw",
+  sw: "nw"
 };
 
 var signsX = {
@@ -97,7 +85,7 @@ var signsX = {
   nw: -1,
   ne: +1,
   se: +1,
-  sw: -1,
+  sw: -1
 };
 
 var signsY = {
@@ -110,11 +98,11 @@ var signsY = {
   nw: -1,
   ne: -1,
   se: +1,
-  sw: +1,
+  sw: +1
 };
 
 function type(t) {
-  return { type: t };
+  return {type: t};
 }
 
 // Ignore right-click, since that should open the context menu.
@@ -142,8 +130,8 @@ function local(node) {
 }
 
 function empty(extent) {
-  return extent[0][0] === extent[1][0] ||
-    extent[0][1] === extent[1][1];
+  return extent[0][0] === extent[1][0]
+      || extent[0][1] === extent[1][1];
 }
 
 export function brushSelection(node) {
@@ -159,182 +147,146 @@ export function brushY() {
   return brush(Y);
 }
 
-export default function () {
+export default function() {
   return brush(XY);
 }
 
 function brush(dim) {
   var extent = defaultExtent,
-    filter = defaultFilter,
-    touchable = defaultTouchable,
-    keys = true,
-    listeners = dispatch("start", "brush", "end"),
-    handleSize = 6,
-    touchending;
+      filter = defaultFilter,
+      touchable = defaultTouchable,
+      keys = true,
+      listeners = dispatch("start", "brush", "end"),
+      handleSize = 6,
+      touchending;
 
   function brush(group) {
     var overlay = group
-      .property("__brush", initialize)
+        .property("__brush", initialize)
       .selectAll(".overlay")
       .data([type("overlay")]);
 
     overlay.enter().append("rect")
-      .attr("class", "overlay")
-      .attr("pointer-events", "all")
-      .attr("cursor", cursors.overlay)
+        .attr("class", "overlay")
+        .attr("pointer-events", "all")
+        .attr("cursor", cursors.overlay)
       .merge(overlay)
-      .each(function () {
-        var extent = local(this).extent;
-        select(this)
-          .attr("x", extent[0][0])
-          .attr("y", extent[0][1])
-          .attr("width", extent[1][0] - extent[0][0])
-          .attr("height", extent[1][1] - extent[0][1]);
-      });
+        .each(function() {
+          var extent = local(this).extent;
+          select(this)
+              .attr("x", extent[0][0])
+              .attr("y", extent[0][1])
+              .attr("width", extent[1][0] - extent[0][0])
+              .attr("height", extent[1][1] - extent[0][1]);
+        });
 
     group.selectAll(".selection")
       .data([type("selection")])
       .enter().append("rect")
-      .attr("class", "selection")
-      .attr("cursor", cursors.selection)
-      .attr("fill", "#777")
-      .attr("fill-opacity", 0.3)
-      .attr("stroke", "#fff")
-      .attr("shape-rendering", "crispEdges");
+        .attr("class", "selection")
+        .attr("cursor", cursors.selection)
+        .attr("fill", "#777")
+        .attr("fill-opacity", 0.3)
+        .attr("stroke", "#fff")
+        .attr("shape-rendering", "crispEdges");
 
     var handle = group.selectAll(".handle")
-      .data(dim.handles, function (d) {
-        return d.type;
-      });
+      .data(dim.handles, function(d) { return d.type; });
 
     handle.exit().remove();
 
     handle.enter().append("rect")
-      .attr("class", function (d) {
-        return "handle handle--" + d.type;
-      })
-      .attr("cursor", function (d) {
-        return cursors[d.type];
-      });
+        .attr("class", function(d) { return "handle handle--" + d.type; })
+        .attr("cursor", function(d) { return cursors[d.type]; });
 
     group
-      .each(redraw)
-      .attr("fill", "none")
-      .attr("pointer-events", "all")
-      .on("mousedown.brush", started)
+        .each(redraw)
+        .attr("fill", "none")
+        .attr("pointer-events", "all")
+        .on("mousedown.brush", started)
       .filter(touchable)
-      .on("touchstart.brush", started)
-      .on("touchmove.brush", touchmoved)
-      .on("touchend.brush touchcancel.brush", touchended)
-      .style("touch-action", "none")
-      .style("-webkit-tap-highlight-color", "rgba(0,0,0,0)");
+        .on("touchstart.brush", started)
+        .on("touchmove.brush", touchmoved)
+        .on("touchend.brush touchcancel.brush", touchended)
+        .style("touch-action", "none")
+        .style("-webkit-tap-highlight-color", "rgba(0,0,0,0)");
   }
 
-  brush.move = function (group, selection) {
+  brush.move = function(group, selection) {
     if (group.tween) {
       group
-        .on("start.brush", function (event) {
-          emitter(this, arguments).beforestart().start(event);
-        })
-        .on("interrupt.brush end.brush", function (event) {
-          emitter(this, arguments).end(event);
-        })
-        .tween("brush", function () {
-          var that = this,
-            state = that.__brush,
-            emit = emitter(that, arguments),
-            selection0 = state.selection,
-            selection1 = dim.input(
-              typeof selection === "function"
-                ? selection.apply(this, arguments)
-                : selection,
-              state.extent,
-            ),
-            i = interpolate(selection0, selection1);
+          .on("start.brush", function(event) { emitter(this, arguments).beforestart().start(event); })
+          .on("interrupt.brush end.brush", function(event) { emitter(this, arguments).end(event); })
+          .tween("brush", function() {
+            var that = this,
+                state = that.__brush,
+                emit = emitter(that, arguments),
+                selection0 = state.selection,
+                selection1 = dim.input(typeof selection === "function" ? selection.apply(this, arguments) : selection, state.extent),
+                i = interpolate(selection0, selection1);
 
-          function tween(t) {
-            state.selection = t === 1 && selection1 === null ? null : i(t);
-            redraw.call(that);
-            emit.brush();
-          }
+            function tween(t) {
+              state.selection = t === 1 && selection1 === null ? null : i(t);
+              redraw.call(that);
+              emit.brush();
+            }
 
-          return selection0 !== null && selection1 !== null ? tween : tween(1);
-        });
+            return selection0 !== null && selection1 !== null ? tween : tween(1);
+          });
     } else {
       group
-        .each(function () {
-          var that = this,
-            args = arguments,
-            state = that.__brush,
-            selection1 = dim.input(
-              typeof selection === "function"
-                ? selection.apply(that, args)
-                : selection,
-              state.extent,
-            ),
-            emit = emitter(that, args).beforestart();
+          .each(function() {
+            var that = this,
+                args = arguments,
+                state = that.__brush,
+                selection1 = dim.input(typeof selection === "function" ? selection.apply(that, args) : selection, state.extent),
+                emit = emitter(that, args).beforestart();
 
-          interrupt(that);
-          state.selection = selection1 === null ? null : selection1;
-          redraw.call(that);
-          emit.start().brush().end();
-        });
+            interrupt(that);
+            state.selection = selection1 === null ? null : selection1;
+            redraw.call(that);
+            emit.start().brush().end();
+          });
     }
   };
 
-  brush.clear = function (group) {
+  brush.clear = function(group) {
     brush.move(group, null);
   };
 
   function redraw() {
     var group = select(this),
-      selection = local(this).selection;
+        selection = local(this).selection;
 
     if (selection) {
       group.selectAll(".selection")
-        .style("display", null)
-        .attr("x", selection[0][0])
-        .attr("y", selection[0][1])
-        .attr("width", selection[1][0] - selection[0][0])
-        .attr("height", selection[1][1] - selection[0][1]);
+          .style("display", null)
+          .attr("x", selection[0][0])
+          .attr("y", selection[0][1])
+          .attr("width", selection[1][0] - selection[0][0])
+          .attr("height", selection[1][1] - selection[0][1]);
 
       group.selectAll(".handle")
-        .style("display", null)
-        .attr("x", function (d) {
-          return d.type[d.type.length - 1] === "e"
-            ? selection[1][0] - handleSize / 2
-            : selection[0][0] - handleSize / 2;
-        })
-        .attr("y", function (d) {
-          return d.type[0] === "s"
-            ? selection[1][1] - handleSize / 2
-            : selection[0][1] - handleSize / 2;
-        })
-        .attr("width", function (d) {
-          return d.type === "n" || d.type === "s"
-            ? selection[1][0] - selection[0][0] + handleSize
-            : handleSize;
-        })
-        .attr("height", function (d) {
-          return d.type === "e" || d.type === "w"
-            ? selection[1][1] - selection[0][1] + handleSize
-            : handleSize;
-        });
-    } else {
+          .style("display", null)
+          .attr("x", function(d) { return d.type[d.type.length - 1] === "e" ? selection[1][0] - handleSize / 2 : selection[0][0] - handleSize / 2; })
+          .attr("y", function(d) { return d.type[0] === "s" ? selection[1][1] - handleSize / 2 : selection[0][1] - handleSize / 2; })
+          .attr("width", function(d) { return d.type === "n" || d.type === "s" ? selection[1][0] - selection[0][0] + handleSize : handleSize; })
+          .attr("height", function(d) { return d.type === "e" || d.type === "w" ? selection[1][1] - selection[0][1] + handleSize : handleSize; });
+    }
+
+    else {
       group.selectAll(".selection,.handle")
-        .style("display", "none")
-        .attr("x", null)
-        .attr("y", null)
-        .attr("width", null)
-        .attr("height", null);
+          .style("display", "none")
+          .attr("x", null)
+          .attr("y", null)
+          .attr("width", null)
+          .attr("height", null);
     }
   }
 
   function emitter(that, args, clean) {
     var emit = that.__brush.emitter;
-    return emit && (!clean || !emit.clean)
-      ? emit
-      : new Emitter(that, args, clean);
+    return emit && (!clean || !emit.clean) ? emit : new Emitter(that, args, clean);
   }
 
   function Emitter(that, args, clean) {
@@ -346,26 +298,24 @@ function brush(dim) {
   }
 
   Emitter.prototype = {
-    beforestart: function () {
+    beforestart: function() {
       if (++this.active === 1) this.state.emitter = this, this.starting = true;
       return this;
     },
-    start: function (event, mode) {
+    start: function(event, mode) {
       if (this.starting) this.starting = false, this.emit("start", event, mode);
       else this.emit("brush", event);
       return this;
     },
-    brush: function (event, mode) {
+    brush: function(event, mode) {
       this.emit("brush", event, mode);
       return this;
     },
-    end: function (event, mode) {
-      if (--this.active === 0) {
-        delete this.state.emitter, this.emit("end", event, mode);
-      }
+    end: function(event, mode) {
+      if (--this.active === 0) delete this.state.emitter, this.emit("end", event, mode);
       return this;
     },
-    emit: function (type, event, mode) {
+    emit: function(type, event, mode) {
       var d = select(this.that).datum();
       listeners.call(
         type,
@@ -375,11 +325,11 @@ function brush(dim) {
           target: brush,
           selection: dim.output(this.state.selection),
           mode,
-          dispatch: listeners,
+          dispatch: listeners
         }),
-        d,
+        d
       );
-    },
+    }
   };
 
   function started(event) {
@@ -387,51 +337,41 @@ function brush(dim) {
     if (!filter.apply(this, arguments)) return;
 
     var that = this,
-      type = event.target.__data__.type,
-      mode = (keys && event.metaKey ? type = "overlay" : type) === "selection"
-        ? MODE_DRAG
-        : (keys && event.altKey ? MODE_CENTER : MODE_HANDLE),
-      signX = dim === Y ? null : signsX[type],
-      signY = dim === X ? null : signsY[type],
-      state = local(that),
-      extent = state.extent,
-      selection = state.selection,
-      W = extent[0][0],
-      w0,
-      w1,
-      N = extent[0][1],
-      n0,
-      n1,
-      E = extent[1][0],
-      e0,
-      e1,
-      S = extent[1][1],
-      s0,
-      s1,
-      dx = 0,
-      dy = 0,
-      moving,
-      shifting = signX && signY && keys && event.shiftKey,
-      lockX,
-      lockY,
-      points = Array.from(event.touches || [event], (t) => {
-        const i = t.identifier;
-        t = pointer(t, that);
-        t.point0 = t.slice();
-        t.identifier = i;
-        return t;
-      });
+        type = event.target.__data__.type,
+        mode = (keys && event.metaKey ? type = "overlay" : type) === "selection" ? MODE_DRAG : (keys && event.altKey ? MODE_CENTER : MODE_HANDLE),
+        signX = dim === Y ? null : signsX[type],
+        signY = dim === X ? null : signsY[type],
+        state = local(that),
+        extent = state.extent,
+        selection = state.selection,
+        W = extent[0][0], w0, w1,
+        N = extent[0][1], n0, n1,
+        E = extent[1][0], e0, e1,
+        S = extent[1][1], s0, s1,
+        dx = 0,
+        dy = 0,
+        moving,
+        shifting = signX && signY && keys && event.shiftKey,
+        lockX,
+        lockY,
+        points = Array.from(event.touches || [event], t => {
+          const i = t.identifier;
+          t = pointer(t, that);
+          t.point0 = t.slice();
+          t.identifier = i;
+          return t;
+        });
 
     if (type === "overlay") {
       if (selection) moving = true;
       const pts = [points[0], points[1] || points[0]];
       state.selection = selection = [[
-        w0 = dim === Y ? W : min(pts[0][0], pts[1][0]),
-        n0 = dim === X ? N : min(pts[0][1], pts[1][1]),
-      ], [
-        e0 = dim === Y ? E : max(pts[0][0], pts[1][0]),
-        s0 = dim === X ? S : max(pts[0][1], pts[1][1]),
-      ]];
+          w0 = dim === Y ? W : min(pts[0][0], pts[1][0]),
+          n0 = dim === X ? N : min(pts[0][1], pts[1][1])
+        ], [
+          e0 = dim === Y ? E : max(pts[0][0], pts[1][0]),
+          s0 = dim === X ? S : max(pts[0][1], pts[1][1])
+        ]];
       if (points.length > 1) move();
     } else {
       w0 = selection[0][0];
@@ -446,10 +386,10 @@ function brush(dim) {
     s1 = s0;
 
     var group = select(that)
-      .attr("pointer-events", "none");
+        .attr("pointer-events", "none");
 
     var overlay = group.selectAll(".overlay")
-      .attr("cursor", cursors[type]);
+        .attr("cursor", cursors[type]);
 
     interrupt(that);
     var emit = emitter(that, arguments, true).beforestart();
@@ -459,13 +399,11 @@ function brush(dim) {
       emit.ended = ended;
     } else {
       var view = select(event.view)
-        .on("mousemove.brush", moved, true)
-        .on("mouseup.brush", ended, true);
-      if (keys) {
-        view
+          .on("mousemove.brush", moved, true)
+          .on("mouseup.brush", ended, true);
+      if (keys) view
           .on("keydown.brush", keydowned, true)
-          .on("keyup.brush", keyupped, true);
-      }
+          .on("keyup.brush", keyupped, true)
 
       dragDisable(event.view);
     }
@@ -475,21 +413,18 @@ function brush(dim) {
 
     function moved(event) {
       for (const p of event.changedTouches || [event]) {
-        for (const d of points) {
+        for (const d of points)
           if (d.identifier === p.identifier) d.cur = pointer(p, that);
-        }
       }
       if (shifting && !lockX && !lockY && points.length === 1) {
         const point = points[0];
-        if (abs(point.cur[0] - point[0]) > abs(point.cur[1] - point[1])) {
+        if (abs(point.cur[0] - point[0]) > abs(point.cur[1] - point[1]))
           lockY = true;
-        } else {
+        else
           lockX = true;
-        }
       }
-      for (const point of points) {
+      for (const point of points)
         if (point.cur) point[0] = point.cur[0], point[1] = point.cur[1];
-      }
       moving = true;
       noevent(event);
       move(event);
@@ -505,49 +440,25 @@ function brush(dim) {
       switch (mode) {
         case MODE_SPACE:
         case MODE_DRAG: {
-          if (signX) {
-            dx = max(W - w0, min(E - e0, dx)), w1 = w0 + dx, e1 = e0 + dx;
-          }
-          if (signY) {
-            dy = max(N - n0, min(S - s0, dy)), n1 = n0 + dy, s1 = s0 + dy;
-          }
+          if (signX) dx = max(W - w0, min(E - e0, dx)), w1 = w0 + dx, e1 = e0 + dx;
+          if (signY) dy = max(N - n0, min(S - s0, dy)), n1 = n0 + dy, s1 = s0 + dy;
           break;
         }
         case MODE_HANDLE: {
           if (points[1]) {
-            if (signX) {
-              w1 = max(W, min(E, points[0][0])),
-                e1 = max(W, min(E, points[1][0])),
-                signX = 1;
-            }
-            if (signY) {
-              n1 = max(N, min(S, points[0][1])),
-                s1 = max(N, min(S, points[1][1])),
-                signY = 1;
-            }
+            if (signX) w1 = max(W, min(E, points[0][0])), e1 = max(W, min(E, points[1][0])), signX = 1;
+            if (signY) n1 = max(N, min(S, points[0][1])), s1 = max(N, min(S, points[1][1])), signY = 1;
           } else {
-            if (signX < 0) {
-              dx = max(W - w0, min(E - w0, dx)), w1 = w0 + dx, e1 = e0;
-            } else if (signX > 0) {
-              dx = max(W - e0, min(E - e0, dx)), w1 = w0, e1 = e0 + dx;
-            }
-            if (signY < 0) {
-              dy = max(N - n0, min(S - n0, dy)), n1 = n0 + dy, s1 = s0;
-            } else if (signY > 0) {
-              dy = max(N - s0, min(S - s0, dy)), n1 = n0, s1 = s0 + dy;
-            }
+            if (signX < 0) dx = max(W - w0, min(E - w0, dx)), w1 = w0 + dx, e1 = e0;
+            else if (signX > 0) dx = max(W - e0, min(E - e0, dx)), w1 = w0, e1 = e0 + dx;
+            if (signY < 0) dy = max(N - n0, min(S - n0, dy)), n1 = n0 + dy, s1 = s0;
+            else if (signY > 0) dy = max(N - s0, min(S - s0, dy)), n1 = n0, s1 = s0 + dy;
           }
           break;
         }
         case MODE_CENTER: {
-          if (signX) {
-            w1 = max(W, min(E, w0 - dx * signX)),
-              e1 = max(W, min(E, e0 + dx * signX));
-          }
-          if (signY) {
-            n1 = max(N, min(S, n0 - dy * signY)),
-              s1 = max(N, min(S, s0 + dy * signY));
-          }
+          if (signX) w1 = max(W, min(E, w0 - dx * signX)), e1 = max(W, min(E, e0 + dx * signX));
+          if (signY) n1 = max(N, min(S, n0 - dy * signY)), s1 = max(N, min(S, s0 + dy * signY));
           break;
         }
       }
@@ -570,12 +481,10 @@ function brush(dim) {
       if (lockX) w1 = selection[0][0], e1 = selection[1][0];
       if (lockY) n1 = selection[0][1], s1 = selection[1][1];
 
-      if (
-        selection[0][0] !== w1 ||
-        selection[0][1] !== n1 ||
-        selection[1][0] !== e1 ||
-        selection[1][1] !== s1
-      ) {
+      if (selection[0][0] !== w1
+          || selection[0][1] !== n1
+          || selection[1][0] !== e1
+          || selection[1][1] !== s1) {
         state.selection = [[w1, n1], [e1, s1]];
         redraw.call(that);
         emit.brush(event, mode.name);
@@ -587,15 +496,10 @@ function brush(dim) {
       if (event.touches) {
         if (event.touches.length) return;
         if (touchending) clearTimeout(touchending);
-        touchending = setTimeout(function () {
-          touchending = null;
-        }, 500); // Ghost clicks are delayed!
+        touchending = setTimeout(function() { touchending = null; }, 500); // Ghost clicks are delayed!
       } else {
         dragEnable(event.view, moving);
-        view.on(
-          "keydown.brush keyup.brush mousemove.brush mouseup.brush",
-          null,
-        );
+        view.on("keydown.brush keyup.brush mousemove.brush mouseup.brush", null);
       }
       group.attr("pointer-events", "all");
       overlay.attr("cursor", cursors.overlay);
@@ -621,18 +525,15 @@ function brush(dim) {
         }
         case 32: { // SPACE; takes priority over ALT
           if (mode === MODE_HANDLE || mode === MODE_CENTER) {
-            if (signX < 0) e0 = e1 - dx;
-            else if (signX > 0) w0 = w1 - dx;
-            if (signY < 0) s0 = s1 - dy;
-            else if (signY > 0) n0 = n1 - dy;
+            if (signX < 0) e0 = e1 - dx; else if (signX > 0) w0 = w1 - dx;
+            if (signY < 0) s0 = s1 - dy; else if (signY > 0) n0 = n1 - dy;
             mode = MODE_SPACE;
             overlay.attr("cursor", cursors.selection);
             move();
           }
           break;
         }
-        default:
-          return;
+        default: return;
       }
       noevent(event);
     }
@@ -648,10 +549,8 @@ function brush(dim) {
         }
         case 18: { // ALT
           if (mode === MODE_CENTER) {
-            if (signX < 0) e0 = e1;
-            else if (signX > 0) w0 = w1;
-            if (signY < 0) s0 = s1;
-            else if (signY > 0) n0 = n1;
+            if (signX < 0) e0 = e1; else if (signX > 0) w0 = w1;
+            if (signY < 0) s0 = s1; else if (signY > 0) n0 = n1;
             mode = MODE_HANDLE;
             move();
           }
@@ -664,10 +563,8 @@ function brush(dim) {
               if (signY) s0 = s1 - dy * signY, n0 = n1 + dy * signY;
               mode = MODE_CENTER;
             } else {
-              if (signX < 0) e0 = e1;
-              else if (signX > 0) w0 = w1;
-              if (signY < 0) s0 = s1;
-              else if (signY > 0) n0 = n1;
+              if (signX < 0) e0 = e1; else if (signX > 0) w0 = w1;
+              if (signY < 0) s0 = s1; else if (signY > 0) n0 = n1;
               mode = MODE_HANDLE;
             }
             overlay.attr("cursor", cursors[type]);
@@ -675,8 +572,7 @@ function brush(dim) {
           }
           break;
         }
-        default:
-          return;
+        default: return;
       }
       noevent(event);
     }
@@ -691,39 +587,33 @@ function brush(dim) {
   }
 
   function initialize() {
-    var state = this.__brush || { selection: null };
+    var state = this.__brush || {selection: null};
     state.extent = number2(extent.apply(this, arguments));
     state.dim = dim;
     return state;
   }
 
-  brush.extent = function (_) {
-    return arguments.length
-      ? (extent = typeof _ === "function" ? _ : constant(number2(_)), brush)
-      : extent;
+  brush.extent = function(_) {
+    return arguments.length ? (extent = typeof _ === "function" ? _ : constant(number2(_)), brush) : extent;
   };
 
-  brush.filter = function (_) {
-    return arguments.length
-      ? (filter = typeof _ === "function" ? _ : constant(!!_), brush)
-      : filter;
+  brush.filter = function(_) {
+    return arguments.length ? (filter = typeof _ === "function" ? _ : constant(!!_), brush) : filter;
   };
 
-  brush.touchable = function (_) {
-    return arguments.length
-      ? (touchable = typeof _ === "function" ? _ : constant(!!_), brush)
-      : touchable;
+  brush.touchable = function(_) {
+    return arguments.length ? (touchable = typeof _ === "function" ? _ : constant(!!_), brush) : touchable;
   };
 
-  brush.handleSize = function (_) {
+  brush.handleSize = function(_) {
     return arguments.length ? (handleSize = +_, brush) : handleSize;
   };
 
-  brush.keyModifiers = function (_) {
+  brush.keyModifiers = function(_) {
     return arguments.length ? (keys = !!_, brush) : keys;
   };
 
-  brush.on = function () {
+  brush.on = function() {
     var value = listeners.on.apply(listeners, arguments);
     return value === listeners ? brush : value;
   };

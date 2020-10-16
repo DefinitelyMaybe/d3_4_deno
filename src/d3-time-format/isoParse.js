@@ -1,6 +1,6 @@
 /// <reference lib="dom" />
-import { isoSpecifier } from "./isoFormat.js";
-import { utcParse } from "./defaultLocale.js";
+import {isoSpecifier} from "./isoFormat.js";
+import {utcParse} from "./defaultLocale.js";
 
 function parseIsoNative(string) {
   var date = new Date(string);
@@ -8,7 +8,7 @@ function parseIsoNative(string) {
 }
 
 var parseIso = +new Date("2000-01-01T00:00:00.000Z")
-  ? parseIsoNative
-  : utcParse(isoSpecifier);
+    ? parseIsoNative
+    : utcParse(isoSpecifier);
 
 export default parseIso;

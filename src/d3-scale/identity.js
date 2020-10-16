@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-import { linearish } from "./linear.js";
+import {linearish} from "./linear.js";
 import number from "./number.js";
 
 export default function identity(domain) {
@@ -11,17 +11,15 @@ export default function identity(domain) {
 
   scale.invert = scale;
 
-  scale.domain = scale.range = function (_) {
-    return arguments.length
-      ? (domain = Array.from(_, number), scale)
-      : domain.slice();
+  scale.domain = scale.range = function(_) {
+    return arguments.length ? (domain = Array.from(_, number), scale) : domain.slice();
   };
 
-  scale.unknown = function (_) {
+  scale.unknown = function(_) {
     return arguments.length ? (unknown = _, scale) : unknown;
   };
 
-  scale.copy = function () {
+  scale.copy = function() {
     return identity(domain).unknown(unknown);
   };
 

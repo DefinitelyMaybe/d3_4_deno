@@ -1,35 +1,35 @@
 /// <reference lib="dom" />
-import { Adder } from "../d3-array/mod.js";
-import { sqrt } from "../math.js";
+import {Adder} from "../../d3-array/mod.js";
+import {sqrt} from "../math.js";
 import noop from "../noop.js";
 
 var lengthSum = new Adder(),
-  lengthRing,
-  x00,
-  y00,
-  x0,
-  y0;
+    lengthRing,
+    x00,
+    y00,
+    x0,
+    y0;
 
 var lengthStream = {
   point: noop,
-  lineStart: function () {
+  lineStart: function() {
     lengthStream.point = lengthPointFirst;
   },
-  lineEnd: function () {
+  lineEnd: function() {
     if (lengthRing) lengthPoint(x00, y00);
     lengthStream.point = noop;
   },
-  polygonStart: function () {
+  polygonStart: function() {
     lengthRing = true;
   },
-  polygonEnd: function () {
+  polygonEnd: function() {
     lengthRing = null;
   },
-  result: function () {
+  result: function() {
     var length = +lengthSum;
     lengthSum = new Adder();
     return length;
-  },
+  }
 };
 
 function lengthPointFirst(x, y) {
