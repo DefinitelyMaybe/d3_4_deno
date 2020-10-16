@@ -256,17 +256,17 @@ if (!existsSync(`${d3Dir}mod.js`)) {
     await initIndex(moduleName);
   }
   // create the mod.js and mod.d.ts files
-  let modSRC = '/// <reference types="./mod.d.ts" />\n/// <reference lib="dom" />\n';
+  let modSRC = '/// <reference lib="dom" />\n';
   d3modules.forEach((name) => {
-    modSRC += `export * from "./${name}/mod.js"\n`;
+    modSRC += `// @deno-types="./${name}/mod.d.ts"\nexport * from "./${name}/mod.js"\n`;
   });
   Deno.writeTextFileSync(`${d3Dir}mod.js`, modSRC);
 
-  let modTypes = "";
-  d3modules.forEach((name) => {
-    modTypes += `export * from "./${name}/mod.d.ts"\n`;
-  });
-  Deno.writeTextFileSync(`${d3Dir}mod.d.ts`, modTypes);
+  // let modTypes = "";
+  // d3modules.forEach((name) => {
+  //   modTypes += `export * from "./${name}/mod.d.ts"\n`;
+  // });
+  // Deno.writeTextFileSync(`${d3Dir}mod.d.ts`, modTypes);
 }
 
 let c = 1
@@ -295,27 +295,35 @@ for (const entry of walkSync(d3Dir)) {
 }
 
 // lastly adjust specific files
-const geoJsonURL = `https://raw.githubusercontent.com/eugeneYWang/GeoJSON.ts/master/geojson.ts`
+const geoJsonURL = `https://raw.githubusercontent.com/caseycesari/GeoJSON.js/master/geojson.js`
+const geoJsonTypesURL = `https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/geojson/index.d.ts`
 const delaunayURL = `https://raw.githubusercontent.com/mapbox/delaunator/master/index.js`
+const delaunayTypesURL = `https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/d3-delaunay/index.d.ts`
 const d3geoFile = "d3/d3-geo/mod.d.ts"
 const d3contourFile = "d3/d3-contour/mod.d.ts"
 const delaunayFile = "d3/d3-delaunay/delaunay.js"
+
 let src = Deno.readTextFileSync(d3geoFile)
 src = src.replace(/import \* as GeoJSON from 'geojson';/g, (m)=> {
-  return m.replace(/'geojson'/g, `'${geoJsonURL}'`)
+  m = m.replace(/'geojson'/g, `'${geoJsonURL}'`)
+  m = m.replace(/^/g, `// @deno-types="${geoJsonTypesURL}"\n`)
+  return m
 })
-
 Deno.writeTextFileSync(d3geoFile, src)
 
 src = Deno.readTextFileSync(d3contourFile)
 src = src.replace(/import { MultiPolygon } from 'geojson';/g, (m)=> {
-  return m.replace(/'geojson'/g, `'${geoJsonURL}'`)
+  m = m.replace(/'geojson'/g, `'${geoJsonURL}'`)
+  m = m.replace(/^/g, `// @deno-types="${geoJsonTypesURL}"\n`)
+  return m
 })
 Deno.writeTextFileSync(d3contourFile, src)
 
 src = Deno.readTextFileSync(delaunayFile)
 src = src.replace(/import Delaunator from "delaunator";/g, (m)=> {
-  return m.replace(/"delaunator"/g, `"${delaunayURL}"`)
+  m = m.replace(/"delaunator"/g, `"${delaunayURL}"`)
+  m = m.replace(/^/g, `/// <reference types="${delaunayTypesURL}" />\n`)
+  return m
 })
 Deno.writeTextFileSync(delaunayFile, src)
 
