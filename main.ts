@@ -317,3 +317,7 @@ src = src.replace(/import Delaunator from "delaunator";/g, (m)=> {
   return m
 })
 Deno.writeTextFileSync(delaunayFile, src)
+
+Deno.run({
+  cmd: ["deno", "fmt", "d3"],
+});
