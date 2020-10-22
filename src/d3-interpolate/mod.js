@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-// @deno-types="./mod.d.ts"
+/// <reference types="./mod.d.ts" />
 export { default as interpolate } from "./value.js";
 export { default as interpolateArray } from "./array.js";
 export { default as interpolateBasis } from "./basis.js";

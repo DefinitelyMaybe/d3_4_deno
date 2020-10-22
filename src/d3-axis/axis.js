@@ -87,7 +87,9 @@ function axis(orient, scale) {
         .attr(x, k * spacing)
         .attr(
           "dy",
-          orient === top ? "0em" : orient === bottom ? "0.71em" : "0.32em",
+          orient === top ? "0em" : orient === bottom
+            ? "0.71em"
+            : "0.32em",
         ),
     );
 

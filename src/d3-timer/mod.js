@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-// @deno-types="./mod.d.ts"
+/// <reference types="./mod.d.ts" />
 export { now, timer, timerFlush } from "./timer.js";
 
 export { default as timeout } from "./timeout.js";

@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-// @deno-types="./mod.d.ts"
+/// <reference types="./mod.d.ts" />
 export { linear as easeLinear } from "./linear.js";
 
 export {

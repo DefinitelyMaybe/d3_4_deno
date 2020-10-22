@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-// @deno-types="./mod.d.ts"
+/// <reference types="./mod.d.ts" />
 export { default as create } from "./create.js";
 export { default as creator } from "./creator.js";
 export { default as local } from "./local.js";

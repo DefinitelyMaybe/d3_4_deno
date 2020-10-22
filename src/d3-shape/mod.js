@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-// @deno-types="./mod.d.ts"
+/// <reference types="./mod.d.ts" />
 export { default as arc } from "./arc.js";
 export { default as area } from "./area.js";
 export { default as line } from "./line.js";

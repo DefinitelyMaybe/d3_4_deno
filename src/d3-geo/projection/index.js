@@ -102,11 +102,13 @@ export function projectionMutator(projectAt) {
   }
 
   projection.stream = function (stream) {
-    return cache && cacheStream === stream ? cache : cache = transformRadians(
-      transformRotate(rotate)(
-        preclip(projectResample(postclip(cacheStream = stream))),
-      ),
-    );
+    return cache && cacheStream === stream
+      ? cache
+      : cache = transformRadians(
+        transformRotate(rotate)(
+          preclip(projectResample(postclip(cacheStream = stream))),
+        ),
+      );
   };
 
   projection.preclip = function (_) {

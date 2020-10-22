@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-// @deno-types="https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/d3-delaunay/index.d.ts"
+/// <reference types="https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/d3-delaunay/index.d.ts" />
 import Delaunator from "./delaunator.js";
 import Path from "./path.js";
 import Polygon from "./polygon.js";

@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-// @deno-types="./mod.d.ts"
+/// <reference types="./mod.d.ts" />
 export { default as cluster } from "./cluster.js";
 export { default as hierarchy } from "./hierarchy/index.js";
 export { default as pack } from "./pack/index.js";

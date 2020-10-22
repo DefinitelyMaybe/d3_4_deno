@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-// @deno-types="./mod.d.ts"
+/// <reference types="./mod.d.ts" />
 export { default as geoArea } from "./area.js";
 export { default as geoBounds } from "./bounds.js";
 export { default as geoCentroid } from "./centroid.js";

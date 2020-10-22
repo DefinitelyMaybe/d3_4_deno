@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-// @deno-types="./mod.d.ts"
+/// <reference types="./mod.d.ts" />
 export { default as scaleBand, point as scalePoint } from "./band.js";
 
 export { default as scaleIdentity } from "./identity.js";

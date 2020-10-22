@@ -46,8 +46,9 @@ export default function (points) {
 
   // Construct the hull polygon, removing possible duplicate endpoints.
   var skipLeft = lowerIndexes[0] === upperIndexes[0],
-    skipRight = lowerIndexes[lowerIndexes.length - 1] ===
-      upperIndexes[upperIndexes.length - 1],
+    skipRight =
+      lowerIndexes[lowerIndexes.length - 1] ===
+        upperIndexes[upperIndexes.length - 1],
     hull = [];
 
   // Add upper hull in right-to-l order.

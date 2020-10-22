@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-// @deno-types="./mod.d.ts"
+/// <reference types="./mod.d.ts" />
 export { default as polygonArea } from "./area.js";
 export { default as polygonCentroid } from "./centroid.js";
 export { default as polygonHull } from "./hull.js";

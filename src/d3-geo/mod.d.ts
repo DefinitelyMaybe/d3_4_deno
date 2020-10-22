@@ -11,7 +11,7 @@
 
 // Last module patch version validated against: 2.0.1
 
-// @deno-types="https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/geojson/index.d.ts"
+/// <reference types="https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/geojson/index.d.ts" />
 import * as GeoJSON from "https://raw.githubusercontent.com/caseycesari/GeoJSON.js/master/geojson.js";
 
 // ----------------------------------------------------------------------

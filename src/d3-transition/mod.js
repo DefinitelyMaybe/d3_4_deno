@@ -1,5 +1,5 @@
 /// <reference lib="dom" />
-// @deno-types="./mod.d.ts"
+/// <reference types="./mod.d.ts" />
 import "./selection/index.js";
 export { default as transition } from "./transition/index.js";
 export { default as active } from "./active.js";

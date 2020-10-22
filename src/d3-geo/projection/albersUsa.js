@@ -82,13 +82,15 @@ export default function () {
   };
 
   albersUsa.stream = function (stream) {
-    return cache && cacheStream === stream ? cache : cache = multiplex(
-      [
-        lower48.stream(cacheStream = stream),
-        alaska.stream(stream),
-        hawaii.stream(stream),
-      ],
-    );
+    return cache && cacheStream === stream
+      ? cache
+      : cache = multiplex(
+        [
+          lower48.stream(cacheStream = stream),
+          alaska.stream(stream),
+          hawaii.stream(stream),
+        ],
+      );
   };
 
   albersUsa.precision = function (_) {
