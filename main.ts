@@ -44,7 +44,7 @@ function fetchTypes(path: string, url: string) {
     if (res.status == 200) {
       res.text().then((text) => {
         ensureFileSync(path);
-        // text = text.replace(/^/, '/// <reference lib="dom" />\n')
+        text = text.replace(/^/, '/// <reference lib="dom" />\n')
         Deno.writeTextFileSync(path, text);
       });
     } else {
@@ -158,8 +158,7 @@ function fetchFile(path:string) {
       ensureFileSync(path + relativePathJS);
 
       // add deno ref to dom
-      // text = text.replace(/^/, `/// <reference lib="dom" />\n`);
-      // maybe we'll add this back in soon but only for specific files?
+      text = text.replace(/^/, `/// <reference lib="dom" />\n`);
 
       Deno.writeTextFileSync(path + relativePathJS, text); 
       return true
@@ -254,7 +253,7 @@ if (!existsSync(`${d3Dir}mod.js`)) {
     await initIndex(moduleName);
   }
   // create the mod.js and mod.d.ts files
-  let modSRC = ''; // /// <reference lib="dom" />\n';
+  let modSRC = '/// <reference lib="dom" />\n';
   d3modules.forEach((name) => {
     modSRC += `// @deno-types="./${name}/mod.d.ts"\nexport * from "./${name}/mod.js"\n`;
   });
