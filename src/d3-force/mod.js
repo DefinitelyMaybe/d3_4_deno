@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // @deno-types="./mod.d.ts"
 export { default as forceCenter } from "./center.js";
 export { default as forceCollide } from "./collide.js";

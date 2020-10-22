@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // @deno-types="./mod.d.ts"
 export { default as blob } from "./blob.js";
 export { default as buffer } from "./buffer.js";

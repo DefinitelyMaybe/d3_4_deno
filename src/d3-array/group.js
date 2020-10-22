@@ -1,4 +1,4 @@
-/// <reference lib="do./identity.js.js
+/// <reference lib="dom" />
 import identity from "./identity.js";
 
 export default function group(values, ...keys) {

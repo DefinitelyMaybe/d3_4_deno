@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // @deno-types="./mod.d.ts"
 export { default as schemeCategory10 } from "./categorical/category10.js";
 export { default as schemeAccent } from "./categorical/Accent.js";

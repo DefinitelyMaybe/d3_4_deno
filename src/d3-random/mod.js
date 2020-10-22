@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // @deno-types="./mod.d.ts"
 export { default as randomUniform } from "./uniform.js";
 export { default as randomInt } from "./int.js";

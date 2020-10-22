@@ -1,6 +1,6 @@
 /// <reference lib="dom" />
 // @deno-types="https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/d3-delaunay/index.d.ts"
-import Delaunator from "https://raw.githubusercontent.com/mapbox/delaunator/master/index.js";
+import Delaunator from "./delaunator.js";
 import Path from "./path.js";
 import Polygon from "./polygon.js";
 import Voronoi from "./voronoi.js";

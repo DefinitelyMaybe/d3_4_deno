@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // @deno-types="./mod.d.ts"
 export { default as arc } from "./arc.js";
 export { default as area } from "./area.js";
