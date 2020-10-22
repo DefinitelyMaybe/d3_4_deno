@@ -269,12 +269,18 @@ for (let index = 0; index < d3modules.length; index++) {
 await Promise.all(initIndices);
 
 // create the mod.js and mod.d.ts files
-let modSRC = '/// <reference lib="dom" />\n';
+let modSRC = '/// <reference lib="dom" />\n/// <reference types="./mod.d.ts" />\n';
 d3modules.forEach((name) => {
   modSRC +=
-    `/// <reference types="./${name}/mod.d.ts" />\nexport * from "./${name}/mod.js"\n`;
+    `export * from "./${name}/mod.js"\n`;
 });
 Deno.writeTextFileSync(`${d3Dir}mod.js`, modSRC);
+let modDTS = '/// <reference lib="dom" />\n';
+d3modules.forEach((name) => {
+  modDTS +=
+    `export * from "./${name}/mod.d.ts"\n`;
+});
+Deno.writeTextFileSync(`${d3Dir}mod.d.ts`, modDTS);
 
 let c = 1;
 let missing = identifyMissingFiles();
