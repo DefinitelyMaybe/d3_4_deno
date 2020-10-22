@@ -13,6 +13,8 @@ The following `tsconfig.json` may come in handy if your running into type errors
 }
 ```
 
-The repo is made by running the `main.ts` script and tested via running `deno run -c ./tsconfig.json [d3/mod.js or src/mod.js]`
+The repo is made by running the `main.ts` script and tested via running:
+
+`deno run -c ./tsconfig.json [d3/mod.js or src/mod.js]`
 
 You're welcome to create an issue or PR should the need arise :)
