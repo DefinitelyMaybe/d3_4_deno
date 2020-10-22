@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 // Type definitions for D3JS d3-transition module 2.0
 // Project: https://github.com/d3/d3-transition/, https://d3js.org/d3-transition
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>
@@ -11,13 +10,18 @@
 
 // Last module patch version validated against: 2.0.0
 
-import { ArrayLike, BaseType, Selection, ValueFn } from '../d3-selection/mod.js';
+import {
+  ArrayLike,
+  BaseType,
+  Selection,
+  ValueFn,
+} from "../d3-selection/mod.d.ts";
 
 /**
  * Extend interface 'Selection' by declaration merging with 'd3-selection'
  */
-declare module 'd3-selection' {
-    /**
+declare module "d3-selection" {
+  /**
      * A D3 Selection of elements.
      *
      * The first generic "GElement" refers to the type of the selected element(s).
@@ -25,8 +29,13 @@ declare module 'd3-selection' {
      * The third generic "PElement" refers to the type of the parent element(s) in the D3 selection.
      * The fourth generic "PDatum" refers to the type of the datum of the parent element(s).
      */
-    interface Selection<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {
-        /**
+  interface Selection<
+    GElement extends BaseType,
+    Datum,
+    PElement extends BaseType,
+    PDatum,
+  > {
+    /**
          * Interrupts the active transition of the specified name on the selected elements, and cancels any pending transitions with the specified name, if any.
          * If a name is not specified, null is used.
          *
@@ -36,15 +45,15 @@ declare module 'd3-selection' {
          *
          * @param name Name of the transition.
          */
-        interrupt(name?: string): this;
-        /**
+    interrupt(name?: string): this;
+    /**
          * Returns a new transition on the given selection with the specified name. If a name is not specified, null is used.
          * The new transition is only exclusive with other transitions of the same name.
          *
          * @param name Name of the transition.
          */
-        transition(name?: string): Transition<GElement, Datum, PElement, PDatum>;
-        /**
+    transition(name?: string): Transition<GElement, Datum, PElement, PDatum>;
+    /**
          * Returns a new transition on the given selection.
          *
          * When using a transition instance, the returned transition has the same id and name as the specified transition.
@@ -58,8 +67,10 @@ declare module 'd3-selection' {
          *
          * @param transition A transition instance.
          */
-        transition(transition: Transition<BaseType, any, any, any>): Transition<GElement, Datum, PElement, PDatum>;
-    }
+    transition(
+      transition: Transition<BaseType, any, any, any>,
+    ): Transition<GElement, Datum, PElement, PDatum>;
+  }
 }
 
 /**
@@ -74,7 +85,15 @@ declare module 'd3-selection' {
  * @param node Element for which the active transition should be returned.
  * @param name Name of the transition.
  */
-export function active<GElement extends BaseType, Datum, PElement extends BaseType, PDatum>(node: GElement, name?: string): Transition<GElement, Datum, PElement, PDatum> | null;
+export function active<
+  GElement extends BaseType,
+  Datum,
+  PElement extends BaseType,
+  PDatum,
+>(
+  node: GElement,
+  name?: string,
+): Transition<GElement, Datum, PElement, PDatum> | null;
 
 /**
  * Interrupts the active transition of the specified name on the specified node, and cancels any pending transitions with the specified name, if any.
@@ -93,10 +112,15 @@ export function interrupt(node: BaseType, name?: string): void;
  * The third generic "PElement" refers to the type of the parent element(s) in the D3 selection in the Transition.
  * The fourth generic "PDatum" refers to the type of the datum of the parent element(s) in the Transition.
  */
-export interface Transition<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {
-    // Sub-selection -------------------------
+export interface Transition<
+  GElement extends BaseType,
+  Datum,
+  PElement extends BaseType,
+  PDatum,
+> {
+  // Sub-selection -------------------------
 
-    /**
+  /**
      * For each selected element, select the first descendant element that matches the specified selector string, if any,
      * and returns a transition on the resulting selection. The new transition has the same id, name and timing as this transition;
      * however, if a transition with the same id already exists on a selected element,
@@ -106,8 +130,10 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      *
      * @param selector CSS selector string
      */
-    select<DescElement extends BaseType>(selector: string): Transition<DescElement, Datum, PElement, PDatum>;
-    /**
+  select<DescElement extends BaseType>(
+    selector: string,
+  ): Transition<DescElement, Datum, PElement, PDatum>;
+  /**
      * For each selected element, select the descendant element returned by the selector function, if any,
      * and returns a transition on the resulting selection. The new transition has the same id, name and timing as this transition;
      * however, if a transition with the same id already exists on a selected element,
@@ -119,9 +145,11 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * the current index (i), and the current group (nodes), with this as the current DOM element (nodes[i]).
      * It must return an element, or null if there is no matching element.
      */
-    select<DescElement extends BaseType>(selector: ValueFn<GElement, Datum, DescElement>): Transition<DescElement, Datum, PElement, PDatum>;
+  select<DescElement extends BaseType>(
+    selector: ValueFn<GElement, Datum, DescElement>,
+  ): Transition<DescElement, Datum, PElement, PDatum>;
 
-    /**
+  /**
      * For each selected element, select all descendant elements that match the specified selector string, if any,
      * and returns a transition on the resulting selection. The new transition has the same id, name and timing as this transition;
      * however, if a transition with the same id already exists on a selected element, the existing transition is returned for that element.
@@ -131,8 +159,10 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      *
      * @param selector CSS selector string
      */
-    selectAll<DescElement extends BaseType, OldDatum>(selector: string): Transition<DescElement, OldDatum, GElement, Datum>;
-    /**
+  selectAll<DescElement extends BaseType, OldDatum>(
+    selector: string,
+  ): Transition<DescElement, OldDatum, GElement, Datum>;
+  /**
      * For each selected element, select all descendant elements returned by the selector function, if any,
      * and returns a transition on the resulting selection. The new transition has the same id, name and timing as this transition;
      * however, if a transition with the same id already exists on a selected element, the existing transition is returned for that element.
@@ -144,14 +174,16 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * the current index (i), and the current group (nodes), with this as the current DOM element (nodes[i]). It must return an array of elements
      * (or a pseudo-array, such as a NodeList), or the empty array if there are no matching elements.
      */
-    selectAll<DescElement extends BaseType, OldDatum>(selector: ValueFn<GElement, Datum, DescElement[] | ArrayLike<DescElement>>): Transition<DescElement, OldDatum, GElement, Datum>;
+  selectAll<DescElement extends BaseType, OldDatum>(
+    selector: ValueFn<GElement, Datum, DescElement[] | ArrayLike<DescElement>>,
+  ): Transition<DescElement, OldDatum, GElement, Datum>;
 
-    /**
+  /**
      * Return the selection corresponding to this transition.
      */
-    selection(): Selection<GElement, Datum, PElement, PDatum>;
+  selection(): Selection<GElement, Datum, PElement, PDatum>;
 
-    /**
+  /**
      * Returns a new transition on the same selected elements as this transition, scheduled to start when this transition ends.
      * The new transition inherits a reference time equal to this transition’s time plus its delay and duration.
      * The new transition also inherits this transition’s name, duration, and easing.
@@ -159,18 +191,18 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      *
      * A delay configured for the new transition will be relative to the previous transition.
      */
-    transition(): Transition<GElement, Datum, PElement, PDatum>;
+  transition(): Transition<GElement, Datum, PElement, PDatum>;
 
-    // Modifying -------------------------------
+  // Modifying -------------------------------
 
-    /**
+  /**
      * For each selected element, the attribute with the specified name will be cleared at the start of the transition.
      *
      * @param name Name of the attribute.
      * @param value Use null to clear the attribute.
      */
-    attr(name: string, value: null): this;
-    /**
+  attr(name: string, value: null): this;
+  /**
      * For each selected element, assigns the attribute tween for the attribute with the specified name to the specified target value.
      * The starting value of the tween is the attribute’s value when the transition starts.
      * The target value is the specified constant value for all elements.
@@ -185,8 +217,8 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * @param name Name of the attribute.
      * @param value Target value for the attribute.
      */
-    attr(name: string, value: string | number | boolean): this;
-    /**
+  attr(name: string, value: string | number | boolean): this;
+  /**
      * For each selected element, assigns the attribute tween for the attribute with the specified name to the specified target value.
      * The starting value of the tween is the attribute’s value when the transition starts.
      * The target value is return value of the value function evaluated for the selected element.
@@ -203,22 +235,29 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * the current index (i), and the current group (nodes), with this as the current DOM element (nodes[i]).
      * A null value will clear the attribute at the start of the transition.
      */
-    attr(name: string, value: ValueFn<GElement, Datum, string | number | boolean | null>): this;
+  attr(
+    name: string,
+    value: ValueFn<GElement, Datum, string | number | boolean | null>,
+  ): this;
 
-    /**
+  /**
      * Return the current interpolator factory for attribute with the specified name, or undefined if no such tween exists.
      *
      * @param name Name of attribute.
      */
-    attrTween(name: string): ValueFn<GElement, Datum, (this: GElement, t: number) => string> | undefined;
-    /**
+  attrTween(
+    name: string,
+  ):
+    | ValueFn<GElement, Datum, (this: GElement, t: number) => string>
+    | undefined;
+  /**
      * Remove the previously-assigned attribute tween of the specified name, if any.
      *
      * @param name Name of attribute.
      * @param factory Use null to remove previously-assigned attribute tween.
      */
-    attrTween(name: string, factory: null): this;
-    /**
+  attrTween(name: string, factory: null): this;
+  /**
      * Assign the attribute tween for the attribute with the specified name to the specified interpolator factory.
      * An interpolator factory is a function that returns an interpolator; when the transition starts, the factory is evaluated for each selected element.
      * The returned interpolator will then be invoked for each frame of the transition, in order,
@@ -230,16 +269,19 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * the current index (i), and the current group (nodes), with this as the current DOM element (nodes[i]). The interpolator factory returns a string interpolator,
      * which takes as its argument eased time t, typically in the range [0, 1] and returns the interpolated string.
      */
-    attrTween(name: string, factory: ValueFn<GElement, Datum, (this: GElement, t: number) => string>): this;
+  attrTween(
+    name: string,
+    factory: ValueFn<GElement, Datum, (this: GElement, t: number) => string>,
+  ): this;
 
-    /**
+  /**
      * For each selected element, the style with the specified name will be cleared at the start of the transition.
      *
      * @param name Name of the style.
      * @param value Use null to clear the style.
      */
-    style(name: string, value: null): this;
-    /**
+  style(name: string, value: null): this;
+  /**
      * For each selected element, assigns the style tween for the style with the specified name to the specified target value with the
      * specified priority.
      * The starting value of the tween is the style’s inline value if present, and otherwise its computed value.
@@ -256,8 +298,12 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * @param value Target value for the style.
      * @param priority An optional priority flag, either null or the string important (without the exclamation point)
      */
-    style(name: string, value: string | number | boolean, priority?: null | 'important'): this;
-    /**
+  style(
+    name: string,
+    value: string | number | boolean,
+    priority?: null | "important",
+  ): this;
+  /**
      * For each selected element, assigns the style tween for the style with the specified name to the specified target value with the
      * specified priority.
      * The starting value of the tween is the style's inline value if present, and otherwise its computed value.
@@ -276,22 +322,30 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * A null value will clear the style at the start of the transition.
      * @param priority An optional priority flag, either null or the string important (without the exclamation point)
      */
-    style(name: string, value: ValueFn<GElement, Datum, string | number | boolean | null>, priority?: null | 'important'): this;
+  style(
+    name: string,
+    value: ValueFn<GElement, Datum, string | number | boolean | null>,
+    priority?: null | "important",
+  ): this;
 
-    /**
+  /**
      * Return the current interpolator factory for style with the specified name, or undefined if no such tween exists.
      *
      * @param name Name of style.
      */
-    styleTween(name: string): ValueFn<GElement, Datum, (this: GElement, t: number) => string> | undefined;
-    /**
+  styleTween(
+    name: string,
+  ):
+    | ValueFn<GElement, Datum, (this: GElement, t: number) => string>
+    | undefined;
+  /**
      * Remove the previously-assigned style tween of the specified name, if any.
      *
      * @param name Name of style.
      * @param factory Use null to remove previously-assigned style tween.
      */
-    styleTween(name: string, factory: null): this;
-    /**
+  styleTween(name: string, factory: null): this;
+  /**
      * Assign the style tween for the style with the specified name to the specified interpolator factory.
      * An interpolator factory is a function that returns an interpolator; when the transition starts, the factory is evaluated for each selected element.
      * The returned interpolator will then be invoked for each frame of the transition, in order,
@@ -304,15 +358,19 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * which takes as its argument eased time t, typically in the range [0, 1] and returns the interpolated string.
      * @param priority An optional priority flag, either null or the string important (without the exclamation point)
      */
-    styleTween(name: string, factory: ValueFn<GElement, Datum, (this: GElement, t: number) => string>, priority?: null | 'important'): this;
+  styleTween(
+    name: string,
+    factory: ValueFn<GElement, Datum, (this: GElement, t: number) => string>,
+    priority?: null | "important",
+  ): this;
 
-    /**
+  /**
      * For each selected element, the text content will be cleared, replacing any existing child elements.
      *
      * @param value Use null to clear the text content.
      */
-    text(value: null): this;
-    /**
+  text(value: null): this;
+  /**
      * For each selected element, sets the text content to the specified target value when the transition starts.
      *
      * To interpolate text rather than to set it on start, use transition.textTween (for example) or append a replacement element and cross-fade opacity (for example).
@@ -320,8 +378,8 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      *
      * @param value Value used for text content
      */
-    text(value: string | number | boolean): this;
-    /**
+  text(value: string | number | boolean): this;
+  /**
      * For each selected element, sets the text content returned by the value function for each selected element when the transition starts.
      *
      * To interpolate text rather than to set it on start, use transition.textTween (for example) or append a replacement element and cross-fade opacity (for example).
@@ -331,19 +389,21 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * the current index (i), and the current group (nodes), with this as the current DOM element (nodes[i]).
      * A null value will clear the text content at the start of the transition.
      */
-    text(value: ValueFn<GElement, Datum, string | number | boolean>): this;
+  text(value: ValueFn<GElement, Datum, string | number | boolean>): this;
 
-    /**
+  /**
      * Returns the current interpolator factory for text, or undefined if no such tween exists.
      */
-    textTween(): ValueFn<GElement, Datum, (this: GElement, t: number) => string> | undefined;
-    /**
+  textTween():
+    | ValueFn<GElement, Datum, (this: GElement, t: number) => string>
+    | undefined;
+  /**
      * Removes the previously-assigned text tween, if any
      *
      * @param factory Use null to remove previously-assigned text tween.
      */
-    textTween(factory: null): this;
-    /**
+  textTween(factory: null): this;
+  /**
      * Assigns the text tween to the specified interpolator factory.
      * An interpolator factory is a function that returns an interpolator; when the transition starts, the factory is evaluated for each selected element,
      * in order, being passed the current datum d and index i, with the this context as the current DOM element.
@@ -357,30 +417,34 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * Lastly, the return value of the interpolator will be used to set the text.
      * The interpolator must return a string.
      */
-    textTween(factory: ValueFn<GElement, Datum, (this: GElement, t: number) => string>): this;
+  textTween(
+    factory: ValueFn<GElement, Datum, (this: GElement, t: number) => string>,
+  ): this;
 
-    /**
+  /**
      * For each selected element, removes the element when the transition ends, as long as the element has no other active or pending transitions.
      * If the element has other active or pending transitions, does nothing.
      */
-    remove(): this;
+  remove(): this;
 
-    /**
+  /**
      * Returns the tween with the specified name, or undefined, if no tween was previously assigned to
      * that name.
      *
      * @param name Name of tween.
      */
-    tween(name: string): ValueFn<GElement, Datum, (this: GElement, t: number) => void> | undefined;
-    /**
+  tween(
+    name: string,
+  ): ValueFn<GElement, Datum, (this: GElement, t: number) => void> | undefined;
+  /**
      * Removes the tween with the specified name, if a tween was previously assigned to
      * that name.
      *
      * @param name Name of tween.
      * @param tweenFn Use null to remove a previously-assigned tween.
      */
-    tween(name: string, tweenFn: null): this;
-    /**
+  tween(name: string, tweenFn: null): this;
+  /**
      * For each selected element, assigns the tween with the specified name with the specified value function.
      * The value must be specified as a function that returns a function.
      * When the transition starts, the value function is evaluated for each selected element.
@@ -392,9 +456,12 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * the current index (i), and the current group (nodes), with this as the current DOM element (nodes[i]). The tween function returns a function
      * which takes as its argument eased time t, typically in the range [0, 1] and performs the tweening activities for each transition frame.
      */
-    tween(name: string, tweenFn: ValueFn<GElement, Datum, (this: GElement, t: number) => void>): this;
+  tween(
+    name: string,
+    tweenFn: ValueFn<GElement, Datum, (this: GElement, t: number) => void>,
+  ): this;
 
-    /**
+  /**
      * Returns a new transition merging this transition with the specified other transition,
      * which must have the same id as this transition. The returned transition has the same number of groups,
      * the same parents, the same name and the same id as this transition.
@@ -402,9 +469,11 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      *
      * @param other The transition to be merged.
      */
-    merge(other: Transition<GElement, Datum, PElement, PDatum>): Transition<GElement, Datum, PElement, PDatum>;
+  merge(
+    other: Transition<GElement, Datum, PElement, PDatum>,
+  ): Transition<GElement, Datum, PElement, PDatum>;
 
-    /**
+  /**
      * For each selected element, selects only the elements that match the specified filter, and returns a transition on the resulting selection.
      *
      * The new transition has the same id, name and timing as this transition; however, if a transition with the same id already exists on a selected element,
@@ -412,8 +481,8 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      *
      * @param filter A CSS selector string.
      */
-    filter(filter: string): Transition<GElement, Datum, PElement, PDatum>;
-    /**
+  filter(filter: string): Transition<GElement, Datum, PElement, PDatum>;
+  /**
      * For each selected element, selects only the elements that match the specified filter, and returns a transition on the resulting selection.
      *
      * The new transition has the same id, name and timing as this transition; however, if a transition with the same id already exists on a selected element,
@@ -424,8 +493,10 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      *
      * @param filter A CSS selector string.
      */
-    filter<FilteredElement extends BaseType>(filter: string): Transition<FilteredElement, Datum, PElement, PDatum>;
-    /**
+  filter<FilteredElement extends BaseType>(
+    filter: string,
+  ): Transition<FilteredElement, Datum, PElement, PDatum>;
+  /**
      * For each selected element, selects only the elements that match the specified filter, and returns a transition on the resulting selection.
      *
      * The new transition has the same id, name and timing as this transition; however, if a transition with the same id already exists on a selected element,
@@ -435,8 +506,10 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * the current index (i), and the current group (nodes), with this as the current DOM element (nodes[i]). The filter function returns a boolean indicating,
      * whether the selected element matches.
      */
-    filter(filter: ValueFn<GElement, Datum, boolean>): Transition<GElement, Datum, PElement, PDatum>;
-    /**
+  filter(
+    filter: ValueFn<GElement, Datum, boolean>,
+  ): Transition<GElement, Datum, PElement, PDatum>;
+  /**
      * For each selected element, selects only the elements that match the specified filter, and returns a transition on the resulting selection.
      *
      * The new transition has the same id, name and timing as this transition; however, if a transition with the same id already exists on a selected element,
@@ -449,11 +522,13 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * the current index (i), and the current group (nodes), with this as the current DOM element (nodes[i]). The filter function returns a boolean indicating,
      * whether the selected element matches.
      */
-    filter<FilteredElement extends BaseType>(filter: ValueFn<GElement, Datum, boolean>): Transition<FilteredElement, Datum, PElement, PDatum>;
+  filter<FilteredElement extends BaseType>(
+    filter: ValueFn<GElement, Datum, boolean>,
+  ): Transition<FilteredElement, Datum, PElement, PDatum>;
 
-    // Event Handling -------------------
+  // Event Handling -------------------
 
-    /**
+  /**
      * Return the currently-assigned listener for the specified event typename on the first (non-null) selected element, if any.
      * If multiple typenames are specified, the first matching listener is returned.
      *
@@ -463,16 +538,16 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * the optional name allows multiple callbacks to be registered to receive events of the same type, such as "start.foo"" and "start.bar".
      * To specify multiple typenames, separate typenames with spaces, such as "interrupt end"" or "start.foo start.bar".
      */
-    on(typenames: string): ValueFn<GElement, Datum, void> | undefined;
-    /**
+  on(typenames: string): ValueFn<GElement, Datum, void> | undefined;
+  /**
      * Remove all listeners for a given name.
      *
      * @param typenames Name of the event type for which the listener should be removed. To remove all listeners for a given name use ".foo"
      * as the typename, where foo is the name; to remove all listeners with no name, specify "." as the typename.
      * @param listener Use null to remove listeners.
      */
-    on(typenames: string, listener: null): this;
-    /**
+  on(typenames: string, listener: null): this;
+  /**
      * Add a listener to each selected element for the specified event typenames.
      *
      * When a specified transition event is dispatched on a selected node, the specified listener will be invoked for each transitioning element.
@@ -488,16 +563,16 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * and the current group (nodes), with this as the current DOM element (nodes[i]). Listeners always see the latest datum for their element,
      * but the index is a property of the selection and is fixed when the listener is assigned; to update the index, re-assign the listener.
      */
-    on(typenames: string, listener: ValueFn<GElement, Datum, void>): this;
+  on(typenames: string, listener: ValueFn<GElement, Datum, void>): this;
 
-    /**
+  /**
      * Returns a promise that resolves when every selected element finishes transitioning. If any element’s transition is cancelled or interrupted, the promise rejects.
      */
-    end(): Promise<void>;
+  end(): Promise<void>;
 
-    // Control Flow ----------------------
+  // Control Flow ----------------------
 
-    /**
+  /**
      * Invoke the specified function for each selected element, passing the current datum (d),
      * the current index (i), and the current group (nodes), with this of the current DOM element (nodes[i]).
      * This method can be used to invoke arbitrary code for each selected element, and is useful for creating a context to access parent and child data simultaneously.
@@ -505,52 +580,58 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * @param func A function which is invoked for each selected element,
      *             being passed the current datum (d), the current index (i), and the current group (nodes), with this of the current DOM element (nodes[i]).
      */
-    each(func: ValueFn<GElement, Datum, void>): this;
+  each(func: ValueFn<GElement, Datum, void>): this;
 
-    /**
+  /**
      * Invoke the specified function exactly once, passing in this transition along with any optional arguments.
      * Returns this transition.
      *
      * @param func A function which is passed this transition as the first argument along with any optional arguments.
      * @param args List of optional arguments to be passed to the callback function.
      */
-    call(func: (transition: Transition<GElement, Datum, PElement, PDatum>, ...args: any[]) => any, ...args: any[]): this;
+  call(
+    func: (
+      transition: Transition<GElement, Datum, PElement, PDatum>,
+      ...args: any[]
+    ) => any,
+    ...args: any[]
+  ): this;
 
-    /**
+  /**
      * Return true if this transition contains no (non-null) elements.
      */
-    empty(): boolean;
+  empty(): boolean;
 
-    /**
+  /**
      * Return the first (non-null) element in this transition. If the transition is empty, returns null.
      */
-    node(): GElement | null;
+  node(): GElement | null;
 
-    /**
+  /**
      * Return an array of all (non-null) elements in this transition.
      */
-    nodes(): GElement[];
+  nodes(): GElement[];
 
-    /**
+  /**
      * Returns the total number of elements in this transition.
      */
-    size(): number;
+  size(): number;
 
-    // Transition Configuration ----------------------
+  // Transition Configuration ----------------------
 
-    /**
+  /**
      * Returns the current value of the delay for the first (non-null) element in the transition.
      * This is generally useful only if you know that the transition contains exactly one element.
      */
-    delay(): number;
-    /**
+  delay(): number;
+  /**
      * For each selected element, sets the transition delay to the specified value in milliseconds.
      * If a delay is not specified, it defaults to zero.
      *
      * @param milliseconds Number of milliseconds for the delay.
      */
-    delay(milliseconds: number): this;
-    /**
+  delay(milliseconds: number): this;
+  /**
      * For each selected element, sets the transition delay to the value in milliseconds returned by the
      * value function.
      *
@@ -558,21 +639,21 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * the current index (i), and the current group (nodes), with this of the current DOM element (nodes[i]). The return value is a number
      * specifying the delay in milliseconds.
      */
-    delay(milliseconds: ValueFn<GElement, Datum, number>): this;
+  delay(milliseconds: ValueFn<GElement, Datum, number>): this;
 
-    /**
+  /**
      * Returns the current value of the duration for the first (non-null) element in the transition.
      * This is generally useful only if you know that the transition contains exactly one element.
      */
-    duration(): number;
-    /**
+  duration(): number;
+  /**
      * For each selected element, sets the transition duration to the specified value in milliseconds.
      * If a duration is not specified, it defaults to 250ms.
      *
      * @param duration Number of milliseconds for the duration.
      */
-    duration(milliseconds: number): this;
-    /**
+  duration(milliseconds: number): this;
+  /**
      * For each selected element, sets the transition duration to the value in milliseconds returned by the
      * value function.
      *
@@ -580,14 +661,14 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * the current index (i), and the current group (nodes), with this of the current DOM element (nodes[i]). The return value is a number
      * specifying the duration in milliseconds.
      */
-    duration(milliseconds: ValueFn<GElement, Datum, number>): this;
+  duration(milliseconds: ValueFn<GElement, Datum, number>): this;
 
-    /**
+  /**
      * Returns the current easing function for the first (non-null) element in the transition.
      * This is generally useful only if you know that the transition contains exactly one element.
      */
-    ease(): (normalizedTime: number) => number;
-    /**
+  ease(): (normalizedTime: number) => number;
+  /**
      * Specifies the transition easing function for all selected elements. The value must be specified as a function.
      * The easing function is invoked for each frame of the animation, being passed the normalized time t in the range [0, 1];
      * it must then return the eased time tʹ which is typically also in the range [0, 1].
@@ -598,23 +679,32 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
      * it must then return the eased time tʹ which is typically also in the range [0, 1].
      * A good easing function should return 0 if t = 0 and 1 if t = 1.
      */
-    ease(easingFn: (normalizedTime: number) => number): this;
+  ease(easingFn: (normalizedTime: number) => number): this;
 
-    /**
+  /**
      * Specifies a factory for the transition easing function.
      *
      * @param factory The factory must be a function.
      * It is invoked for each node of the selection, being passed the current datum (d), the current index (i), and the current group (nodes), with this as the current DOM element.
      * It must return an easing function.
      */
-    easeVarying(factory: ValueFn<GElement, Datum, (normalizedTime: number) => number>): this;
+  easeVarying(
+    factory: ValueFn<GElement, Datum, (normalizedTime: number) => number>,
+  ): this;
 }
 
 /**
  * Represents the union of the Selection and Transition types for any usages that operate on both.
  * Typically used for functions which take in either a selection or transition and set or update attributes.
  */
-export type SelectionOrTransition<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> = Selection<GElement, Datum, PElement, PDatum> | Transition<GElement, Datum, PElement, PDatum>;
+export type SelectionOrTransition<
+  GElement extends BaseType,
+  Datum,
+  PElement extends BaseType,
+  PDatum,
+> =
+  | Selection<GElement, Datum, PElement, PDatum>
+  | Transition<GElement, Datum, PElement, PDatum>;
 
 /**
  * Returns a new transition with the specified name. If a name is not specified, null is used.
@@ -624,7 +714,9 @@ export type SelectionOrTransition<GElement extends BaseType, Datum, PElement ext
  *
  * @param name Name of the transition.
  */
-export function transition<OldDatum>(name?: string): Transition<HTMLElement, OldDatum, null, undefined>;
+export function transition<OldDatum>(
+  name?: string,
+): Transition<HTMLElement, OldDatum, null, undefined>;
 
 /**
  * Returns a new transition from an existing transition.
@@ -635,4 +727,6 @@ export function transition<OldDatum>(name?: string): Transition<HTMLElement, Old
  *
  * @param transition A transition instance.
  */
-export function transition<OldDatum>(transition: Transition<BaseType, any, BaseType, any>): Transition<HTMLElement, OldDatum, null, undefined>;
+export function transition<OldDatum>(
+  transition: Transition<BaseType, any, BaseType, any>,
+): Transition<HTMLElement, OldDatum, null, undefined>;

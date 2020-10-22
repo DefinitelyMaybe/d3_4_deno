@@ -1,33 +1,32 @@
-/// <reference lib="dom" />
-import {Adder} from "../../d3-array/mod.js";
-import {abs} from "../math.js";
+import { Adder } from "../../d3-array/mod.js";
+import { abs } from "../math.js";
 import noop from "../noop.js";
 
 var areaSum = new Adder(),
-    areaRingSum = new Adder(),
-    x00,
-    y00,
-    x0,
-    y0;
+  areaRingSum = new Adder(),
+  x00,
+  y00,
+  x0,
+  y0;
 
 var areaStream = {
   point: noop,
   lineStart: noop,
   lineEnd: noop,
-  polygonStart: function() {
+  polygonStart: function () {
     areaStream.lineStart = areaRingStart;
     areaStream.lineEnd = areaRingEnd;
   },
-  polygonEnd: function() {
+  polygonEnd: function () {
     areaStream.lineStart = areaStream.lineEnd = areaStream.point = noop;
     areaSum.add(abs(areaRingSum));
     areaRingSum = new Adder();
   },
-  result: function() {
+  result: function () {
     var area = areaSum / 2;
     areaSum = new Adder();
     return area;
-  }
+  },
 };
 
 function areaRingStart() {

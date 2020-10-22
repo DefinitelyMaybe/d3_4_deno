@@ -1,5 +1,4 @@
-/// <reference lib="dom" />
-import {selection} from "../../d3-selection/mod.js";
+import { selection } from "../../d3-selection/mod.js";
 import selection_interrupt from "./interrupt.js";
 import selection_transition from "./transition.js";
 

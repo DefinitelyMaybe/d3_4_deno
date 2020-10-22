@@ -1,68 +1,65 @@
-/// <reference types="./mod.d.ts" />
-/// <reference lib="dom" />
-export {
-  linear as easeLinear
-} from "./linear.js";
+// @deno-types="./mod.d.ts"
+export { linear as easeLinear } from "./linear.js";
 
 export {
-  quadInOut as easeQuad,
   quadIn as easeQuadIn,
+  quadInOut as easeQuad,
+  quadInOut as easeQuadInOut,
   quadOut as easeQuadOut,
-  quadInOut as easeQuadInOut
 } from "./quad.js";
 
 export {
-  cubicInOut as easeCubic,
   cubicIn as easeCubicIn,
+  cubicInOut as easeCubic,
+  cubicInOut as easeCubicInOut,
   cubicOut as easeCubicOut,
-  cubicInOut as easeCubicInOut
 } from "./cubic.js";
 
 export {
-  polyInOut as easePoly,
   polyIn as easePolyIn,
+  polyInOut as easePoly,
+  polyInOut as easePolyInOut,
   polyOut as easePolyOut,
-  polyInOut as easePolyInOut
 } from "./poly.js";
 
 export {
-  sinInOut as easeSin,
   sinIn as easeSinIn,
+  sinInOut as easeSin,
+  sinInOut as easeSinInOut,
   sinOut as easeSinOut,
-  sinInOut as easeSinInOut
 } from "./sin.js";
 
 export {
-  expInOut as easeExp,
   expIn as easeExpIn,
+  expInOut as easeExp,
+  expInOut as easeExpInOut,
   expOut as easeExpOut,
-  expInOut as easeExpInOut
 } from "./exp.js";
 
 export {
-  circleInOut as easeCircle,
   circleIn as easeCircleIn,
+  circleInOut as easeCircle,
+  circleInOut as easeCircleInOut,
   circleOut as easeCircleOut,
-  circleInOut as easeCircleInOut
 } from "./circle.js";
 
 export {
-  bounceOut as easeBounce,
   bounceIn as easeBounceIn,
+  bounceInOut as easeBounceInOut,
+  bounceOut as easeBounce,
   bounceOut as easeBounceOut,
-  bounceInOut as easeBounceInOut
 } from "./bounce.js";
 
 export {
-  backInOut as easeBack,
   backIn as easeBackIn,
+  backInOut as easeBack,
+  backInOut as easeBackInOut,
   backOut as easeBackOut,
-  backInOut as easeBackInOut
 } from "./back.js";
 
 export {
-  elasticOut as easeElastic,
   elasticIn as easeElasticIn,
+  elasticInOut as easeElasticInOut,
+  elasticOut as easeElastic,
   elasticOut as easeElasticOut,
-  elasticInOut as easeElasticInOut
 } from "./elastic.js";

@@ -1,25 +1,24 @@
-/// <reference lib="dom" />
-import {path} from "../d3-path/mod.js";
+import { path } from "../d3-path/mod.js";
 import array from "./array.js";
 import constant from "./constant.js";
 import curveLinear from "./curve/linear.js";
-import {x as pointX, y as pointY} from "./point.js";
+import { x as pointX, y as pointY } from "./point.js";
 
-export default function(x, y) {
+export default function (x, y) {
   var defined = constant(true),
-      context = null,
-      curve = curveLinear,
-      output = null;
+    context = null,
+    curve = curveLinear,
+    output = null;
 
   x = typeof x === "function" ? x : (x === undefined) ? pointX : constant(x);
   y = typeof y === "function" ? y : (y === undefined) ? pointY : constant(y);
 
   function line(data) {
     var i,
-        n = (data = array(data)).length,
-        d,
-        defined0 = false,
-        buffer;
+      n = (data = array(data)).length,
+      d,
+      defined0 = false,
+      buffer;
 
     if (context == null) output = curve(buffer = path());
 
@@ -34,24 +33,35 @@ export default function(x, y) {
     if (buffer) return output = null, buffer + "" || null;
   }
 
-  line.x = function(_) {
-    return arguments.length ? (x = typeof _ === "function" ? _ : constant(+_), line) : x;
+  line.x = function (_) {
+    return arguments.length
+      ? (x = typeof _ === "function" ? _ : constant(+_), line)
+      : x;
   };
 
-  line.y = function(_) {
-    return arguments.length ? (y = typeof _ === "function" ? _ : constant(+_), line) : y;
+  line.y = function (_) {
+    return arguments.length
+      ? (y = typeof _ === "function" ? _ : constant(+_), line)
+      : y;
   };
 
-  line.defined = function(_) {
-    return arguments.length ? (defined = typeof _ === "function" ? _ : constant(!!_), line) : defined;
+  line.defined = function (_) {
+    return arguments.length
+      ? (defined = typeof _ === "function" ? _ : constant(!!_), line)
+      : defined;
   };
 
-  line.curve = function(_) {
-    return arguments.length ? (curve = _, context != null && (output = curve(context)), line) : curve;
+  line.curve = function (_) {
+    return arguments.length
+      ? (curve = _, context != null && (output = curve(context)), line)
+      : curve;
   };
 
-  line.context = function(_) {
-    return arguments.length ? (_ == null ? context = output = null : output = curve(context = _), line) : context;
+  line.context = function (_) {
+    return arguments.length
+      ? (_ == null ? context = output = null : output = curve(context = _),
+        line)
+      : context;
   };
 
   return line;

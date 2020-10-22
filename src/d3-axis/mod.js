@@ -1,8 +1,2 @@
-/// <reference types="./mod.d.ts" />
-/// <reference lib="dom" />
-export {
-  axisTop,
-  axisRight,
-  axisBottom,
-  axisLeft
-} from "./axis.js";
+// @deno-types="./mod.d.ts"
+export { axisBottom, axisLeft, axisRight, axisTop } from "./axis.js";

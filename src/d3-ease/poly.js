@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 var exponent = 3;
 
 export var polyIn = (function custom(e) {

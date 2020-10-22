@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import defaultSource from "./defaultSource.js";
 import normal from "./normal.js";
 
@@ -7,7 +6,7 @@ export default (function sourceRandomLogNormal(source) {
 
   function randomLogNormal() {
     var randomNormal = N.apply(this, arguments);
-    return function() {
+    return function () {
       return Math.exp(randomNormal());
     };
   }

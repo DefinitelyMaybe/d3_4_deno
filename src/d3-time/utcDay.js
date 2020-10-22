@@ -1,14 +1,13 @@
-/// <reference lib="dom" />
 import interval from "./interval.js";
-import {durationDay} from "./duration.js";
+import { durationDay } from "./duration.js";
 
-var utcDay = interval(function(date) {
+var utcDay = interval(function (date) {
   date.setUTCHours(0, 0, 0, 0);
-}, function(date, step) {
+}, function (date, step) {
   date.setUTCDate(date.getUTCDate() + step);
-}, function(start, end) {
+}, function (start, end) {
   return (end - start) / durationDay;
-}, function(date) {
+}, function (date) {
   return date.getUTCDate() - 1;
 });
 

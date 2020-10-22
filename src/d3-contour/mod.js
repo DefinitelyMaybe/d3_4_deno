@@ -1,4 +1,3 @@
-/// <reference types="./mod.d.ts" />
-/// <reference lib="dom" />
-export {default as contours} from "./contours.js";
-export {default as contourDensity} from "./density.js";
+// @deno-types="./mod.d.ts"
+export { default as contours } from "./contours.js";
+export { default as contourDensity } from "./density.js";

@@ -1,3 +1,2 @@
-/// <reference types="./mod.d.ts" />
-/// <reference lib="dom" />
-export {default as path} from "./path.js";
+// @deno-types="./mod.d.ts"
+export { default as path } from "./path.js";

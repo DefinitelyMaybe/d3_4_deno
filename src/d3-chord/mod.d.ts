@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 // Type definitions for D3JS d3-chord module 2.0
 // Project: https://github.com/d3/d3-chord/, https://d3js.org/d3-chord
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>
@@ -18,39 +17,39 @@
  * A chord subgroup serving as source or target of a chord between two nodes i an j (where i may be equal to j).
  */
 export interface ChordSubgroup {
-    /**
+  /**
      * Start angle of the chord subgroup in radians
      */
-    startAngle: number;
+  startAngle: number;
 
-    /***
+  /***
      * End angle of the chord subgroup in radians
      */
-    endAngle: number;
+  endAngle: number;
 
-    /**
+  /**
      * The flow value in matrix[i][j] from node i to node j
      */
-    value: number;
+  value: number;
 
-    /**
+  /**
      * The node index i
      */
-    index: number;
+  index: number;
 }
 
 /**
  * A chord represents the combined bidirectional flow between two nodes i and j (where i may be equal to j)
  */
 export interface Chord {
-    /**
+  /**
      * Chord subgroup constituting the source of Chord
      */
-    source: ChordSubgroup;
-    /**
+  source: ChordSubgroup;
+  /**
      * Chord subgroup constituting the Target of Chord
      */
-    target: ChordSubgroup;
+  target: ChordSubgroup;
 }
 
 /**
@@ -58,25 +57,25 @@ export interface Chord {
  * corresponding to the elements matrix[i][0 … n - 1].
  */
 export interface ChordGroup {
-    /**
+  /**
      * The start angle of the chord group in radians
      */
-    startAngle: number;
+  startAngle: number;
 
-    /**
+  /**
      * The end angle of the chord group in radians
      */
-    endAngle: number;
+  endAngle: number;
 
-    /**
+  /**
      * The total outgoing flow value for node i
      */
-    value: number;
+  value: number;
 
-    /**
+  /**
      * The node index i
      */
-    index: number;
+  index: number;
 }
 
 /**
@@ -91,11 +90,11 @@ export interface ChordGroup {
  * chord.source.value is greater than or equal to chord.target.value, and chord.source.value is always greater than zero.
  */
 export interface Chords extends Array<Chord> {
-    /**
+  /**
      * An array of length n, where each group represents the combined outflow for node i,
      * corresponding to the elements matrix[i][0 … n - 1]
      */
-    groups: ChordGroup[];
+  groups: ChordGroup[];
 }
 
 /**
@@ -104,58 +103,58 @@ export interface Chords extends Array<Chord> {
  * The relationships are represented as a square matrix of size n×n, where the matrix represents the directed flow amongst a network (a complete digraph) of n nodes.
  */
 export interface ChordLayout {
-    /**
+  /**
      * Computes the chord layout for the specified square matrix of size n×n, where the matrix represents the directed flow amongst a network (a complete digraph) of n nodes.
      *
      * @param matrix An (n x n) matrix representing the directed flow amongst a network (a complete digraph) of n nodes.The given matrix must be an array of length n,
      * where each element matrix[i] is an array of n numbers, where each matrix[i][j] represents the flow from the ith node in the network to the jth node.
      * Each number matrix[i][j] must be nonnegative, though it can be zero if there is no flow from node i to node j.
      */
-    (matrix: number[][]): Chords;
+  (matrix: number[][]): Chords;
 
-    /**
+  /**
      * Returns the current pad angle in radians, which defaults to zero.
      */
-    padAngle(): number;
-    /**
+  padAngle(): number;
+  /**
      * Sets the pad angle between adjacent groups to the specified number in radians and returns this chord layout.
      *
      * The default is zero.
      *
      * @param angle Pad angle between adjacent groups in radians.
      */
-    padAngle(angle: number): this;
+  padAngle(angle: number): this;
 
-    /**
+  /**
      * Returns the current group comparator, which defaults to null.
      */
-    sortGroups(): ((a: number, b: number) => number) | null;
-    /**
+  sortGroups(): ((a: number, b: number) => number) | null;
+  /**
      * Removes the current group comparator and returns this chord layout.
      *
      * @param compare Use null to remove the current comparator function, if any.
      */
-    sortGroups(compare: null): this;
-    /**
+  sortGroups(compare: null): this;
+  /**
      * Sets the group comparator to the specified function and returns this chord layout.
      *
      * If the group comparator is non-null, it is used to sort the groups by their total outflow. See also d3.ascending and d3.descending.
      *
      * @param compare A comparator function, e.g. d3.ascending or d3.descending.
      */
-    sortGroups(compare: (a: number, b: number) => number): this;
+  sortGroups(compare: (a: number, b: number) => number): this;
 
-    /**
+  /**
      * Returns the current subgroup comparator, which defaults to null.
      */
-    sortSubgroups(): ((a: number, b: number) => number) | null;
-    /**
+  sortSubgroups(): ((a: number, b: number) => number) | null;
+  /**
      * Removes the current subgroup comparator and returns this chord layout.
      *
      * @param compare Use null to remove the current comparator function, if any.
      */
-    sortSubgroups(compare: null): this;
-    /**
+  sortSubgroups(compare: null): this;
+  /**
      * Sets the subgroup comparator to the specified function and returns this chord layout.
      *
      * If the subgroup comparator is non-null, it is used to sort the subgroups corresponding to matrix[i][0 … n - 1]
@@ -163,19 +162,19 @@ export interface ChordLayout {
      *
      * @param compare A comparator function, e.g. d3.ascending or d3.descending.
      */
-    sortSubgroups(compare: (a: number, b: number) => number): this;
+  sortSubgroups(compare: (a: number, b: number) => number): this;
 
-    /**
+  /**
      * Returns the current chord comparator, which defaults to null.
      */
-    sortChords(): ((a: number, b: number) => number) | null;
-    /**
+  sortChords(): ((a: number, b: number) => number) | null;
+  /**
      * Removes the current chord comparator and returns this chord layout.
      *
      * @param compare Use null to remove the current comparator function, if any.
      */
-    sortChords(compare: null): this;
-    /**
+  sortChords(compare: null): this;
+  /**
      * Sets the chord comparator to the specified function and returns this chord layout.
      *
      * If the chord comparator is non-null, it is used to sort the chords by their combined flow; this only affects the z-order of the chords.
@@ -183,7 +182,7 @@ export interface ChordLayout {
      *
      * @param compare A comparator function, e.g. d3.ascending or d3.descending.
      */
-    sortChords(compare: (a: number, b: number) => number): this;
+  sortChords(compare: (a: number, b: number) => number): this;
 }
 
 /**
@@ -212,18 +211,18 @@ export function chordTranspose(): ChordLayout;
  * (Corresponds to ChordSubgroup)
  */
 export interface RibbonSubgroup {
-    /**
+  /**
      * Start angle of the ribbon subgroup in radians
      */
-    startAngle: number;
-    /**
+  startAngle: number;
+  /**
      * End angle of the ribbon subgroup in radians
      */
-    endAngle: number;
-    /**
+  endAngle: number;
+  /**
      * Radius of the ribbon subgroup
      */
-    radius: number;
+  radius: number;
 }
 
 /**
@@ -231,14 +230,14 @@ export interface RibbonSubgroup {
  * (Corresponds to Chord)
  */
 export interface Ribbon {
-    /**
+  /**
      * Ribbon subgroup constituting the source of the Ribbon
      */
-    source: RibbonSubgroup;
-    /**
+  source: RibbonSubgroup;
+  /**
      * Ribbon subgroup constituting the target of the Ribbon
      */
-    target: RibbonSubgroup;
+  target: RibbonSubgroup;
 }
 
 /**
@@ -252,7 +251,7 @@ export interface Ribbon {
  * The third generic corresponds to the datum type of the chord subgroup, i.e. source or target of the cord. The default type is RibbonSubgroup.
  */
 export interface RibbonGenerator<This, RibbonDatum, RibbonSubgroupDatum> {
-    /**
+  /**
      * Generates a ribbon for the given arguments.
      *
      * IMPORTANT: If the ribbon generator has been configured with a rendering context,
@@ -263,8 +262,8 @@ export interface RibbonGenerator<This, RibbonDatum, RibbonSubgroupDatum> {
      *
      * @param d The datum representing the chord for which the ribbon is to be generated.
      */
-    (this: This, d: RibbonDatum, ...args: any[]): void;
-    /**
+  (this: This, d: RibbonDatum, ...args: any[]): void;
+  /**
      * Generates a ribbon for the given arguments.
      *
      * IMPORTANT: If the rendering context of the ribbon generator is null,
@@ -275,44 +274,48 @@ export interface RibbonGenerator<This, RibbonDatum, RibbonSubgroupDatum> {
      *
      * @param d The datum representing the chord for which the ribbon is to be generated.
      */
-    (this: This, d: RibbonDatum, ...args: any[]): string | null;
+  (this: This, d: RibbonDatum, ...args: any[]): string | null;
 
-    /**
+  /**
      * Returns the current source accessor, which defaults to a function returning the "source" property of the first argument passed into the accessor.
      */
-    source(): (this: This, d: RibbonDatum, ...args: any[]) => RibbonSubgroupDatum;
-    /**
+  source(): (this: This, d: RibbonDatum, ...args: any[]) => RibbonSubgroupDatum;
+  /**
      * Sets the source accessor to the specified function and returns this ribbon generator.
      *
      * @param source An accessor function returning the source datum of the chord. The accessor function is invoked in the same "this" context as the generator was invoked in and
      * receives the same arguments that were passed into the ribbon generator.
      */
-    source(source: (this: This, d: RibbonDatum, ...args: any[]) => RibbonSubgroupDatum): this;
+  source(
+    source: (this: This, d: RibbonDatum, ...args: any[]) => RibbonSubgroupDatum,
+  ): this;
 
-    /**
+  /**
      * Returns the current target accessor, which defaults to a function returning the "target" property of the first argument passed into the accessor.
      */
-    target(): (this: This, d: RibbonDatum, ...args: any[]) => RibbonSubgroupDatum;
-    /**
+  target(): (this: This, d: RibbonDatum, ...args: any[]) => RibbonSubgroupDatum;
+  /**
      * Sets the target accessor to the specified function and returns this ribbon generator.
      *
      * @param target An accessor function returning the target datum of the chord. The accessor function is invoked in the same "this" context as the generator was invoked in and
      * receives the same arguments that were passed into the ribbon generator.
      */
-    target(target: (this: This, d: RibbonDatum, ...args: any[]) => RibbonSubgroupDatum): this;
+  target(
+    target: (this: This, d: RibbonDatum, ...args: any[]) => RibbonSubgroupDatum,
+  ): this;
 
-    /**
+  /**
      * Returns the current radius accessor, which defaults to a function returning the "radius" property (assumed to be a number) of the source or
      * target object returned by the source or target accessor, respectively.
      */
-    radius(): (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number;
-    /**
+  radius(): (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number;
+  /**
      * Sets the radius to a fixed number and returns this ribbon generator.
      *
      * @param radius A fixed numeric value for the radius.
      */
-    radius(radius: number): this;
-    /**
+  radius(radius: number): this;
+  /**
      * Sets the radius accessor to the specified function and returns this ribbon generator.
      *
      * @param radius An accessor function which is invoked for the source and target of the chord. The accessor function is invoked in the same "this" context as the generator was invoked in and
@@ -320,20 +323,26 @@ export interface RibbonGenerator<This, RibbonDatum, RibbonSubgroupDatum> {
      * It is also passed any additional arguments that were passed into the generator, with the exception of the first element representing the chord datum itself.
      * The function returns the radius value.
      */
-    radius(radius: (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number): this;
+  radius(
+    radius: (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number,
+  ): this;
 
-    /**
+  /**
      * Returns the current source radius accessor, which defaults to a function returning the "radius" property (assumed to be a number) of the source or
      * target object returned by the source or target accessor, respectively.
      */
-    sourceRadius(): (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number;
-    /**
+  sourceRadius(): (
+    this: This,
+    d: RibbonSubgroupDatum,
+    ...args: any[]
+  ) => number;
+  /**
      * Sets the source radius to a fixed number and returns this ribbon generator.
      *
      * @param radius A fixed numeric value for the source radius.
      */
-    sourceRadius(radius: number): this;
-    /**
+  sourceRadius(radius: number): this;
+  /**
      * Sets the source radius accessor to the specified function and returns this ribbon generator.
      *
      * @param radius An accessor function which is invoked for the source and target of the chord. The accessor function is invoked in the same "this" context as the generator was invoked in and
@@ -341,20 +350,26 @@ export interface RibbonGenerator<This, RibbonDatum, RibbonSubgroupDatum> {
      * It is also passed any additional arguments that were passed into the generator, with the exception of the first element representing the chord datum itself.
      * The function returns the source radius value.
      */
-    sourceRadius(radius: (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number): this;
+  sourceRadius(
+    radius: (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number,
+  ): this;
 
-    /**
+  /**
      * Returns the current target radius accessor, which defaults to a function returning the "radius" property (assumed to be a number) of the source or
      * target object returned by the source or target accessor, respectively.
      */
-    targetRadius(): (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number;
-    /**
+  targetRadius(): (
+    this: This,
+    d: RibbonSubgroupDatum,
+    ...args: any[]
+  ) => number;
+  /**
      * Sets the target radius to a fixed number and returns this ribbon generator.
      *
      * @param radius A fixed numeric value for the target radius.
      */
-    targetRadius(radius: number): this;
-    /**
+  targetRadius(radius: number): this;
+  /**
      * Sets the target radius accessor to the specified function and returns this ribbon generator.
      *
      * @param radius An accessor function which is invoked for the source and target of the chord. The accessor function is invoked in the same "this" context as the generator was invoked in and
@@ -362,20 +377,22 @@ export interface RibbonGenerator<This, RibbonDatum, RibbonSubgroupDatum> {
      * It is also passed any additional arguments that were passed into the generator, with the exception of the first element representing the chord datum itself.
      * The function returns the target radius value.
      */
-    targetRadius(radius: (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number): this;
+  targetRadius(
+    radius: (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number,
+  ): this;
 
-    /**
+  /**
      * Returns the current start angle accessor, which defaults to a function returning the "startAngle" property (assumed to be a number in radians) of the source or
      * target object returned by the source or target accessor, respectively.
      */
-    startAngle(): (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number;
-    /**
+  startAngle(): (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number;
+  /**
      * Sets the start angle to a fixed number in radians and returns this ribbon generator.
      *
      * @param angle A fixed numeric value for the start angle in radians.
      */
-    startAngle(angle: number): this;
-    /**
+  startAngle(angle: number): this;
+  /**
      * Sets the start angle accessor to the specified function and returns this ribbon generator.
      *
      * @param angle An accessor function which is invoked for the source and target of the chord. The accessor function is invoked in the same "this" context as the generator was invoked in and
@@ -383,20 +400,22 @@ export interface RibbonGenerator<This, RibbonDatum, RibbonSubgroupDatum> {
      * It is also passed any additional arguments that were passed into the generator, with the exception of the first element representing the chord datum itself.
      * The function returns the start angle in radians.
      */
-    startAngle(angle: (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number): this;
+  startAngle(
+    angle: (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number,
+  ): this;
 
-    /**
+  /**
      * Returns the current end angle accessor, which defaults to a function returning the "endAngle" property (assumed to be a number in radians) of the source or
      * target object returned by the source or target accessor, respectively.
      */
-    endAngle(): (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number;
-    /**
+  endAngle(): (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number;
+  /**
      * Sets the end angle to a fixed number in radians and returns this ribbon generator.
      *
      * @param angle A fixed numeric value for the end angle in radians.
      */
-    endAngle(angle: number): this;
-    /**
+  endAngle(angle: number): this;
+  /**
      * Sets the end angle accessor to the specified function and returns this ribbon generator.
      *
      * @param angle An accessor function which is invoked for the source and target of the chord. The accessor function is invoked in the same "this" context as the generator was invoked in and
@@ -404,19 +423,21 @@ export interface RibbonGenerator<This, RibbonDatum, RibbonSubgroupDatum> {
      * It is also passed any additional arguments that were passed into the generator, with the exception of the first element representing the chord datum itself.
      * The function returns the end angle in radians.
      */
-    endAngle(angle: (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number): this;
+  endAngle(
+    angle: (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number,
+  ): this;
 
-    /**
+  /**
      * Returns the current pad angle accessor, which defaults to a function returning 0.
      */
-    padAngle(): (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number;
-    /**
+  padAngle(): (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number;
+  /**
      * Sets the pad angle to a fixed number in radians and returns this ribbon generator.
      *
      * @param angle A fixed numeric value for the pad angle in radians.
      */
-    padAngle(angle: number): this;
-    /**
+  padAngle(angle: number): this;
+  /**
      * Sets the pad angle accessor to the specified function and returns this ribbon generator.
      *
      * @param angle An accessor function which is invoked for the source and target of the chord. The accessor function is invoked in the same "this" context as the generator was invoked in and
@@ -424,28 +445,30 @@ export interface RibbonGenerator<This, RibbonDatum, RibbonSubgroupDatum> {
      * It is also passed any additional arguments that were passed into the generator, with the exception of the first element representing the chord datum itself.
      * The function returns the pad angle in radians.
      */
-    padAngle(angle: (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number): this;
+  padAngle(
+    angle: (this: This, d: RibbonSubgroupDatum, ...args: any[]) => number,
+  ): this;
 
-    /**
+  /**
      * Returns the current rendering context, which defaults to null.
      */
-    context(): CanvasRenderingContext2D | null;
-    /**
+  context(): CanvasRenderingContext2D | null;
+  /**
      * Sets the rendering context and returns this ribbon generator.
      *
      * If the context is not null, then the generated ribbon is rendered to this context as a sequence of path method calls.
      *
      * @param context The rendering context.
      */
-    context(context: CanvasRenderingContext2D): this;
-    /**
+  context(context: CanvasRenderingContext2D): this;
+  /**
      * Sets the rendering context to null and returns this ribbon generator.
      *
      * A path data string representing the generated ribbon will be returned when the generator is invoked with data. See also d3-path.
      *
      * @param context null, to remove rendering context.
      */
-    context(context: null): this;
+  context(context: null): this;
 }
 
 /**
@@ -461,7 +484,11 @@ export function ribbon(): RibbonGenerator<any, Ribbon, RibbonSubgroup>;
  *
  * The second generic corresponds to the datum type of the chord subgroup, i.e. source or target of the cord. The default type is ChordSubgroup.
  */
-export function ribbon<Datum, SubgroupDatum>(): RibbonGenerator<any, Datum, SubgroupDatum>;
+export function ribbon<Datum, SubgroupDatum>(): RibbonGenerator<
+  any,
+  Datum,
+  SubgroupDatum
+>;
 /**
  * Creates a new ribbon generator with the default settings.
  *
@@ -473,4 +500,8 @@ export function ribbon<Datum, SubgroupDatum>(): RibbonGenerator<any, Datum, Subg
  *
  * The third generic corresponds to the datum type of the chord subgroup, i.e. source or target of the cord. The default type is ChordSubgroup.
  */
-export function ribbon<This, Datum, SubgroupDatum>(): RibbonGenerator<This, Datum, SubgroupDatum>;
+export function ribbon<This, Datum, SubgroupDatum>(): RibbonGenerator<
+  This,
+  Datum,
+  SubgroupDatum
+>;

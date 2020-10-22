@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 export var epsilon = 1e-6;
 export var epsilon2 = 1e-12;
 export var pi = Math.PI;
@@ -20,7 +19,9 @@ export var hypot = Math.hypot;
 export var log = Math.log;
 export var pow = Math.pow;
 export var sin = Math.sin;
-export var sign = Math.sign || function(x) { return x > 0 ? 1 : x < 0 ? -1 : 0; };
+export var sign = Math.sign || function (x) {
+  return x > 0 ? 1 : x < 0 ? -1 : 0;
+};
 export var sqrt = Math.sqrt;
 export var tan = Math.tan;
 

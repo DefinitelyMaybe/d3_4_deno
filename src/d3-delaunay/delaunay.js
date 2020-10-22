@@ -1,5 +1,4 @@
-/// <reference lib="dom" />
-/// <reference types="https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/d3-delaunay/index.d.ts" />
+// @deno-types="https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/d3-delaunay/index.d.ts"
 import Delaunator from "https://raw.githubusercontent.com/mapbox/delaunator/master/index.js";
 import Path from "./path.js";
 import Polygon from "./polygon.js";
@@ -17,13 +16,13 @@ function pointY(p) {
 
 // A triangulation is collinear if all its triangles have a non-null area
 function collinear(d) {
-  const {triangles, coords} = d;
+  const { triangles, coords } = d;
   for (let i = 0; i < triangles.length; i += 3) {
     const a = 2 * triangles[i],
-          b = 2 * triangles[i + 1],
-          c = 2 * triangles[i + 2],
-          cross = (coords[c] - coords[a]) * (coords[b + 1] - coords[a + 1])
-                - (coords[b] - coords[a]) * (coords[c + 1] - coords[a + 1]);
+      b = 2 * triangles[i + 1],
+      c = 2 * triangles[i + 2],
+      cross = (coords[c] - coords[a]) * (coords[b + 1] - coords[a + 1]) -
+        (coords[b] - coords[a]) * (coords[c + 1] - coords[a + 1]);
     if (cross > 1e-10) return false;
   }
   return true;
@@ -35,9 +34,11 @@ function jitter(x, y, r) {
 
 export default class Delaunay {
   static from(points, fx = pointX, fy = pointY, that) {
-    return new Delaunay("length" in points
+    return new Delaunay(
+      "length" in points
         ? flatArray(points, fx, fy, that)
-        : Float64Array.from(flatIterable(points, fx, fy, that)));
+        : Float64Array.from(flatIterable(points, fx, fy, that)),
+    );
   }
   constructor(points) {
     this._delaunator = new Delaunator(points);
@@ -56,10 +57,21 @@ export default class Delaunay {
 
     // check for collinear
     if (d.hull && d.hull.length > 2 && collinear(d)) {
-      this.collinear = Int32Array.from({length: points.length/2}, (_,i) => i)
-        .sort((i, j) => points[2 * i] - points[2 * j] || points[2 * i + 1] - points[2 * j + 1]); // for exact neighbors
-      const e = this.collinear[0], f = this.collinear[this.collinear.length - 1],
-        bounds = [ points[2 * e], points[2 * e + 1], points[2 * f], points[2 * f + 1] ],
+      this.collinear = Int32Array.from(
+        { length: points.length / 2 },
+        (_, i) => i,
+      )
+        .sort((i, j) =>
+          points[2 * i] - points[2 * j] || points[2 * i + 1] - points[2 * j + 1]
+        ); // for exact neighbors
+      const e = this.collinear[0],
+        f = this.collinear[this.collinear.length - 1],
+        bounds = [
+          points[2 * e],
+          points[2 * e + 1],
+          points[2 * f],
+          points[2 * f + 1],
+        ],
         r = 1e-8 * Math.hypot(bounds[3] - bounds[1], bounds[2] - bounds[0]);
       for (let i = 0, n = points.length / 2; i < n; ++i) {
         const p = jitter(points[2 * i], points[2 * i + 1], r);
@@ -103,7 +115,7 @@ export default class Delaunay {
     return new Voronoi(this, bounds);
   }
   *neighbors(i) {
-    const {inedges, hull, _hullIndex, halfedges, triangles, collinear} = this;
+    const { inedges, hull, _hullIndex, halfedges, triangles, collinear } = this;
 
     // degenerate case with several collinear points
     if (collinear) {
@@ -136,8 +148,10 @@ export default class Delaunay {
     return c;
   }
   _step(i, x, y) {
-    const {inedges, hull, _hullIndex, halfedges, triangles, points} = this;
-    if (inedges[i] === -1 || !points.length) return (i + 1) % (points.length >> 1);
+    const { inedges, hull, _hullIndex, halfedges, triangles, points } = this;
+    if (inedges[i] === -1 || !points.length) {
+      return (i + 1) % (points.length >> 1);
+    }
     let c = i;
     let dc = pow(x - points[i * 2], 2) + pow(y - points[i * 2 + 1], 2);
     const e0 = inedges[i];
@@ -152,7 +166,11 @@ export default class Delaunay {
       if (e === -1) {
         e = hull[(_hullIndex[i] + 1) % hull.length];
         if (e !== t) {
-          if (pow(x - points[e * 2], 2) + pow(y - points[e * 2 + 1], 2) < dc) return e;
+          if (
+            pow(x - points[e * 2], 2) + pow(y - points[e * 2 + 1], 2) < dc
+          ) {
+            return e;
+          }
         }
         break;
       }
@@ -160,8 +178,8 @@ export default class Delaunay {
     return c;
   }
   render(context) {
-    const buffer = context == null ? context = new Path : undefined;
-    const {points, halfedges, triangles} = this;
+    const buffer = context == null ? context = new Path() : undefined;
+    const { points, halfedges, triangles } = this;
     for (let i = 0, n = halfedges.length; i < n; ++i) {
       const j = halfedges[i];
       if (j < i) continue;
@@ -174,8 +192,8 @@ export default class Delaunay {
     return buffer && buffer.value();
   }
   renderPoints(context, r = 2) {
-    const buffer = context == null ? context = new Path : undefined;
-    const {points} = this;
+    const buffer = context == null ? context = new Path() : undefined;
+    const { points } = this;
     for (let i = 0, n = points.length; i < n; i += 2) {
       const x = points[i], y = points[i + 1];
       context.moveTo(x + r, y);
@@ -184,8 +202,8 @@ export default class Delaunay {
     return buffer && buffer.value();
   }
   renderHull(context) {
-    const buffer = context == null ? context = new Path : undefined;
-    const {hull, points} = this;
+    const buffer = context == null ? context = new Path() : undefined;
+    const { hull, points } = this;
     const h = hull[0] * 2, n = hull.length;
     context.moveTo(points[h], points[h + 1]);
     for (let i = 1; i < n; ++i) {
@@ -196,13 +214,13 @@ export default class Delaunay {
     return buffer && buffer.value();
   }
   hullPolygon() {
-    const polygon = new Polygon;
+    const polygon = new Polygon();
     this.renderHull(polygon);
     return polygon.value();
   }
   renderTriangle(i, context) {
-    const buffer = context == null ? context = new Path : undefined;
-    const {points, triangles} = this;
+    const buffer = context == null ? context = new Path() : undefined;
+    const { points, triangles } = this;
     const t0 = triangles[i *= 3] * 2;
     const t1 = triangles[i + 1] * 2;
     const t2 = triangles[i + 2] * 2;
@@ -213,13 +231,13 @@ export default class Delaunay {
     return buffer && buffer.value();
   }
   *trianglePolygons() {
-    const {triangles} = this;
+    const { triangles } = this;
     for (let i = 0, n = triangles.length / 3; i < n; ++i) {
       yield this.trianglePolygon(i);
     }
   }
   trianglePolygon(i) {
-    const polygon = new Polygon;
+    const polygon = new Polygon();
     this.renderTriangle(i, polygon);
     return polygon.value();
   }

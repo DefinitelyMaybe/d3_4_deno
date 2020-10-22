@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 export default function mean(values, valueof) {
   let count = 0;
   let sum = 0;
@@ -11,7 +10,10 @@ export default function mean(values, valueof) {
   } else {
     let index = -1;
     for (let value of values) {
-      if ((value = valueof(value, ++index, values)) != null && (value = +value) >= value) {
+      if (
+        (value = valueof(value, ++index, values)) != null &&
+        (value = +value) >= value
+      ) {
         ++count, sum += value;
       }
     }

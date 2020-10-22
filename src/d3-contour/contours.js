@@ -1,6 +1,5 @@
-/// <reference lib="dom" />
-import {extent, thresholdSturges, tickStep, range} from "../d3-array/mod.js";
-import {slice} from "./array.js";
+import { extent, range, thresholdSturges, tickStep } from "../d3-array/mod.js";
+import { slice } from "./array.js";
 import ascending from "./ascending.js";
 import area from "./area.js";
 import constant from "./constant.js";
@@ -23,14 +22,14 @@ var cases = [
   [[[0.5, 1.0], [1.5, 1.0]]],
   [[[1.0, 1.5], [1.5, 1.0]]],
   [[[0.5, 1.0], [1.0, 1.5]]],
-  []
+  [],
 ];
 
-export default function() {
+export default function () {
   var dx = 1,
-      dy = 1,
-      threshold = thresholdSturges,
-      smooth = smoothLinear;
+    dy = 1,
+    threshold = thresholdSturges,
+    smooth = smoothLinear;
 
   function contours(values) {
     var tz = threshold(values);
@@ -44,7 +43,7 @@ export default function() {
       tz = tz.slice().sort(ascending);
     }
 
-    return tz.map(function(value) {
+    return tz.map(function (value) {
       return contour(values, value);
     });
   }
@@ -53,15 +52,15 @@ export default function() {
   // Based on https://github.com/mbostock/shapefile/blob/v0.6.2/shp/polygon.js
   function contour(values, value) {
     var polygons = [],
-        holes = [];
+      holes = [];
 
-    isorings(values, value, function(ring) {
+    isorings(values, value, function (ring) {
       smooth(ring, values, value);
       if (area(ring) > 0) polygons.push([ring]);
       else holes.push(ring);
     });
 
-    holes.forEach(function(hole) {
+    holes.forEach(function (hole) {
       for (var i = 0, n = polygons.length, polygon; i < n; ++i) {
         if (contains((polygon = polygons[i])[0], hole) !== -1) {
           polygon.push(hole);
@@ -73,16 +72,21 @@ export default function() {
     return {
       type: "MultiPolygon",
       value: value,
-      coordinates: polygons
+      coordinates: polygons,
     };
   }
 
   // Marching squares with isolines stitched into rings.
   // Based on https://github.com/topojson/topojson-client/blob/v3.0.0/src/stitch.js
   function isorings(values, value, callback) {
-    var fragmentByStart = new Array,
-        fragmentByEnd = new Array,
-        x, y, t0, t1, t2, t3;
+    var fragmentByStart = new Array(),
+      fragmentByEnd = new Array(),
+      x,
+      y,
+      t0,
+      t1,
+      t2,
+      t3;
 
     // Special case for the first row (y = -1, t2 = t3 = 0).
     x = y = -1;
@@ -120,10 +124,11 @@ export default function() {
 
     function stitch(line) {
       var start = [line[0][0] + x, line[0][1] + y],
-          end = [line[1][0] + x, line[1][1] + y],
-          startIndex = index(start),
-          endIndex = index(end),
-          f, g;
+        end = [line[1][0] + x, line[1][1] + y],
+        startIndex = index(start),
+        endIndex = index(end),
+        f,
+        g;
       if (f = fragmentByEnd[startIndex]) {
         if (g = fragmentByStart[endIndex]) {
           delete fragmentByEnd[f.end];
@@ -132,7 +137,11 @@ export default function() {
             f.ring.push(end);
             callback(f.ring);
           } else {
-            fragmentByStart[f.start] = fragmentByEnd[g.end] = {start: f.start, end: g.end, ring: f.ring.concat(g.ring)};
+            fragmentByStart[f.start] = fragmentByEnd[g.end] = {
+              start: f.start,
+              end: g.end,
+              ring: f.ring.concat(g.ring),
+            };
           }
         } else {
           delete fragmentByEnd[f.end];
@@ -147,7 +156,11 @@ export default function() {
             f.ring.push(end);
             callback(f.ring);
           } else {
-            fragmentByStart[g.start] = fragmentByEnd[f.end] = {start: g.start, end: f.end, ring: g.ring.concat(f.ring)};
+            fragmentByStart[g.start] = fragmentByEnd[f.end] = {
+              start: g.start,
+              end: f.end,
+              ring: g.ring.concat(f.ring),
+            };
           }
         } else {
           delete fragmentByStart[f.start];
@@ -155,7 +168,11 @@ export default function() {
           fragmentByStart[f.start = startIndex] = f;
         }
       } else {
-        fragmentByStart[startIndex] = fragmentByEnd[endIndex] = {start: startIndex, end: endIndex, ring: [start, end]};
+        fragmentByStart[startIndex] = fragmentByEnd[endIndex] = {
+          start: startIndex,
+          end: endIndex,
+          ring: [start, end],
+        };
       }
     }
   }
@@ -165,13 +182,13 @@ export default function() {
   }
 
   function smoothLinear(ring, values, value) {
-    ring.forEach(function(point) {
+    ring.forEach(function (point) {
       var x = point[0],
-          y = point[1],
-          xt = x | 0,
-          yt = y | 0,
-          v0,
-          v1 = values[yt * dx + xt];
+        y = point[1],
+        xt = x | 0,
+        yt = y | 0,
+        v0,
+        v1 = values[yt * dx + xt];
       if (x > 0 && x < dx && xt === x) {
         v0 = values[yt * dx + xt - 1];
         point[0] = x + (value - v0) / (v1 - v0) - 0.5;
@@ -185,19 +202,28 @@ export default function() {
 
   contours.contour = contour;
 
-  contours.size = function(_) {
+  contours.size = function (_) {
     if (!arguments.length) return [dx, dy];
     var _0 = Math.floor(_[0]), _1 = Math.floor(_[1]);
     if (!(_0 >= 0 && _1 >= 0)) throw new Error("invalid size");
     return dx = _0, dy = _1, contours;
   };
 
-  contours.thresholds = function(_) {
-    return arguments.length ? (threshold = typeof _ === "function" ? _ : Array.isArray(_) ? constant(slice.call(_)) : constant(_), contours) : threshold;
+  contours.thresholds = function (_) {
+    return arguments.length
+      ? (threshold = typeof _ === "function"
+        ? _
+        : Array.isArray(_)
+        ? constant(slice.call(_))
+        : constant(_),
+        contours)
+      : threshold;
   };
 
-  contours.smooth = function(_) {
-    return arguments.length ? (smooth = _ ? smoothLinear : noop, contours) : smooth === smoothLinear;
+  contours.smooth = function (_) {
+    return arguments.length
+      ? (smooth = _ ? smoothLinear : noop, contours)
+      : smooth === smoothLinear;
   };
 
   return contours;

@@ -1,5 +1,4 @@
-/// <reference lib="dom" />
-export default function(series, order) {
+export default function (series, order) {
   if (!((n = series.length) > 1)) return;
   for (var i = 1, j, s0, s1 = series[order[0]], n, m = s1.length; i < n; ++i) {
     s0 = s1, s1 = series[order[i]];

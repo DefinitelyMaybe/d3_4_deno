@@ -1,5 +1,4 @@
-/// <reference lib="dom" />
-export default function*() {
+export default function* () {
   var node = this, current, next = [node], children, i, n;
   do {
     current = next.reverse(), next = [];

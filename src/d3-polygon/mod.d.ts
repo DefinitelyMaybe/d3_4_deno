@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 // Type definitions for D3JS d3-polygon module 2.0
 // Project: https://github.com/d3/d3-polygon/, https://d3js.org/d3-polygon
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>
@@ -23,7 +22,9 @@ export function polygonArea(polygon: Array<[number, number]>): number;
  *
  * @param polygon Array of coordinates <x0, y0>, <x1, y1> and so on.
  */
-export function polygonCentroid(polygon: Array<[number, number]>): [number, number];
+export function polygonCentroid(
+  polygon: Array<[number, number]>,
+): [number, number];
 
 /**
  * Returns the convex hull of the specified points using Andrew’s monotone chain algorithm.
@@ -32,7 +33,9 @@ export function polygonCentroid(polygon: Array<[number, number]>): [number, numb
  *
  * @param points Array of coordinates <x0, y0>, <x1, y1> and so on.
  */
-export function polygonHull(points: Array<[number, number]>): Array<[number, number]> | null;
+export function polygonHull(
+  points: Array<[number, number]>,
+): Array<[number, number]> | null;
 
 /**
  * Returns true if and only if the specified point is inside the specified polygon.
@@ -40,7 +43,10 @@ export function polygonHull(points: Array<[number, number]>): Array<[number, num
  * @param polygon Array of coordinates <x0, y0>, <x1, y1> and so on.
  * @param point Coordinates of point <x, y>.
  */
-export function polygonContains(polygon: Array<[number, number]>, point: [number, number]): boolean;
+export function polygonContains(
+  polygon: Array<[number, number]>,
+  point: [number, number],
+): boolean;
 
 /**
  * Returns the length of the perimeter of the specified polygon.

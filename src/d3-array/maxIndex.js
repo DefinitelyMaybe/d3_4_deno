@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 export default function maxIndex(values, valueof) {
   let max;
   let maxIndex = -1;
@@ -6,15 +5,19 @@ export default function maxIndex(values, valueof) {
   if (valueof === undefined) {
     for (const value of values) {
       ++index;
-      if (value != null
-          && (max < value || (max === undefined && value >= value))) {
+      if (
+        value != null &&
+        (max < value || (max === undefined && value >= value))
+      ) {
         max = value, maxIndex = index;
       }
     }
   } else {
     for (let value of values) {
-      if ((value = valueof(value, ++index, values)) != null
-          && (max < value || (max === undefined && value >= value))) {
+      if (
+        (value = valueof(value, ++index, values)) != null &&
+        (max < value || (max === undefined && value >= value))
+      ) {
         max = value, maxIndex = index;
       }
     }

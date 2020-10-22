@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 // Type definitions for D3JS d3-geo module 2.0
 // Project: https://github.com/d3/d3-geo/, https://d3js.org/d3-geo
 // Definitions by: Hugues Stefanski <https://github.com/ledragon>
@@ -12,7 +11,7 @@
 // Last module patch version validated against: 2.0.1
 
 // @deno-types="https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/geojson/index.d.ts"
-import * as GeoJSON from 'https://raw.githubusercontent.com/caseycesari/GeoJSON.js/master/geojson.js';
+import * as GeoJSON from "https://raw.githubusercontent.com/caseycesari/GeoJSON.js/master/geojson.js";
 
 // ----------------------------------------------------------------------
 // Shared Interfaces and Types
@@ -23,10 +22,10 @@ import * as GeoJSON from 'https://raw.githubusercontent.com/caseycesari/GeoJSON.
  * beyond the GeoJSON geometries.
  */
 export interface GeoSphere {
-    /**
+  /**
      * Sphere geometry type
      */
-    type: 'Sphere';
+  type: "Sphere";
 }
 
 /**
@@ -41,14 +40,16 @@ export type GeoGeometryObjects = GeoJSON.GeometryObject | GeoSphere;
  *
  * The generic refers to the type(s) of d3-geo geometry objects contained in the collection.
  */
-export interface ExtendedGeometryCollection<GeometryType extends GeoGeometryObjects = GeoGeometryObjects> {
+export interface ExtendedGeometryCollection<
+  GeometryType extends GeoGeometryObjects = GeoGeometryObjects,
+> {
+  type: string;
+  bbox?: number[];
+  crs?: {
     type: string;
-    bbox?: number[];
-    crs?: {
-        type: string;
-        properties: any;
-    };
-    geometries: GeometryType[];
+    properties: any;
+  };
+  geometries: GeometryType[];
 }
 
 /**
@@ -62,12 +63,12 @@ export interface ExtendedGeometryCollection<GeometryType extends GeoGeometryObje
  * the properties value is nullable.
  */
 export interface ExtendedFeature<
-    GeometryType extends GeoGeometryObjects | null = GeoGeometryObjects | null,
-    Properties extends GeoJSON.GeoJsonProperties = GeoJSON.GeoJsonProperties
-    > extends GeoJSON.GeoJsonObject {
-    geometry: GeometryType;
-    properties: Properties;
-    id?: string | number;
+  GeometryType extends GeoGeometryObjects | null = GeoGeometryObjects | null,
+  Properties extends GeoJSON.GeoJsonProperties = GeoJSON.GeoJsonProperties,
+> extends GeoJSON.GeoJsonObject {
+  geometry: GeometryType;
+  properties: Properties;
+  id?: string | number;
 }
 
 /**
@@ -76,15 +77,21 @@ export interface ExtendedFeature<
  *
  * The generic refers to the type of ExtendedFeature contained in the ExtendedFeatureCollection.
  */
-export interface ExtendedFeatureCollection<FeatureType extends ExtendedFeature = ExtendedFeature> extends GeoJSON.GeoJsonObject {
-    features: FeatureType[];
+export interface ExtendedFeatureCollection<
+  FeatureType extends ExtendedFeature = ExtendedFeature,
+> extends GeoJSON.GeoJsonObject {
+  features: FeatureType[];
 }
 
 /**
  * Type Alias for permissible objects which can be used with d3-geo
  * methods
  */
-export type GeoPermissibleObjects = GeoGeometryObjects | ExtendedGeometryCollection | ExtendedFeature | ExtendedFeatureCollection;
+export type GeoPermissibleObjects =
+  | GeoGeometryObjects
+  | ExtendedGeometryCollection
+  | ExtendedFeature
+  | ExtendedFeatureCollection;
 
 // ----------------------------------------------------------------------
 // Spherical Math
@@ -127,7 +134,9 @@ export function geoArea(object: ExtendedGeometryCollection): number;
  *
  * @param object A geographic feature supported by d3-geo (An extension of GeoJSON feature).
  */
-export function geoBounds(object: ExtendedFeature): [[number, number], [number, number]];
+export function geoBounds(
+  object: ExtendedFeature,
+): [[number, number], [number, number]];
 /**
  * Returns the spherical bounding box for the specified feature collection. The bounding box is represented by a two-dimensional array: [[left, bottom], [right, top]],
  * where left is the minimum longitude, bottom is the minimum latitude, right is maximum longitude, and top is the maximum latitude. All coordinates are given in degrees.
@@ -136,7 +145,9 @@ export function geoBounds(object: ExtendedFeature): [[number, number], [number, 
  *
  * @param object A geographic feature collection supported by d3-geo (An extension of GeoJSON feature).
  */
-export function geoBounds(object: ExtendedFeatureCollection): [[number, number], [number, number]];
+export function geoBounds(
+  object: ExtendedFeatureCollection,
+): [[number, number], [number, number]];
 /**
  * Returns the spherical bounding box for the specified GeoJson Geometry Object or GeoSphere object. The bounding box is represented by a two-dimensional array: [[left, bottom], [right, top]],
  * where left is the minimum longitude, bottom is the minimum latitude, right is maximum longitude, and top is the maximum latitude. All coordinates are given in degrees.
@@ -145,7 +156,9 @@ export function geoBounds(object: ExtendedFeatureCollection): [[number, number],
  *
  * @param object A GeoJson Geometry Object or GeoSphere object supported by d3-geo (An extension of GeoJSON).
  */
-export function geoBounds(object: GeoGeometryObjects): [[number, number], [number, number]];
+export function geoBounds(
+  object: GeoGeometryObjects,
+): [[number, number], [number, number]];
 /**
  * Returns the spherical bounding box for the specified geometry collection. The bounding box is represented by a two-dimensional array: [[left, bottom], [right, top]],
  * where left is the minimum longitude, bottom is the minimum latitude, right is maximum longitude, and top is the maximum latitude. All coordinates are given in degrees.
@@ -154,7 +167,9 @@ export function geoBounds(object: GeoGeometryObjects): [[number, number], [numbe
  *
  * @param object A geographic geometry collection supported by d3-geo (An extension of GeoJSON geometry collection).
  */
-export function geoBounds(object: ExtendedGeometryCollection): [[number, number], [number, number]];
+export function geoBounds(
+  object: ExtendedGeometryCollection,
+): [[number, number], [number, number]];
 
 /**
  * Returns the spherical centroid of the specified feature in steradians.
@@ -169,7 +184,9 @@ export function geoCentroid(object: ExtendedFeature): [number, number];
  *
  * @param object A geographic feature collection supported by d3-geo (An extension of GeoJSON feature).
  */
-export function geoCentroid(object: ExtendedFeatureCollection): [number, number];
+export function geoCentroid(
+  object: ExtendedFeatureCollection,
+): [number, number];
 /**
  * Returns the spherical centroid of the specified GeoJson Geometry Object or GeoSphere object in steradians.
  * This is the spherical equivalent of path.centroid.
@@ -183,7 +200,9 @@ export function geoCentroid(object: GeoGeometryObjects): [number, number];
  *
  * @param object A geographic geometry collection supported by d3-geo (An extension of GeoJSON geometry collection).
  */
-export function geoCentroid(object: ExtendedGeometryCollection): [number, number];
+export function geoCentroid(
+  object: ExtendedGeometryCollection,
+): [number, number];
 
 /**
  * Returns true if and only if the specified GeoJSON object contains the specified point, or false if the object does not contain the point.
@@ -193,7 +212,10 @@ export function geoCentroid(object: ExtendedGeometryCollection): [number, number
  * @param object A geographic feature supported by d3-geo (An extension of GeoJSON feature).
  * @param point Point specified as a two-element array [longitude, latitude] in degrees.
  */
-export function geoContains(object: ExtendedFeature, point: [number, number]): boolean;
+export function geoContains(
+  object: ExtendedFeature,
+  point: [number, number],
+): boolean;
 /**
  * Returns true if and only if the specified GeoJSON object contains the specified point, or false if the object does not contain the point.
  * The point must be specified as a two-element array [longitude, latitude] in degrees. For Point and MultiPoint geometries, an exact test is used;
@@ -202,7 +224,10 @@ export function geoContains(object: ExtendedFeature, point: [number, number]): b
  * @param object A geographic feature collection supported by d3-geo (An extension of GeoJSON feature).
  * @param point Point specified as a two-element array [longitude, latitude] in degrees.
  */
-export function geoContains(object: ExtendedFeatureCollection, point: [number, number]): boolean;
+export function geoContains(
+  object: ExtendedFeatureCollection,
+  point: [number, number],
+): boolean;
 /**
  * Returns true if and only if the specified GeoJSON object contains the specified point, or false if the object does not contain the point.
  * The point must be specified as a two-element array [longitude, latitude] in degrees. For Point and MultiPoint geometries, an exact test is used;
@@ -211,7 +236,10 @@ export function geoContains(object: ExtendedFeatureCollection, point: [number, n
  * @param object A GeoJson Geometry Object or GeoSphere object supported by d3-geo (An extension of GeoJSON).
  * @param point Point specified as a two-element array [longitude, latitude] in degrees.
  */
-export function geoContains(object: GeoGeometryObjects, point: [number, number]): boolean;
+export function geoContains(
+  object: GeoGeometryObjects,
+  point: [number, number],
+): boolean;
 /**
  * Returns true if and only if the specified GeoJSON object contains the specified point, or false if the object does not contain the point.
  * The point must be specified as a two-element array [longitude, latitude] in degrees. For Point and MultiPoint geometries, an exact test is used;
@@ -220,7 +248,10 @@ export function geoContains(object: GeoGeometryObjects, point: [number, number])
  * @param object A geographic geometry collection supported by d3-geo (An extension of GeoJSON geometry collection).
  * @param point Point specified as a two-element array [longitude, latitude] in degrees.
  */
-export function geoContains(object: ExtendedGeometryCollection, point: [number, number]): boolean;
+export function geoContains(
+  object: ExtendedGeometryCollection,
+  point: [number, number],
+): boolean;
 
 /**
  * Returns the great-arc distance in radians between the two points a and b.
@@ -267,25 +298,28 @@ export function geoLength(object: ExtendedGeometryCollection): number;
  * @param a Point specified as a two-element array [longitude, latitude] in degrees.
  * @param b Point specified as a two-element array [longitude, latitude] in degrees.
  */
-export function geoInterpolate(a: [number, number], b: [number, number]): (t: number) => [number, number];
+export function geoInterpolate(
+  a: [number, number],
+  b: [number, number],
+): (t: number) => [number, number];
 
 /**
  * A Geo Rotation
  */
 export interface GeoRotation {
-    /**
+  /**
      * Returns a new array [longitude, latitude] in degrees representing the rotated point of the given point.
      *
      * @param point The point must be specified as a two-element array [longitude, latitude] in degrees.
      */
-    (point: [number, number]): [number, number];
+  (point: [number, number]): [number, number];
 
-    /**
+  /**
      * Returns a new array [longitude, latitude] in degrees representing the point of the given rotated point; the inverse of rotation.
      *
      * @param point The rotated point must be specified as a two-element array [longitude, latitude] in degrees.
      */
-    invert(point: [number, number]): [number, number];
+  invert(point: [number, number]): [number, number];
 }
 
 /**
@@ -294,7 +328,9 @@ export interface GeoRotation {
  * @param angles  A two- or three-element array of numbers [lambda, phi, gamma] specifying the rotation angles in degrees about each spherical axis.
  * (These correspond to yaw, pitch and roll.) If the rotation angle gamma is omitted, it defaults to 0.
  */
-export function geoRotation(angles: [number, number] | [number, number, number]): GeoRotation;
+export function geoRotation(
+  angles: [number, number] | [number, number, number],
+): GeoRotation;
 
 // ----------------------------------------------------------------------
 // Spherical Shapes
@@ -310,53 +346,55 @@ export function geoRotation(angles: [number, number] | [number, number, number])
  * The second generic corresponds to the type of the Datum which will be passed into the geo circle generator.
  */
 export interface GeoCircleGenerator<This = any, Datum = any> {
-    /**
+  /**
      * Returns a new GeoJSON geometry object of type “Polygon” approximating a circle on the surface of a sphere,
      * with the current center, radius and precision. Any arguments are passed to the accessors.
      */
-    (this: This, d?: Datum, ...args: any[]): GeoJSON.Polygon;
+  (this: This, d?: Datum, ...args: any[]): GeoJSON.Polygon;
 
-    /**
+  /**
      * Returns the current center accessor, which defaults to a function returning [0, 0].
      */
-    center(): ((this: This, d: Datum, ...args: any[]) => [number, number]);
-    /**
+  center(): ((this: This, d: Datum, ...args: any[]) => [number, number]);
+  /**
      * Sets the circle center to the specified point [longitude, latitude] in degrees, and returns this circle generator.
      *
      * @param center Center point specified as [longitude, latitude] in degrees.
      */
-    center(center: [number, number]): this;
-    /**
+  center(center: [number, number]): this;
+  /**
      * Sets the circle center to the specified center point accessor function, and returns this circle generator.
      *
      * @param center An accessor function which will be invoked whenever a circle is generated, being passed any arguments passed to the circle generator.
      * It returns the center point specified as [longitude, latitude] in degrees.
      */
-    center(center: ((this: This, d: Datum, ...args: any[]) => [number, number])): this;
+  center(
+    center: ((this: This, d: Datum, ...args: any[]) => [number, number]),
+  ): this;
 
-    /**
+  /**
      * Returns the current radius accessor, which defaults to a function returning 90.
      */
-    radius(): ((this: This, d: Datum, ...args: any[]) => number);
-    /**
+  radius(): ((this: This, d: Datum, ...args: any[]) => number);
+  /**
      * Sets the circle radius to the specified angle in degrees, and returns this circle generator.
      *
      * @param radius Circle radius as the specified angle in degrees.
      */
-    radius(radius: number): this;
-    /**
+  radius(radius: number): this;
+  /**
      * Sets the circle radius to the specified radius accessor function, and returns this circle generator.
      *
      * @param radius An accessor function which will be invoked whenever a circle is generated, being passed any arguments passed to the circle generator.
      * It returns the radius as the specified angle in degrees.
      */
-    radius(radius: ((this: This, d: Datum, ...args: any[]) => number)): this;
+  radius(radius: ((this: This, d: Datum, ...args: any[]) => number)): this;
 
-    /**
+  /**
      * Returns the current precision accessor, which defaults to a function returning 6.
      */
-    precision(): ((this: This, d: Datum, ...args: any[]) => number);
-    /**
+  precision(): ((this: This, d: Datum, ...args: any[]) => number);
+  /**
      * Sets the circle precision to the specified angle in degrees, and returns this circle generator.
      *
      * Small circles do not follow great arcs and thus the generated polygon is only an approximation.
@@ -364,8 +402,8 @@ export interface GeoCircleGenerator<This = any, Datum = any> {
      *
      * @param precision Precision as specified angle in degrees.
      */
-    precision(precision: number): this;
-    /**
+  precision(precision: number): this;
+  /**
      * Sets the circle precision to the precision accessor function, and returns this circle generator.
      *
      * Small circles do not follow great arcs and thus the generated polygon is only an approximation.
@@ -374,7 +412,7 @@ export interface GeoCircleGenerator<This = any, Datum = any> {
      * @param precision An accessor function which will be invoked whenever a circle is generated, being passed any arguments passed to the circle generator.
      * It returns the precision as the specified angle in degrees.
      */
-    precision(precision: (this: This, d: Datum, ...args: any[]) => number): this;
+  precision(precision: (this: This, d: Datum, ...args: any[]) => number): this;
 }
 
 /**
@@ -403,97 +441,97 @@ export function geoCircle<This, Datum>(): GeoCircleGenerator<This, Datum>;
  * The default graticule has meridians and parallels every 10° between ±80° latitude; for the polar regions, there are meridians every 90°.
  */
 export interface GeoGraticuleGenerator {
-    /**
+  /**
      * Returns a GeoJSON MultiLineString geometry object representing all meridians and parallels for this graticule.
      */
-    (): GeoJSON.MultiLineString;
+  (): GeoJSON.MultiLineString;
 
-    /**
+  /**
      * Returns an array of GeoJSON LineString geometry objects, one for each meridian or parallel for this graticule.
      */
-    lines(): GeoJSON.LineString[];
+  lines(): GeoJSON.LineString[];
 
-    /**
+  /**
      * Returns a GeoJSON Polygon geometry object representing the outline of this graticule, i.e. along the meridians and parallels defining its extent.
      */
-    outline(): GeoJSON.Polygon;
+  outline(): GeoJSON.Polygon;
 
-    /**
+  /**
      * Returns the current minor extent, which defaults to ⟨⟨-180°, -80° - ε⟩, ⟨180°, 80° + ε⟩⟩.
      */
-    extent(): [[number, number], [number, number]];
-    /**
+  extent(): [[number, number], [number, number]];
+  /**
      * Sets the major and minor extents of this graticule.
      *
      * @param extent Extent to use for major and minor extent of graticule.
      */
-    extent(extent: [[number, number], [number, number]]): this;
+  extent(extent: [[number, number], [number, number]]): this;
 
-    /**
+  /**
      * Returns the current major extent, which defaults to ⟨⟨-180°, -90° + ε⟩, ⟨180°, 90° - ε⟩⟩.
      */
-    extentMajor(): [[number, number], [number, number]];
-    /**
+  extentMajor(): [[number, number], [number, number]];
+  /**
      * Sets the major extent of this graticule.
      *
      * @param extent Major extent of graticule.
      */
-    extentMajor(extent: [[number, number], [number, number]]): this;
+  extentMajor(extent: [[number, number], [number, number]]): this;
 
-    /**
+  /**
      * Returns the current minor extent, which defaults to  ⟨⟨-180°, -80° - ε⟩, ⟨180°, 80° + ε⟩⟩.
      */
-    extentMinor(): [[number, number], [number, number]];
-    /**
+  extentMinor(): [[number, number], [number, number]];
+  /**
      * Sets the minor extent of this graticule.
      *
      * @param extent Minor extent of graticule.
      */
-    extentMinor(extent: [[number, number], [number, number]]): this;
+  extentMinor(extent: [[number, number], [number, number]]): this;
 
-    /**
+  /**
      * Returns the current minor step, which defaults to ⟨10°, 10°⟩.
      */
-    step(): [number, number];
-    /**
+  step(): [number, number];
+  /**
      * Sets the major and minor step for this graticule
      *
      * @param step Major and minor step to use for this graticule.
      */
-    step(step: [number, number]): this;
+  step(step: [number, number]): this;
 
-    /**
+  /**
      * Returns the current major step, which defaults to ⟨90°, 360°⟩.
      */
-    stepMajor(): [number, number];
-    /**
+  stepMajor(): [number, number];
+  /**
      * Sets the major step for this graticule.
      *
      * @param step Major step.
      */
-    stepMajor(step: [number, number]): this;
+  stepMajor(step: [number, number]): this;
 
-    /**
+  /**
      * Returns the current major step, which defaults to ⟨10°, 10°⟩.
      */
-    stepMinor(): [number, number];
-    /**
+  stepMinor(): [number, number];
+  /**
      * Sets the minor step for this graticule.
      *
      * @param step Minor step.
      */
-    stepMinor(step: [number, number]): this;
+  stepMinor(step: [number, number]): this;
 
-    /**
+  /**
      * Returns the current precision, which defaults to 2.5°.
      */
-    precision(): number;
-    /**
+  precision(): number;
+  /**
      * Sets the precision for this graticule, in degrees.
      *
      * @param angle Precision in degrees.
      */
-    precision(angle: number): this;
+  precision(angle: number): this;
 }
 
 /**
@@ -517,19 +555,19 @@ export function geoGraticule10(): GeoJSON.MultiLineString;
  * and likewise a line is distinguished from a ring by a polygon. Despite the name “stream”, these method calls are currently synchronous.
  */
 export interface GeoStream {
-    /**
+  /**
      * Indicates the end of a line or ring. Within a polygon, indicates the end of a ring.
      * Unlike GeoJSON, the redundant closing coordinate of a ring is not indicated via point, and instead is implied via lineEnd within a polygon.
      */
-    lineEnd(): void;
+  lineEnd(): void;
 
-    /**
+  /**
      * Indicates the start of a line or ring. Within a polygon, indicates the start of a ring. The first ring of a polygon is the exterior ring, and is typically clockwise.
      * Any subsequent rings indicate holes in the polygon, and are typically counterclockwise.
      */
-    lineStart(): void;
+  lineStart(): void;
 
-    /**
+  /**
      * Indicates a point with the specified coordinates x and y (and optionally z). The coordinate system is unspecified and implementation-dependent;
      * for example, projection streams require spherical coordinates in degrees as input. Outside the context of a polygon or line,
      * a point indicates a point geometry object (Point or MultiPoint). Within a line or polygon ring, the point indicates a control point.
@@ -538,22 +576,22 @@ export interface GeoStream {
      * @param y y-coordinate of point.
      * @param z Optional z-coordinate of point.
      */
-    point(x: number, y: number, z?: number): void;
+  point(x: number, y: number, z?: number): void;
 
-    /**
+  /**
      * Indicates the end of a polygon.
      */
-    polygonEnd(): void;
+  polygonEnd(): void;
 
-    /**
+  /**
      * Indicates the start of a polygon. The first line of a polygon indicates the exterior ring, and any subsequent lines indicate interior holes.
      */
-    polygonStart(): void;
+  polygonStart(): void;
 
-    /**
+  /**
      * Indicates the sphere (the globe; the unit sphere centered at ⟨0,0,0⟩).
      */
-    sphere?(): void;
+  sphere?(): void;
 }
 
 // geoStream(...) =======================================================
@@ -574,7 +612,10 @@ export function geoStream(object: ExtendedFeature, stream: GeoStream): void;
  * @param object A geographic feature collection supported by d3-geo (An extension of GeoJSON feature).
  * @param stream A projection stream.
  */
-export function geoStream(object: ExtendedFeatureCollection, stream: GeoStream): void;
+export function geoStream(
+  object: ExtendedFeatureCollection,
+  stream: GeoStream,
+): void;
 
 /**
  * Streams the specified GeoJSON object to the specified projection stream. While both features and geometry objects are supported as input,
@@ -592,7 +633,10 @@ export function geoStream(object: GeoGeometryObjects, stream: GeoStream): void;
  * @param object A geographic geometry collection supported by d3-geo (An extension of GeoJSON geometry collection).
  * @param stream A projection stream.
  */
-export function geoStream(object: ExtendedGeometryCollection, stream: GeoStream): void;
+export function geoStream(
+  object: ExtendedGeometryCollection,
+  stream: GeoStream,
+): void;
 
 // ----------------------------------------------------------------------
 // Projections
@@ -604,33 +648,33 @@ export function geoStream(object: ExtendedGeometryCollection, stream: GeoStream)
  * Raw projections take spherical coordinates [lambda, phi] in radians (not degrees!) and return a point [x, y], typically in the unit square centered around the origin.
  */
 export interface GeoRawProjection {
-    /**
+  /**
      * Projects the specified point [lambda, phi] in radians, returning a new point [x, y] in unitless coordinates.
      * @param lambda Spherical lambda coordinate in radians.
      * @param phi Spherical phi coordinate in radians.
      */
-    (lambda: number, phi: number): [number, number];
+  (lambda: number, phi: number): [number, number];
 
-    /**
+  /**
      * Inverts the projected point [x, y] in unitless coordinates, returning an unprojected point in spherical coordinates [lambda, phi] in radians.
      * @param x x-coordinate (unitless).
      * @param y y-coordinate (unitless).
      */
-    invert?(x: number, y: number): [number, number];
+  invert?(x: number, y: number): [number, number];
 }
 
 /**
  * An object implementing a stream method
  */
 export interface GeoStreamWrapper {
-    /**
+  /**
      * Returns a projection stream for the specified output stream. Any input geometry is projected before being streamed to the output stream.
      * A typical projection involves several geometry transformations: the input geometry is first converted to radians, rotated on three axes,
      * clipped to the small circle or cut along the antimeridian, and lastly projected to the plane with adaptive resampling, scale and translation.
      *
      * @param stream An input stream
      */
-    stream(stream: GeoStream): GeoStream;
+  stream(stream: GeoStream): GeoStream;
 }
 
 /**
@@ -645,65 +689,65 @@ export interface GeoStreamWrapper {
  * For many more projections, see d3-geo-projection. You can implement custom projections using d3.geoProjection or d3.geoProjectionMutator.
  */
 export interface GeoProjection extends GeoStreamWrapper {
-    /**
+  /**
      * Returns a new array [x, y] (typically in pixels) representing the projected point of the given point.
      * The point must be specified as a two-element array [longitude, latitude] in degrees.
      * May return null if the specified point has no defined projected position, such as when the point is outside the clipping bounds of the projection.
      *
      * @param point A point specified as a two-dimensional array [longitude, latitude] in degrees.
      */
-    (point: [number, number]): [number, number] | null;
+  (point: [number, number]): [number, number] | null;
 
-    /**
+  /**
      * Returns a new array [longitude, latitude] in degrees representing the unprojected point of the given projected point.
      * May return null if the specified point has no defined projected position, such as when the point is outside the clipping bounds of the projection.
      *
      * @param point The projected point, specified as a two-element array [x, y] (typically in pixels).
      */
-    invert?(point: [number, number]): [number, number] | null;
+  invert?(point: [number, number]): [number, number] | null;
 
-    /**
+  /**
      * Returns the current spherical clipping function.
      * Pre-clipping occurs in geographic coordinates. Cutting along the antimeridian line,
      * or clipping along a small circle are the most common strategies.
      */
-    preclip(): (stream: GeoStream) => GeoStream;
-    /**
+  preclip(): (stream: GeoStream) => GeoStream;
+  /**
      * Sets the projection’s spherical clipping to the specified function and returns the projection.
      * Pre-clipping occurs in geographic coordinates. Cutting along the antimeridian line, or clipping along a small circle are the most common strategies.
      *
      * @param preclip A spherical clipping function. Clipping functions are implemented as transformations of a projection stream.
      * Pre-clipping operates on spherical coordinates, in radians.
      */
-    preclip(preclip: (stream: GeoStream) => GeoStream): this;
+  preclip(preclip: (stream: GeoStream) => GeoStream): this;
 
-    /**
+  /**
      * Returns the current cartesian clipping function.
      * Post-clipping occurs on the plane, when a projection is bounded to a certain extent such as a rectangle.
      */
-    postclip(): (stream: GeoStream) => GeoStream;
-    /**
+  postclip(): (stream: GeoStream) => GeoStream;
+  /**
      * Sets the projection’s cartesian clipping to the specified function and returns the projection.
      *
      * @param postclip A cartesian clipping function. Clipping functions are implemented as transformations of a projection stream.
      * Post-clipping operates on planar coordinates, in pixels.
      */
-    postclip(postclip: (stream: GeoStream) => GeoStream): this;
+  postclip(postclip: (stream: GeoStream) => GeoStream): this;
 
-    /**
+  /**
      * Returns the current clip angle which defaults to null.
      *
      * null switches to antimeridian cutting rather than small-circle clipping.
      */
-    clipAngle(): number | null;
-    /**
+  clipAngle(): number | null;
+  /**
      * Switches to antimeridian cutting rather than small-circle clipping.
      * See also projection.preclip, d3.geoClipAntimeridian, d3.geoClipCircle.
      *
      * @param angle Set to null to switch to antimeridian cutting.
      */
-    clipAngle(angle: null): this;
-    /**
+  clipAngle(angle: null): this;
+  /**
      * Sets the projection’s clipping circle radius to the specified angle in degrees and returns the projection.
      * Small-circle clipping is independent of viewport clipping via projection.clipExtent.
      *
@@ -711,13 +755,13 @@ export interface GeoProjection extends GeoStreamWrapper {
      *
      * @param angle Angle in degrees.
      */
-    clipAngle(angle: number): this;
+  clipAngle(angle: number): this;
 
-    /**
+  /**
      * Returns the current viewport clip extent which defaults to null.
      */
-    clipExtent(): [[number, number], [number, number]] | null;
-    /**
+  clipExtent(): [[number, number], [number, number]] | null;
+  /**
      * Sets the clip extent to null and returns the projection.
      * With a clip extent of null, no viewport clipping is performed.
      *
@@ -727,8 +771,8 @@ export interface GeoProjection extends GeoStreamWrapper {
      *
      * @param extent Set to null to disable viewport clipping.
      */
-    clipExtent(extent: null): this;
-    /**
+  clipExtent(extent: null): this;
+  /**
      * Sets the projection’s viewport clip extent to the specified bounds in pixels and returns the projection.
      * The extent bounds are specified as an array [[x₀, y₀], [x₁, y₁]], where x₀ is the left-side of the viewport, y₀ is the top, x₁ is the right and y₁ is the bottom.
      *
@@ -738,106 +782,106 @@ export interface GeoProjection extends GeoStreamWrapper {
      *
      * @param extent The extent bounds are specified as an array [[x₀, y₀], [x₁, y₁]], where x₀ is the left-side of the viewport, y₀ is the top, x₁ is the right and y₁ is the bottom.
      */
-    clipExtent(extent: [[number, number], [number, number]]): this;
+  clipExtent(extent: [[number, number], [number, number]]): this;
 
-    /**
+  /**
      * Returns the current scale factor; the default scale is projection-specific.
      *
      * The scale factor corresponds linearly to the distance between projected points; however, absolute scale factors are not equivalent across projections.
      */
-    scale(): number;
-    /**
+  scale(): number;
+  /**
      * Sets the projection’s scale factor to the specified value and returns the projection.
      * The scale factor corresponds linearly to the distance between projected points; however, absolute scale factors are not equivalent across projections.
      *
      * @param scale Scale factor to be used for the projection; the default scale is projection-specific.
      */
-    scale(scale: number): this;
+  scale(scale: number): this;
 
-    /**
+  /**
      * Returns the current translation offset which defaults to [480, 250] and places ⟨0°,0°⟩ at the center of a 960×500 area.
      * The translation offset determines the pixel coordinates of the projection’s center.
      */
-    translate(): [number, number];
-    /**
+  translate(): [number, number];
+  /**
      * Sets the projection’s translation offset to the specified two-element array [tx, ty] and returns the projection.
      * The translation offset determines the pixel coordinates of the projection’s center. The default translation offset places ⟨0°,0°⟩ at the center of a 960×500 area.
      *
      * @param point A two-element array [tx, ty] specifying the translation offset. The default translation offset of defaults to [480, 250] places ⟨0°,0°⟩ at the center of a 960×500 area.
      */
-    translate(point: [number, number]): this;
+  translate(point: [number, number]): this;
 
-    /**
+  /**
      * Returns the current center of the projection, which defaults to ⟨0°,0°⟩.
      */
-    center(): [number, number];
-    /**
+  center(): [number, number];
+  /**
      * Sets the projection’s center to the specified center,
      * a two-element array of longitude and latitude in degrees and returns the projection.
      * The default is ⟨0°,0°⟩.
      *
      * @param point A point specified as a two-dimensional array [longitude, latitude] in degrees.
      */
-    center(point: [number, number]): this;
+  center(point: [number, number]): this;
 
-    /**
+  /**
      * Returns the projection’s current angle, which defaults to 0°.
      */
-    angle(): number;
-    /**
+  angle(): number;
+  /**
      * Sets the projection’s post-projection planar rotation angle to the specified angle in degrees and returns the projection.
      * @param angle The new rotation angle of the projection.
      */
-    angle(angle: number): this;
+  angle(angle: number): this;
 
-    /**
+  /**
      * Returns true if x-reflection is enabled, which defaults to false.
      */
-    reflectX(): boolean;
-    /**
+  reflectX(): boolean;
+  /**
      * Sets whether or not the x-dimension is reflected (negated) in the output.
      * @param reflect Whether or not the x-dimension is reflected (negated) in the output.
      */
-    reflectX(reflect: boolean): this;
+  reflectX(reflect: boolean): this;
 
-    /**
+  /**
      * Returns true if y-reflection is enabled, which defaults to false.
      */
-    reflectY(): boolean;
-    /**
+  reflectY(): boolean;
+  /**
      * Sets whether or not the y-dimension is reflected (negated) in the output.
      * @param reflect Whether or not the y-dimension is reflected (negated) in the output.
      */
-    reflectY(reflect: boolean): this;
+  reflectY(reflect: boolean): this;
 
-    /**
+  /**
      * Returns the current rotation [lambda, phi, gamma] specifying the rotation angles in degrees about each spherical axis.
      * (These correspond to yaw, pitch and roll.) which defaults [0, 0, 0].
      */
-    rotate(): [number, number, number];
+  rotate(): [number, number, number];
 
-    /**
+  /**
      * Sets the projection’s three-axis rotation to the specified angles, which must be a two- or three-element array of numbers.
      *
      * @param angles  A two- or three-element array of numbers [lambda, phi, gamma] specifying the rotation angles in degrees about each spherical axis.
      * (These correspond to yaw, pitch and roll.) If the rotation angle gamma is omitted, it defaults to 0.
      */
-    rotate(angles: [number, number] | [number, number, number]): this;
+  rotate(angles: [number, number] | [number, number, number]): this;
 
-    /**
+  /**
      * Returns the projection’s current resampling precision which defaults to square root of 0.5.
      * This value corresponds to the Douglas–Peucker distance.
      */
-    precision(): number;
-    /**
+  precision(): number;
+  /**
      * Sets the threshold for the projection’s adaptive resampling to the specified value in pixels and returns the projection.
      * This value corresponds to the Douglas–Peucker distance.
      *
      * @param precision A numeric value in pixels to use as the threshold for the projection’s adaptive resampling.
      */
-    precision(precision: number): this;
+  precision(precision: number): this;
 
-    /**
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic feature in the center of the given extent.
      * Returns the projection.
      *
@@ -846,8 +890,11 @@ export interface GeoProjection extends GeoStreamWrapper {
      * @param extent The extent, specified as an array [[x₀, y₀], [x₁, y₁]], where x₀ is the left side of the bounding box, y₀ is the top, x₁ is the right and y₁ is the bottom.
      * @param object A geographic feature supported by d3-geo (An extension of GeoJSON feature).
      */
-    fitExtent(extent: [[number, number], [number, number]], object: ExtendedFeature): this;
-    /**
+  fitExtent(
+    extent: [[number, number], [number, number]],
+    object: ExtendedFeature,
+  ): this;
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic feature collection in the center of the given extent.
      * Returns the projection.
      *
@@ -856,8 +903,11 @@ export interface GeoProjection extends GeoStreamWrapper {
      * @param extent The extent, specified as an array [[x₀, y₀], [x₁, y₁]], where x₀ is the left side of the bounding box, y₀ is the top, x₁ is the right and y₁ is the bottom.
      * @param object A geographic feature collection supported by d3-geo (An extension of GeoJSON feature collection).
      */
-    fitExtent(extent: [[number, number], [number, number]], object: ExtendedFeatureCollection): this;
-    /**
+  fitExtent(
+    extent: [[number, number], [number, number]],
+    object: ExtendedFeatureCollection,
+  ): this;
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic geometry object in the center of the given extent.
      * Returns the projection.
      *
@@ -866,8 +916,11 @@ export interface GeoProjection extends GeoStreamWrapper {
      * @param extent The extent, specified as an array [[x₀, y₀], [x₁, y₁]], where x₀ is the left side of the bounding box, y₀ is the top, x₁ is the right and y₁ is the bottom.
      * @param object A GeoJson Geometry Object or GeoSphere object supported by d3-geo (An extension of GeoJSON).
      */
-    fitExtent(extent: [[number, number], [number, number]], object: GeoGeometryObjects): this;
-    /**
+  fitExtent(
+    extent: [[number, number], [number, number]],
+    object: GeoGeometryObjects,
+  ): this;
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic geometry collection in the center of the given extent.
      * Returns the projection.
      *
@@ -876,9 +929,12 @@ export interface GeoProjection extends GeoStreamWrapper {
      * @param extent The extent, specified as an array [[x₀, y₀], [x₁, y₁]], where x₀ is the left side of the bounding box, y₀ is the top, x₁ is the right and y₁ is the bottom.
      * @param object A geographic geometry collection supported by d3-geo (An extension of GeoJSON geometry collection).
      */
-    fitExtent(extent: [[number, number], [number, number]], object: ExtendedGeometryCollection): this;
+  fitExtent(
+    extent: [[number, number], [number, number]],
+    object: ExtendedGeometryCollection,
+  ): this;
 
-    /**
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic feature in the center of an extent with the given size and top-left corner of [0, 0].
      * Returns the projection.
      *
@@ -887,8 +943,8 @@ export interface GeoProjection extends GeoStreamWrapper {
      * @param size The size of the extent, specified as an array [width, height].
      * @param object A geographic feature supported by d3-geo (An extension of GeoJSON feature).
      */
-    fitSize(size: [number, number], object: ExtendedFeature): this;
-    /**
+  fitSize(size: [number, number], object: ExtendedFeature): this;
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic feature collection in the center of an extent with the given size and top-left corner of [0, 0].
      * Returns the projection.
      *
@@ -897,8 +953,8 @@ export interface GeoProjection extends GeoStreamWrapper {
      * @param size The size of the extent, specified as an array [width, height].
      * @param object A geographic feature collection supported by d3-geo (An extension of GeoJSON feature collection).
      */
-    fitSize(size: [number, number], object: ExtendedFeatureCollection): this;
-    /**
+  fitSize(size: [number, number], object: ExtendedFeatureCollection): this;
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic geometry object in the center of an extent with the given size and top-left corner of [0, 0].
      * Returns the projection.
      *
@@ -907,8 +963,8 @@ export interface GeoProjection extends GeoStreamWrapper {
      * @param size The size of the extent, specified as an array [width, height].
      * @param object A GeoJson Geometry Object or GeoSphere object supported by d3-geo (An extension of GeoJSON).
      */
-    fitSize(size: [number, number], object: GeoGeometryObjects): this;
-    /**
+  fitSize(size: [number, number], object: GeoGeometryObjects): this;
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic geometry collection in the center of an extent with the given size and top-left corner of [0, 0].
      * Returns the projection.
      *
@@ -917,81 +973,81 @@ export interface GeoProjection extends GeoStreamWrapper {
      * @param size The size of the extent, specified as an array [width, height].
      * @param object A geographic geometry collection supported by d3-geo (An extension of GeoJSON geometry collection).
      */
-    fitSize(size: [number, number], object: ExtendedGeometryCollection): this;
+  fitSize(size: [number, number], object: ExtendedGeometryCollection): this;
 
-    /**
+  /**
      * A convenience method for projection.fitSize where the height is automatically chosen from the aspect ratio of object and the given constraint on width.
      *
      * @param width The width of the extent.
      * @param object A geographic feature supported by d3-geo (An extension of GeoJSON feature).
      */
-    fitWidth(width: number, object: ExtendedFeature): this;
-    /**
+  fitWidth(width: number, object: ExtendedFeature): this;
+  /**
      * A convenience method for projection.fitSize where the height is automatically chosen from the aspect ratio of object and the given constraint on width.
      *
      * @param width The width of the extent.
      * @param object A GeoJson Geometry Object or GeoSphere object supported by d3-geo (An extension of GeoJSON).
      */
-    fitWidth(width: number, object: ExtendedFeatureCollection): this;
-    /**
+  fitWidth(width: number, object: ExtendedFeatureCollection): this;
+  /**
      * A convenience method for projection.fitSize where the height is automatically chosen from the aspect ratio of object and the given constraint on width.
      *
      * @param width The width of the extent.
      * @param object A geographic feature supported by d3-geo (An extension of GeoJSON feature).
      */
-    fitWidth(width: number, object: GeoGeometryObjects): this;
-    /**
+  fitWidth(width: number, object: GeoGeometryObjects): this;
+  /**
      * A convenience method for projection.fitSize where the height is automatically chosen from the aspect ratio of object and the given constraint on width.
      *
      * @param width The width of the extent.
      * @param object A geographic geometry collection supported by d3-geo (An extension of GeoJSON geometry collection).
      */
-    fitWidth(width: number, object: ExtendedGeometryCollection): this;
+  fitWidth(width: number, object: ExtendedGeometryCollection): this;
 
-    /**
+  /**
      * A convenience method for projection.fitSize where the width is automatically chosen from the aspect ratio of object and the given constraint on height.
      *
      * @param height The height of the extent.
      * @param object A geographic feature supported by d3-geo (An extension of GeoJSON feature).
      */
-    fitHeight(height: number, object: ExtendedFeature): this;
-    /**
+  fitHeight(height: number, object: ExtendedFeature): this;
+  /**
      * A convenience method for projection.fitSize where the width is automatically chosen from the aspect ratio of object and the given constraint on height.
      *
      * @param height The height of the extent.
      * @param object A GeoJson Geometry Object or GeoSphere object supported by d3-geo (An extension of GeoJSON).
      */
-    fitHeight(height: number, object: ExtendedFeatureCollection): this;
-    /**
+  fitHeight(height: number, object: ExtendedFeatureCollection): this;
+  /**
      * A convenience method for projection.fitSize where the width is automatically chosen from the aspect ratio of object and the given constraint on height.
      *
      * @param height The height of the extent.
      * @param object A geographic feature supported by d3-geo (An extension of GeoJSON feature).
      */
-    fitHeight(height: number, object: GeoGeometryObjects): this;
-    /**
+  fitHeight(height: number, object: GeoGeometryObjects): this;
+  /**
      * A convenience method for projection.fitSize where the width is automatically chosen from the aspect ratio of object and the given constraint on height.
      *
      * @param height The height of the extent.
      * @param object A geographic geometry collection supported by d3-geo (An extension of GeoJSON geometry collection).
      */
-    fitHeight(height: number, object: ExtendedGeometryCollection): this;
+  fitHeight(height: number, object: ExtendedGeometryCollection): this;
 }
 
 /**
  * A Conic Projection
  */
 export interface GeoConicProjection extends GeoProjection {
-    /**
+  /**
      * Return the standard parallels for the conic projection in degrees.
      */
-    parallels(): [number, number];
-    /**
+  parallels(): [number, number];
+  /**
      * Set the standard parallels for the conic projection in degrees and return the projection.
      *
      * @param value A two-dimensional array representing the standard parallels in degrees.
      */
-    parallels(value: [number, number]): this;
+  parallels(value: [number, number]): this;
 }
 
 // geoPath ==============================================================
@@ -1003,7 +1059,7 @@ export interface GeoConicProjection extends GeoProjection {
  * For reference to the CanvasRenderingContext2D see https://developer.mozilla.org/en/docs/Web/API/CanvasRenderingContext2D
  */
 export interface GeoContext {
-    /**
+  /**
      * Adds an arc to the path with center point (x, y) and radius r starting at startAngle and ending at endAngle.
      * The arc is drawn in clockwise direction by default.
      *
@@ -1014,35 +1070,42 @@ export interface GeoContext {
      * @param endAngle The end angle of the arc, measured clockwise from the positive x axis and expressed in radians.
      * @param anticlockwise Optional boolean flag, if true the arc is drawn counter-clockwise between the two angles.
      */
-    arc(x: number, y: number, radius: number, startAngle: number, endAngle: number, anticlockwise?: boolean): void;
+  arc(
+    x: number,
+    y: number,
+    radius: number,
+    startAngle: number,
+    endAngle: number,
+    anticlockwise?: boolean,
+  ): void;
 
-    /**
+  /**
      * Start a new path by emptying the list of sub-paths.
      */
-    beginPath(): void;
+  beginPath(): void;
 
-    /**
+  /**
      * Causes the point of the pen to move back to the start of the current sub-path.
      * It tries to draw a straight line from the current point to the start.
      * If the shape has already been closed or has only one point, this function does nothing.
      */
-    closePath(): void;
+  closePath(): void;
 
-    /**
+  /**
      * Connects the last point in the sub-path to the x, y coordinates with a straight line (but does not actually draw it).
      *
      * @param x The x-coordinate for the end of the line.
      * @param y The y-coordinate for the end of the line.
      */
-    lineTo(x: number, y: number): void;
+  lineTo(x: number, y: number): void;
 
-    /**
+  /**
      * Move the starting point of a new sub-path to the (x, y) coordinates.
      *
      * @param x The x-coordinate for the new starting point.
      * @param y The y-coordinate for the new starting point.
      */
-    moveTo(x: number, y: number): void;
+  moveTo(x: number, y: number): void;
 }
 
 /**
@@ -1053,8 +1116,11 @@ export interface GeoContext {
  *
  * The second generic corresponds to the type of the DatumObject which will be passed into the geo path generator for rendering.
  */
-export interface GeoPath<This = any, DatumObject extends GeoPermissibleObjects = GeoPermissibleObjects> {
-    /**
+export interface GeoPath<
+  This = any,
+  DatumObject extends GeoPermissibleObjects = GeoPermissibleObjects,
+> {
+  /**
      * Renders the given object, which may be any GeoJSON feature or geometry object:
      *
      * + Point - a single position.
@@ -1082,8 +1148,8 @@ export interface GeoPath<This = any, DatumObject extends GeoPermissibleObjects =
      *
      * @param object An object to be rendered.
      */
-    (this: This, object: DatumObject, ...args: any[]): string | null;
-    /**
+  (this: This, object: DatumObject, ...args: any[]): string | null;
+  /**
      * Renders the given object, which may be any GeoJSON feature or geometry object:
      *
      * + Point - a single position.
@@ -1111,9 +1177,9 @@ export interface GeoPath<This = any, DatumObject extends GeoPermissibleObjects =
      *
      * @param object An object to be rendered.
      */
-    (this: This, object: DatumObject, ...args: any[]): void;
+  (this: This, object: DatumObject, ...args: any[]): void;
 
-    /**
+  /**
      * Returns the projected planar area (typically in square pixels) for the specified GeoJSON object.
      * Point, MultiPoint, LineString and MultiLineString geometries have zero area. For Polygon and MultiPolygon geometries,
      * this method first computes the area of the exterior ring, and then subtracts the area of any interior holes.
@@ -1121,9 +1187,9 @@ export interface GeoPath<This = any, DatumObject extends GeoPermissibleObjects =
      *
      * @param object An object for which the area is to be calculated.
      */
-    area(object: DatumObject): number;
+  area(object: DatumObject): number;
 
-    /**
+  /**
      * Returns the projected planar bounding box (typically in pixels) for the specified GeoJSON object.
      * The bounding box is represented by a two-dimensional array: [[x₀, y₀], [x₁, y₁]], where x₀ is the minimum x-coordinate, y₀ is the minimum y-coordinate,
      * x₁ is maximum x-coordinate, and y₁ is the maximum y-coordinate.
@@ -1134,9 +1200,9 @@ export interface GeoPath<This = any, DatumObject extends GeoPermissibleObjects =
      *
      * @param object An object for which the bounds are to be calculated.
      */
-    bounds(object: DatumObject): [[number, number], [number, number]];
+  bounds(object: DatumObject): [[number, number], [number, number]];
 
-    /**
+  /**
      * Returns the projected planar centroid (typically in pixels) for the specified GeoJSON object.
      * This is handy for, say, labeling state or county boundaries, or displaying a symbol map.
      * For example, a noncontiguous cartogram might scale each state around its centroid.
@@ -1144,9 +1210,9 @@ export interface GeoPath<This = any, DatumObject extends GeoPermissibleObjects =
      *
      * @param object An object for which the centroid is to be calculated.
      */
-    centroid(object: DatumObject): [number, number];
+  centroid(object: DatumObject): [number, number];
 
-    /**
+  /**
      * Returns the projected planar length (typically in pixels) for the specified GeoJSON object.
      * Point and MultiPoint geometries have zero length. For Polygon and MultiPolygon geometries, this method computes the summed length of all rings.
      *
@@ -1154,33 +1220,33 @@ export interface GeoPath<This = any, DatumObject extends GeoPermissibleObjects =
      *
      * @param object An object for which the measure is to be calculated.
      */
-    measure(object: DatumObject): number;
+  measure(object: DatumObject): number;
 
-    /**
+  /**
      * Returns the current render context which defaults to null.
      *
      * Use the generic to cast the return type of the rendering context, if it is known for a specific application.
      */
-    context<C extends GeoContext | null>(): C;
+  context<C extends GeoContext | null>(): C;
 
-    /**
+  /**
      * Set the current rendering context to null and return the path generator.
      * The path generator will return an SVG path string;
      *
      * @param context Null to remove the current rendering context, if any.
      */
-    context(context: null): this;
+  context(context: null): this;
 
-    /**
+  /**
      * Set the current rendering context and return the path generator.
      * The path generator will render to the specified context.
      *
      * @param context Rendering context to be used by the path generator.
      * The context must at least implement GeoContext, a subset of the CanvasRenderingContext2D API.
      */
-    context(context: GeoContext): this;
+  context(context: GeoContext): this;
 
-    /**
+  /**
      * Get the current projection. The generic parameter can be used to cast the result to the
      * correct, known type of the projection, e.g. GeoProjection or GeoConicProjection. Otherwise,
      * the return type defaults to the minimum type requirement for a projection which
@@ -1188,16 +1254,18 @@ export interface GeoPath<This = any, DatumObject extends GeoPermissibleObjects =
      *
      * Use the generic to cast the return type of the projection, if it is known for a specific application.
      */
-    projection<P extends GeoConicProjection | GeoProjection | GeoStreamWrapper | null>(): P;
+  projection<
+    P extends GeoConicProjection | GeoProjection | GeoStreamWrapper | null,
+  >(): P;
 
-    /**
+  /**
      * Set the projection to the identity projection.
      *
      * @param projection Use null to set the identity projection.
      */
-    projection(projection: null): this;
+  projection(projection: null): this;
 
-    /**
+  /**
      * Set the current projection to be used with the geo path generator.
      *
      * The given projection is typically one of D3’s built-in geographic projections;
@@ -1206,9 +1274,9 @@ export interface GeoPath<This = any, DatumObject extends GeoPermissibleObjects =
      *
      * @param projection A projection.
      */
-    projection(projection: GeoProjection): this;
+  projection(projection: GeoProjection): this;
 
-    /**
+  /**
      * Set the projection to be used with the geo path generator to a custom projection.
      * Custom projections must minimally contain a stream method.
      *
@@ -1218,22 +1286,24 @@ export interface GeoPath<This = any, DatumObject extends GeoPermissibleObjects =
      *
      * @param projection A wrapper object exposing, at a minimum a "stream" method to be used for custom projections.
      */
-    projection(projection: GeoStreamWrapper): this;
+  projection(projection: GeoStreamWrapper): this;
 
-    /**
+  /**
      * Returns the current radius or radius accessor used to determine the radius for the display of Point and MultiPoint geometries.
      * The default is a constant radius of 4.5.
      */
-    pointRadius(): ((this: This, object: DatumObject, ...args: any[]) => number) | number;
+  pointRadius():
+    | ((this: This, object: DatumObject, ...args: any[]) => number)
+    | number;
 
-    /**
+  /**
      * Sets the radius used to display Point and MultiPoint geometries to the specified number and return the geo path generator.
      *
      * @param value Fixed radius value.
      */
-    pointRadius(value: number): this;
+  pointRadius(value: number): this;
 
-    /**
+  /**
      * Sets the radius used to display Point and MultiPoint geometries to use the specified radius accessor function.
      *
      * While the radius is commonly specified as a number constant, it may also be specified as a function which is computed per feature,
@@ -1245,7 +1315,9 @@ export interface GeoPath<This = any, DatumObject extends GeoPermissibleObjects =
      * The value accessor function is invoked within the "this" context in which the path generator is used.
      * It is passed the object to be rendered, and any additional arguments which have been passed into the call to the render function of the path generator.
      */
-    pointRadius(value: (this: This, object: DatumObject, ...args: any[]) => number): this;
+  pointRadius(
+    value: (this: This, object: DatumObject, ...args: any[]) => number,
+  ): this;
 }
 
 /**
@@ -1263,7 +1335,10 @@ export interface GeoPath<This = any, DatumObject extends GeoPermissibleObjects =
  * @param context An (optional) rendering context to be used. If a context is provided, it must at least implement the interface described by GeoContext, a subset of the CanvasRenderingContext2D API.
  * Setting the context to "null" means that the path generator will return an SVG path string representing the to be rendered object. The default is "null".
  */
-export function geoPath(projection?: GeoProjection | GeoStreamWrapper | null, context?: GeoContext | null): GeoPath;
+export function geoPath(
+  projection?: GeoProjection | GeoStreamWrapper | null,
+  context?: GeoContext | null,
+): GeoPath;
 /**
  * Creates a new geographic path generator with the default settings.
  *
@@ -1281,7 +1356,10 @@ export function geoPath(projection?: GeoProjection | GeoStreamWrapper | null, co
  * @param context An (optional) rendering context to be used. If a context is provided, it must at least implement the interface described by GeoContext, a subset of the CanvasRenderingContext2D API.
  * Setting the context to "null" means that the path generator will return an SVG path string representing the to be rendered object. The default is "null".
  */
-export function geoPath<DatumObject extends GeoPermissibleObjects>(projection?: GeoProjection | GeoStreamWrapper | null, context?: GeoContext | null): GeoPath<any, DatumObject>;
+export function geoPath<DatumObject extends GeoPermissibleObjects>(
+  projection?: GeoProjection | GeoStreamWrapper | null,
+  context?: GeoContext | null,
+): GeoPath<any, DatumObject>;
 /**
  * Creates a new geographic path generator with the default settings.
  *
@@ -1302,7 +1380,10 @@ export function geoPath<DatumObject extends GeoPermissibleObjects>(projection?: 
  * @param context An (optional) rendering context to be used. If a context is provided, it must at least implement the interface described by GeoContext, a subset of the CanvasRenderingContext2D API.
  * Setting the context to "null" means that the path generator will return an SVG path string representing the to be rendered object. The default is "null".
  */
-export function geoPath<This, DatumObject extends GeoPermissibleObjects>(projection?: GeoProjection | GeoStreamWrapper | null, context?: GeoContext | null): GeoPath<This, DatumObject>;
+export function geoPath<This, DatumObject extends GeoPermissibleObjects>(
+  projection?: GeoProjection | GeoStreamWrapper | null,
+  context?: GeoContext | null,
+): GeoPath<This, DatumObject>;
 
 // geoProjection ==========================================================
 
@@ -1325,7 +1406,9 @@ export function geoProjection(project: GeoRawProjection): GeoProjection;
  *
  * When creating a mutable projection, the mutate function is typically not exposed.
  */
-export function geoProjectionMutator(factory: (...args: any[]) => GeoRawProjection): () => GeoProjection;
+export function geoProjectionMutator(
+  factory: (...args: any[]) => GeoRawProjection,
+): () => GeoProjection;
 
 // Pre-Defined Projections and Raw Projections =============================
 
@@ -1416,7 +1499,10 @@ export function geoConicConformal(): GeoConicProjection;
 /**
  * The raw conic conformal projection.
  */
-export function geoConicConformalRaw(phi0: number, phi1: number): GeoRawProjection;
+export function geoConicConformalRaw(
+  phi0: number,
+  phi1: number,
+): GeoRawProjection;
 
 /**
  * The Albers’ equal-area conic projection.
@@ -1426,7 +1512,10 @@ export function geoConicEqualArea(): GeoConicProjection;
 /**
  * The raw Albers’ equal-area conic projection.
  */
-export function geoConicEqualAreaRaw(phi0: number, phi1: number): GeoRawProjection;
+export function geoConicEqualAreaRaw(
+  phi0: number,
+  phi1: number,
+): GeoRawProjection;
 
 /**
  * The conic equidistant projection.
@@ -1436,7 +1525,10 @@ export function geoConicEquidistant(): GeoConicProjection;
 /**
  * The raw conic equidistant projection.
  */
-export function geoConicEquidistantRaw(phi0: number, phi1: number): GeoRawProjection;
+export function geoConicEquidistantRaw(
+  phi0: number,
+  phi1: number,
+): GeoRawProjection;
 
 // Cylindrical Projections ------------------------------------------------
 
@@ -1493,17 +1585,17 @@ export function geoNaturalEarth1Raw(): GeoRawProjection;
  * transform projection.
  */
 export interface GeoTransformPrototype {
-    /**
+  /**
      * Indicates the end of a line or ring. Within a polygon, indicates the end of a ring.
      * Unlike GeoJSON, the redundant closing coordinate of a ring is not indicated via point, and instead is implied via lineEnd within a polygon.
      */
-    lineEnd?(this: this & { stream: GeoStream }): void;
-    /**
+  lineEnd?(this: this & { stream: GeoStream }): void;
+  /**
      * Indicates the start of a line or ring. Within a polygon, indicates the start of a ring. The first ring of a polygon is the exterior ring, and is typically clockwise.
      * Any subsequent rings indicate holes in the polygon, and are typically counterclockwise.
      */
-    lineStart?(this: this & { stream: GeoStream }): void;
-    /**
+  lineStart?(this: this & { stream: GeoStream }): void;
+  /**
      * Indicates a point with the specified coordinates x and y (and optionally z). The coordinate system is unspecified and implementation-dependent;
      * for example, projection streams require spherical coordinates in degrees as input. Outside the context of a polygon or line,
      * a point indicates a point geometry object (Point or MultiPoint). Within a line or polygon ring, the point indicates a control point.
@@ -1512,19 +1604,24 @@ export interface GeoTransformPrototype {
      * @param y y-coordinate of point.
      * @param z Optional z-coordinate of point.
      */
-    point?(this: this & { stream: GeoStream }, x: number, y: number, z?: number): void;
-    /**
+  point?(
+    this: this & { stream: GeoStream },
+    x: number,
+    y: number,
+    z?: number,
+  ): void;
+  /**
      * Indicates the end of a polygon.
      */
-    polygonEnd?(this: this & { stream: GeoStream }): void;
-    /**
+  polygonEnd?(this: this & { stream: GeoStream }): void;
+  /**
      * Indicates the start of a polygon. The first line of a polygon indicates the exterior ring, and any subsequent lines indicate interior holes.
      */
-    polygonStart?(this: this & { stream: GeoStream }): void;
-    /**
+  polygonStart?(this: this & { stream: GeoStream }): void;
+  /**
      * Indicates the sphere (the globe; the unit sphere centered at ⟨0,0,0⟩).
      */
-    sphere?(this: this & { stream: GeoStream }): void;
+  sphere?(this: this & { stream: GeoStream }): void;
 }
 
 // TODO: Review whether GeoStreamWrapper should be included into return value union type, i.e. ({ stream: (s: GeoStream) => (T & GeoStream & GeoStreamWrapper)})?
@@ -1537,7 +1634,9 @@ export interface GeoTransformPrototype {
  *
  * @param methods An object with custom method implementations, which are used to create a transform projection.
  */
-export function geoTransform<T extends GeoTransformPrototype>(methods: T): { stream(s: GeoStream): T & GeoStream };
+export function geoTransform<T extends GeoTransformPrototype>(
+  methods: T,
+): { stream(s: GeoStream): T & GeoStream };
 
 // geoIdentity() =================================================================
 
@@ -1550,74 +1649,74 @@ export type GeoIdentityTranform = GeoIdentityTransform;
  * Geo Identity Transform
  */
 export interface GeoIdentityTransform extends GeoStreamWrapper {
-    /**
+  /**
      * Returns a new array [x, y] (typically in pixels) representing the projected point of the given point.
      * The point must be specified as a two-element array [longitude, latitude] in degrees.
      * May return null if the specified point has no defined projected position, such as when the point is outside the clipping bounds of the projection.
      *
      * @param point A point specified as a two-dimensional array [longitude, latitude] in degrees.
      */
-    (point: [number, number]): [number, number] | null;
+  (point: [number, number]): [number, number] | null;
 
-    /**
+  /**
      * Returns a new array [longitude, latitude] in degrees representing the unprojected point of the given projected point.
      * May return null if the specified point has no defined projected position, such as when the point is outside the clipping bounds of the projection.
      *
      * @param point The projected point, specified as a two-element array [x, y] (typically in pixels).
      */
-    invert(point: [number, number]): [number, number] | null;
+  invert(point: [number, number]): [number, number] | null;
 
-    /**
+  /**
      * Returns the current cartesian clipping function.
      * Post-clipping occurs on the plane, when a projection is bounded to a certain extent such as a rectangle.
      */
-    postclip(): (stream: GeoStream) => GeoStream;
-    /**
+  postclip(): (stream: GeoStream) => GeoStream;
+  /**
      * Sets the projection’s cartesian clipping to the specified function and returns the projection.
      *
      * @param postclip A cartesian clipping function. Clipping functions are implemented as transformations of a projection stream.
      * Post-clipping operates on planar coordinates, in pixels.
      */
-    postclip(postclip: (stream: GeoStream) => GeoStream): this;
+  postclip(postclip: (stream: GeoStream) => GeoStream): this;
 
-    /**
+  /**
      * Returns the current scale factor.
      *
      * The scale factor corresponds linearly to the distance between projected points; however, absolute scale factors are not equivalent across projections.
      */
-    scale(): number;
-    /**
+  scale(): number;
+  /**
      * Sets the projection’s scale factor to the specified value and returns the projection.
      * The scale factor corresponds linearly to the distance between projected points; however, absolute scale factors are not equivalent across projections.
      *
      * @param scale Scale factor to be used for the projection.
      */
-    scale(scale: number): this;
+  scale(scale: number): this;
 
-    /**
+  /**
      * Returns the current translation offset.
      * The translation offset determines the pixel coordinates of the projection’s center.
      */
-    translate(): [number, number];
-    /**
+  translate(): [number, number];
+  /**
      * Sets the projection’s translation offset to the specified two-element array [tx, ty] and returns the projection.
      * The translation offset determines the pixel coordinates of the projection’s center.
      *
      * @param point A two-element array [tx, ty] specifying the translation offset.
      */
-    translate(point: [number, number]): this;
+  translate(point: [number, number]): this;
 
-    /**
+  /**
      * Returns the projection’s current angle, which defaults to 0°.
      */
-    angle(): number;
-    /**
+  angle(): number;
+  /**
      * Sets the projection’s post-projection planar rotation angle to the specified angle in degrees and returns the projection.
      * @param angle The new rotation angle of the projection.
      */
-    angle(angle: number): this;
+  angle(angle: number): this;
 
-    /**
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic feature in the center of the given extent.
      * Returns the projection.
      *
@@ -1626,8 +1725,11 @@ export interface GeoIdentityTransform extends GeoStreamWrapper {
      * @param extent The extent, specified as an array [[x₀, y₀], [x₁, y₁]], where x₀ is the left side of the bounding box, y₀ is the top, x₁ is the right and y₁ is the bottom.
      * @param object A geographic feature supported by d3-geo (An extension of GeoJSON feature).
      */
-    fitExtent(extent: [[number, number], [number, number]], object: ExtendedFeature): this;
-    /**
+  fitExtent(
+    extent: [[number, number], [number, number]],
+    object: ExtendedFeature,
+  ): this;
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic feature collection in the center of the given extent.
      * Returns the projection.
      *
@@ -1636,8 +1738,11 @@ export interface GeoIdentityTransform extends GeoStreamWrapper {
      * @param extent The extent, specified as an array [[x₀, y₀], [x₁, y₁]], where x₀ is the left side of the bounding box, y₀ is the top, x₁ is the right and y₁ is the bottom.
      * @param object A geographic feature collection supported by d3-geo (An extension of GeoJSON feature collection).
      */
-    fitExtent(extent: [[number, number], [number, number]], object: ExtendedFeatureCollection): this;
-    /**
+  fitExtent(
+    extent: [[number, number], [number, number]],
+    object: ExtendedFeatureCollection,
+  ): this;
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic geometry object in the center of the given extent.
      * Returns the projection.
      *
@@ -1646,8 +1751,11 @@ export interface GeoIdentityTransform extends GeoStreamWrapper {
      * @param extent The extent, specified as an array [[x₀, y₀], [x₁, y₁]], where x₀ is the left side of the bounding box, y₀ is the top, x₁ is the right and y₁ is the bottom.
      * @param object A GeoJson Geometry Object or GeoSphere object supported by d3-geo (An extension of GeoJSON).
      */
-    fitExtent(extent: [[number, number], [number, number]], object: GeoGeometryObjects): this;
-    /**
+  fitExtent(
+    extent: [[number, number], [number, number]],
+    object: GeoGeometryObjects,
+  ): this;
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic geometry collection in the center of the given extent.
      * Returns the projection.
      *
@@ -1656,9 +1764,12 @@ export interface GeoIdentityTransform extends GeoStreamWrapper {
      * @param extent The extent, specified as an array [[x₀, y₀], [x₁, y₁]], where x₀ is the left side of the bounding box, y₀ is the top, x₁ is the right and y₁ is the bottom.
      * @param object A geographic geometry collection supported by d3-geo (An extension of GeoJSON geometry collection).
      */
-    fitExtent(extent: [[number, number], [number, number]], object: ExtendedGeometryCollection): this;
+  fitExtent(
+    extent: [[number, number], [number, number]],
+    object: ExtendedGeometryCollection,
+  ): this;
 
-    /**
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic feature in the center of an extent with the given size and top-left corner of [0, 0].
      * Returns the projection.
      *
@@ -1667,8 +1778,8 @@ export interface GeoIdentityTransform extends GeoStreamWrapper {
      * @param size The size of the extent, specified as an array [width, height].
      * @param object A geographic feature supported by d3-geo (An extension of GeoJSON feature).
      */
-    fitSize(size: [number, number], object: ExtendedFeature): this;
-    /**
+  fitSize(size: [number, number], object: ExtendedFeature): this;
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic feature collection in the center of an extent with the given size and top-left corner of [0, 0].
      * Returns the projection.
      *
@@ -1677,8 +1788,8 @@ export interface GeoIdentityTransform extends GeoStreamWrapper {
      * @param size The size of the extent, specified as an array [width, height].
      * @param object A geographic feature collection supported by d3-geo (An extension of GeoJSON feature collection).
      */
-    fitSize(size: [number, number], object: ExtendedFeatureCollection): this;
-    /**
+  fitSize(size: [number, number], object: ExtendedFeatureCollection): this;
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic geometry object in the center of an extent with the given size and top-left corner of [0, 0].
      * Returns the projection.
      *
@@ -1687,8 +1798,8 @@ export interface GeoIdentityTransform extends GeoStreamWrapper {
      * @param size The size of the extent, specified as an array [width, height].
      * @param object A GeoJson Geometry Object or GeoSphere object supported by d3-geo (An extension of GeoJSON).
      */
-    fitSize(size: [number, number], object: GeoGeometryObjects): this;
-    /**
+  fitSize(size: [number, number], object: GeoGeometryObjects): this;
+  /**
      * Sets the projection’s scale and translate to fit the specified geographic geometry collection in the center of an extent with the given size and top-left corner of [0, 0].
      * Returns the projection.
      *
@@ -1697,13 +1808,13 @@ export interface GeoIdentityTransform extends GeoStreamWrapper {
      * @param size The size of the extent, specified as an array [width, height].
      * @param object A geographic geometry collection supported by d3-geo (An extension of GeoJSON geometry collection).
      */
-    fitSize(size: [number, number], object: ExtendedGeometryCollection): this;
+  fitSize(size: [number, number], object: ExtendedGeometryCollection): this;
 
-    /**
+  /**
      * Returns the current viewport clip extent which defaults to null.
      */
-    clipExtent(): [[number, number], [number, number]] | null;
-    /**
+  clipExtent(): [[number, number], [number, number]] | null;
+  /**
      * Sets the clip extent to null and returns the projection.
      * With a clip extent of null, no viewport clipping is performed.
      *
@@ -1711,8 +1822,8 @@ export interface GeoIdentityTransform extends GeoStreamWrapper {
      *
      * @param extent Set to null to disable viewport clipping.
      */
-    clipExtent(extent: null): this;
-    /**
+  clipExtent(extent: null): this;
+  /**
      * Sets the projection’s viewport clip extent to the specified bounds in pixels and returns the projection.
      * The extent bounds are specified as an array [[x₀, y₀], [x₁, y₁]], where x₀ is the left-side of the viewport, y₀ is the top, x₁ is the right and y₁ is the bottom.
      *
@@ -1720,24 +1831,24 @@ export interface GeoIdentityTransform extends GeoStreamWrapper {
      *
      * @param extent The extent bounds are specified as an array [[x₀, y₀], [x₁, y₁]], where x₀ is the left-side of the viewport, y₀ is the top, x₁ is the right and y₁ is the bottom.
      */
-    clipExtent(extent: [[number, number], [number, number]]): this;
+  clipExtent(extent: [[number, number], [number, number]]): this;
 
-    /**
+  /**
      * Returns true if x-reflection is enabled, which defaults to false.
      */
-    reflectX(): boolean;
-    /**
+  reflectX(): boolean;
+  /**
      * Sets whether or not the x-dimension is reflected (negated) in the output.
      *
      * @param reflect true = reflect x-dimension, false = do not reflect x-dimension.
      */
-    reflectX(reflect: boolean): this;
+  reflectX(reflect: boolean): this;
 
-    /**
+  /**
      * Returns true if y-reflection is enabled, which defaults to false.
      */
-    reflectY(): boolean;
-    /**
+  reflectY(): boolean;
+  /**
      * Sets whether or not the y-dimension is reflected (negated) in the output.
      *
      * This is especially useful for transforming from standard spatial reference systems,
@@ -1746,7 +1857,7 @@ export interface GeoIdentityTransform extends GeoStreamWrapper {
      *
      * @param reflect true = reflect y-dimension, false = do not reflect y-dimension.
      */
-    reflectY(reflect: boolean): this;
+  reflectY(reflect: boolean): this;
 }
 
 /**
@@ -1781,4 +1892,9 @@ export function geoClipCircle(angle: number): (stream: GeoStream) => GeoStream;
  * @param x1 x1 coordinate.
  * @param y1 y1 coordinate.
  */
-export function geoClipRectangle(x0: number, y0: number, x1: number, y1: number): (stream: GeoStream) => GeoStream;
+export function geoClipRectangle(
+  x0: number,
+  y0: number,
+  x1: number,
+  y1: number,
+): (stream: GeoStream) => GeoStream;

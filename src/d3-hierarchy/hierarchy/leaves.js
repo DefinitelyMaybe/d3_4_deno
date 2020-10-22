@@ -1,7 +1,6 @@
-/// <reference lib="dom" />
-export default function() {
+export default function () {
   var leaves = [];
-  this.eachBefore(function(node) {
+  this.eachBefore(function (node) {
     if (!node.children) {
       leaves.push(node);
     }

@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 export default function union(...others) {
   const set = new Set();
   for (const other of others) {

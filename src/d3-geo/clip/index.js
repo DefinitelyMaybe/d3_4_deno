@@ -1,32 +1,31 @@
-/// <reference lib="dom" />
 import clipBuffer from "./buffer.js";
 import clipRejoin from "./rejoin.js";
-import {epsilon, halfPi} from "../math.js";
+import { epsilon, halfPi } from "../math.js";
 import polygonContains from "../polygonContains.js";
-import {merge} from "../../d3-array/mod.js";
+import { merge } from "../../d3-array/mod.js";
 
-export default function(pointVisible, clipLine, interpolate, start) {
-  return function(sink) {
+export default function (pointVisible, clipLine, interpolate, start) {
+  return function (sink) {
     var line = clipLine(sink),
-        ringBuffer = clipBuffer(),
-        ringSink = clipLine(ringBuffer),
-        polygonStarted = false,
-        polygon,
-        segments,
-        ring;
+      ringBuffer = clipBuffer(),
+      ringSink = clipLine(ringBuffer),
+      polygonStarted = false,
+      polygon,
+      segments,
+      ring;
 
     var clip = {
       point: point,
       lineStart: lineStart,
       lineEnd: lineEnd,
-      polygonStart: function() {
+      polygonStart: function () {
         clip.point = pointRing;
         clip.lineStart = ringStart;
         clip.lineEnd = ringEnd;
         segments = [];
         polygon = [];
       },
-      polygonEnd: function() {
+      polygonEnd: function () {
         clip.point = point;
         clip.lineStart = lineStart;
         clip.lineEnd = lineEnd;
@@ -34,7 +33,13 @@ export default function(pointVisible, clipLine, interpolate, start) {
         var startInside = polygonContains(polygon, start);
         if (segments.length) {
           if (!polygonStarted) sink.polygonStart(), polygonStarted = true;
-          clipRejoin(segments, compareIntersection, startInside, interpolate, sink);
+          clipRejoin(
+            segments,
+            compareIntersection,
+            startInside,
+            interpolate,
+            sink,
+          );
         } else if (startInside) {
           if (!polygonStarted) sink.polygonStart(), polygonStarted = true;
           sink.lineStart();
@@ -44,13 +49,13 @@ export default function(pointVisible, clipLine, interpolate, start) {
         if (polygonStarted) sink.polygonEnd(), polygonStarted = false;
         segments = polygon = null;
       },
-      sphere: function() {
+      sphere: function () {
         sink.polygonStart();
         sink.lineStart();
         interpolate(null, null, 1, sink);
         sink.lineEnd();
         sink.polygonEnd();
-      }
+      },
     };
 
     function point(lambda, phi) {
@@ -86,10 +91,12 @@ export default function(pointVisible, clipLine, interpolate, start) {
       ringSink.lineEnd();
 
       var clean = ringSink.clean(),
-          ringSegments = ringBuffer.result(),
-          i, n = ringSegments.length, m,
-          segment,
-          point;
+        ringSegments = ringBuffer.result(),
+        i,
+        n = ringSegments.length,
+        m,
+        segment,
+        point;
 
       ring.pop();
       polygon.push(ring);
@@ -111,7 +118,9 @@ export default function(pointVisible, clipLine, interpolate, start) {
 
       // Rejoin connected segments.
       // TODO reuse ringBuffer.rejoin()?
-      if (n > 1 && clean & 2) ringSegments.push(ringSegments.pop().concat(ringSegments.shift()));
+      if (n > 1 && clean & 2) {
+        ringSegments.push(ringSegments.pop().concat(ringSegments.shift()));
+      }
 
       segments.push(ringSegments.filter(validSegment));
     }
@@ -127,6 +136,6 @@ function validSegment(segment) {
 // Intersections are sorted along the clip edge. For both antimeridian cutting
 // and circle clipping, the same comparison is used.
 function compareIntersection(a, b) {
-  return ((a = a.x)[0] < 0 ? a[1] - halfPi - epsilon : halfPi - a[1])
-       - ((b = b.x)[0] < 0 ? b[1] - halfPi - epsilon : halfPi - b[1]);
+  return ((a = a.x)[0] < 0 ? a[1] - halfPi - epsilon : halfPi - a[1]) -
+    ((b = b.x)[0] < 0 ? b[1] - halfPi - epsilon : halfPi - b[1]);
 }

@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 // https://en.wikipedia.org/wiki/Linear_congruential_generator#Parameters_in_common_use
 const mul = 0x19660D;
 const inc = 0x3C6EF35F;

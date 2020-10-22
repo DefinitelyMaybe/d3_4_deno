@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
-export default function() {
+export default function () {
   return this._root;
 }

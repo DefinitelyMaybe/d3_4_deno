@@ -1,8 +1,7 @@
-/// <reference lib="dom" />
-export default function(end) {
+export default function (end) {
   var start = this,
-      ancestor = leastCommonAncestor(start, end),
-      nodes = [start];
+    ancestor = leastCommonAncestor(start, end),
+    nodes = [start];
   while (start !== ancestor) {
     start = start.parent;
     nodes.push(start);
@@ -18,8 +17,8 @@ export default function(end) {
 function leastCommonAncestor(a, b) {
   if (a === b) return a;
   var aNodes = a.ancestors(),
-      bNodes = b.ancestors(),
-      c = null;
+    bNodes = b.ancestors(),
+    c = null;
   a = aNodes.pop();
   b = bNodes.pop();
   while (a === b) {

@@ -1,13 +1,12 @@
-/// <reference lib="dom" />
-export default function(polygon) {
+export default function (polygon) {
   var i = -1,
-      n = polygon.length,
-      x = 0,
-      y = 0,
-      a,
-      b = polygon[n - 1],
-      c,
-      k = 0;
+    n = polygon.length,
+    x = 0,
+    y = 0,
+    a,
+    b = polygon[n - 1],
+    c,
+    k = 0;
 
   while (++i < n) {
     a = b;

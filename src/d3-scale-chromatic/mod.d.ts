@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 // Type definitions for D3JS d3-scale-chromatic module 2.0
 // Project: https://github.com/d3/d3-scale-chromatic/, https://d3js.org/d3-scale-chromatic
 // Definitions by: Hugues Stefanski <https://github.com/Ledragon>

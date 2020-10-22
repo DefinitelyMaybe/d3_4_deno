@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 // Type definitions for d3JS d3-zoom module 2.0
 // Project: https://github.com/d3/d3-zoom/, https://d3js.org/d3-zoom
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>
@@ -11,8 +10,8 @@
 
 // Last module patch version validated against: 2.0.0
 
-import { Selection, TransitionLike, ValueFn } from '../d3-selection/mod.js';
-import { ZoomView } from '../d3-interpolate/mod.js';
+import { Selection, TransitionLike, ValueFn } from "../d3-selection/mod.d.ts";
+import { ZoomView } from "../d3-interpolate/mod.d.ts";
 
 // --------------------------------------------------------------------------
 // Shared Type Definitions and Interfaces
@@ -31,12 +30,12 @@ export type ZoomedElementBaseType = Element;
  * that  can be passed into zoomTransform methods rescaleX and rescaleY
  */
 export interface ZoomScale {
-    domain(): number[] | Date[];
-    domain(domain: Array<Date | number>): this;
-    range(): number[];
-    range(range: number[]): this;
-    copy(): ZoomScale;
-    invert(value: number): number | Date;
+  domain(): number[] | Date[];
+  domain(domain: Array<Date | number>): this;
+  range(): number[];
+  range(range: number[]): this;
+  copy(): ZoomScale;
+  invert(value: number): number | Date;
 }
 
 // --------------------------------------------------------------------------
@@ -49,8 +48,11 @@ export interface ZoomScale {
  * The first generic refers to the type of reference element to which the zoom behavior is attached.
  * The second generic refers to the type of the datum of the reference element.
  */
-export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datum> extends Function {
-    /**
+export interface ZoomBehavior<
+  ZoomRefElement extends ZoomedElementBaseType,
+  Datum,
+> extends Function {
+  /**
      * Applies this zoom behavior to the specified selection, binding the necessary event listeners to
      * allow panning and zooming, and initializing the zoom transform on each selected element to the identity transform if not already defined. This function is typically not invoked directly,
      * and is instead invoked via selection.call.
@@ -60,8 +62,8 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      * @param selection A D3 selection of elements.
      * @param args Optional arguments to be passed in.
      */
-    (selection: Selection<ZoomRefElement, Datum, any, any>, ...args: any[]): void;
-    /**
+  (selection: Selection<ZoomRefElement, Datum, any, any>, ...args: any[]): void;
+  /**
      * If selection is a selection, sets the current zoom transform of the selected elements to the specified transform, instantaneously emitting start, zoom and end events.
      * If selection is a transition, defines a “zoom” tween to the specified transform using d3.interpolateZoom, emitting a start event when the transition starts,
      * zoom events for each tick of the transition, and then an end event when the transition ends (or is interrupted).
@@ -75,13 +77,19 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      * @param point A two-element array [x, y] or a function that returns such an array.
      * If a function, it is invoked for each selected element, being passed the current event (event) and datum d, with the this context as the current DOM element.
      */
-    transform(
-        selection: Selection<ZoomRefElement, Datum, any, any> | TransitionLike<ZoomRefElement, Datum>,
-        transform: ZoomTransform | ((this: ZoomRefElement, event: any, d: Datum) => ZoomTransform),
-        point?: [number, number] | ((this: ZoomRefElement, event: any, d: Datum) => [number, number])
-    ): void;
+  transform(
+    selection:
+      | Selection<ZoomRefElement, Datum, any, any>
+      | TransitionLike<ZoomRefElement, Datum>,
+    transform:
+      | ZoomTransform
+      | ((this: ZoomRefElement, event: any, d: Datum) => ZoomTransform),
+    point?:
+      | [number, number]
+      | ((this: ZoomRefElement, event: any, d: Datum) => [number, number]),
+  ): void;
 
-    /**
+  /**
      * If selection is a selection, translates the current zoom transform of the selected elements by x and y, such that the new tx1 = tx0 + kx and ty1 = ty0 + ky.
      * If selection is a transition, defines a “zoom” tween translating the current transform.
      * This method is a convenience method for zoom.transform.
@@ -92,13 +100,15 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      * @param y A number or a function that returns a number.
      * If a function, it is invoked for each selected element, being passed the current datum d and index i, with the this context as the current DOM element.
      */
-    translateBy(
-        selection: Selection<ZoomRefElement, Datum, any, any> | TransitionLike<ZoomRefElement, Datum>,
-        x: number | ValueFn<ZoomRefElement, Datum, number>,
-        y: number | ValueFn<ZoomRefElement, Datum, number>
-    ): void;
+  translateBy(
+    selection:
+      | Selection<ZoomRefElement, Datum, any, any>
+      | TransitionLike<ZoomRefElement, Datum>,
+    x: number | ValueFn<ZoomRefElement, Datum, number>,
+    y: number | ValueFn<ZoomRefElement, Datum, number>,
+  ): void;
 
-    /**
+  /**
      * If selection is a selection, translates the current zoom transform of the selected elements such that the given position ⟨x,y⟩ appears at given point p.
      * The new tx = px - kx and ty = py - ky. If p is not specified, it defaults to the center of the viewport extent.
      * If selection is a transition, defines a “zoom” tween translating the current transform. This method is a convenience method for zoom.transform.
@@ -117,14 +127,16 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      * @param p A two-element array [px,py] or a function
      * If a function, it is invoked for each selected element, being passed the current datum d and index i, with the this context as the current DOM element.
      */
-    translateTo(
-        selection: Selection<ZoomRefElement, Datum, any, any> | TransitionLike<ZoomRefElement, Datum>,
-        x: number | ValueFn<ZoomRefElement, Datum, number>,
-        y: number | ValueFn<ZoomRefElement, Datum, number>,
-        p?: [number, number] | ValueFn<ZoomRefElement, Datum, [number, number]>
-    ): void;
+  translateTo(
+    selection:
+      | Selection<ZoomRefElement, Datum, any, any>
+      | TransitionLike<ZoomRefElement, Datum>,
+    x: number | ValueFn<ZoomRefElement, Datum, number>,
+    y: number | ValueFn<ZoomRefElement, Datum, number>,
+    p?: [number, number] | ValueFn<ZoomRefElement, Datum, [number, number]>,
+  ): void;
 
-    /**
+  /**
      * If selection is a selection, scales the current zoom transform of the selected elements by k, such that the new k₁ = k₀k.
      * The reference point p does move.
      * If p is not specified, it defaults to the center of the viewport extent.
@@ -137,13 +149,15 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      * @param p A two-element array [px,py] or a function.
      * If a function, it is invoked for each selected element, being passed the current datum d and index i, with the this context as the current DOM element.
      */
-    scaleBy(
-        selection: Selection<ZoomRefElement, Datum, any, any> | TransitionLike<ZoomRefElement, Datum>,
-        k: number | ValueFn<ZoomRefElement, Datum, number>,
-        p?: [number, number] | ValueFn<ZoomRefElement, Datum, [number, number]>
-    ): void;
+  scaleBy(
+    selection:
+      | Selection<ZoomRefElement, Datum, any, any>
+      | TransitionLike<ZoomRefElement, Datum>,
+    k: number | ValueFn<ZoomRefElement, Datum, number>,
+    p?: [number, number] | ValueFn<ZoomRefElement, Datum, [number, number]>,
+  ): void;
 
-    /**
+  /**
      * If selection is a selection, scales the current zoom transform of the selected elements to k, such that the new k₁ = k.
      * The reference point p does move.
      * If p is not specified, it defaults to the center of the viewport extent.
@@ -156,30 +170,43 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      * @param p A two-element array [px,py] or a function.
      * If a function, it is invoked for each selected element, being passed the current datum d and index i, with the this context as the current DOM element.
      */
-    scaleTo(
-        selection: Selection<ZoomRefElement, Datum, any, any> | TransitionLike<ZoomRefElement, Datum>,
-        k: number | ValueFn<ZoomRefElement, Datum, number>,
-        p?: [number, number]
-    ): void;
+  scaleTo(
+    selection:
+      | Selection<ZoomRefElement, Datum, any, any>
+      | TransitionLike<ZoomRefElement, Datum>,
+    k: number | ValueFn<ZoomRefElement, Datum, number>,
+    p?: [number, number],
+  ): void;
 
-    /**
+  /**
      * Returns the current constraint function.
      * The default implementation attempts to ensure that the viewport extent does not go outside the translate extent.
      */
-    constrain(): (transform: ZoomTransform, extent: [[number, number], [number, number]], translateExtent: [[number, number], [number, number]]) => ZoomTransform;
-    /**
+  constrain(): (
+    transform: ZoomTransform,
+    extent: [[number, number], [number, number]],
+    translateExtent: [[number, number], [number, number]],
+  ) => ZoomTransform;
+  /**
      * Sets the transform constraint function to the specified function and returns the zoom behavior.
      *
      * @param constraint A constraint function which returns a transform given the current transform, viewport extent and translate extent.
      * The default implementation attempts to ensure that the viewport extent does not go outside the translate extent.
      */
-    constrain(constraint: ((transform: ZoomTransform, extent: [[number, number], [number, number]], translateExtent: [[number, number], [number, number]]) => ZoomTransform)): this;
+  constrain(
+    constraint:
+      ((
+        transform: ZoomTransform,
+        extent: [[number, number], [number, number]],
+        translateExtent: [[number, number], [number, number]],
+      ) => ZoomTransform),
+  ): this;
 
-    /**
+  /**
      * Returns the current filter function.
      */
-    filter(): (this: ZoomRefElement, event: any, datum: Datum) => boolean;
-    /**
+  filter(): (this: ZoomRefElement, event: any, datum: Datum) => boolean;
+  /**
      * Sets the filter to the specified filter function and returns the zoom behavior.
      * The filter function is invoked in the zoom initiating event handlers of each element to which the zoom behavior was applied.
      *
@@ -191,14 +218,16 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      * in order, being passed the current event (event) and datum d, with the this context as the current DOM element.
      * The function returns a boolean value.
      */
-    filter(filter: (this: ZoomRefElement, event: any, datum: Datum) => boolean): this;
+  filter(
+    filter: (this: ZoomRefElement, event: any, datum: Datum) => boolean,
+  ): this;
 
-    /**
+  /**
      * Returns the current touch support detector, which defaults to a function returning true,
      * if the "ontouchstart" event is supported on the current element.
      */
-    touchable(): ValueFn<ZoomRefElement, Datum, boolean>;
-    /**
+  touchable(): ValueFn<ZoomRefElement, Datum, boolean>;
+  /**
      * Sets the touch support detector to the specified boolean value and returns the zoom behavior.
      *
      * Touch event listeners are only registered if the detector returns truthy for the corresponding element when the zoom behavior is applied.
@@ -207,8 +236,8 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      *
      * @param touchable A boolean value. true when touch event listeners should be applied to the corresponding element, otherwise false.
      */
-    touchable(touchable: boolean): this;
-    /**
+  touchable(touchable: boolean): this;
+  /**
      * Sets the touch support detector to the specified function and returns the zoom behavior.
      *
      * Touch event listeners are only registered if the detector returns truthy for the corresponding element when the zoom behavior is applied.
@@ -219,13 +248,13 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      * The function is evaluated for each selected element to which the zoom behavior was applied, in order, being passed the current datum (d),
      * the current index (i), and the current group (nodes), with this as the current DOM element. The function returns a boolean value.
      */
-    touchable(touchable: ValueFn<ZoomRefElement, Datum, boolean>): this;
+  touchable(touchable: ValueFn<ZoomRefElement, Datum, boolean>): this;
 
-    /**
+  /**
      * Returns the current wheelDelta function.
      */
-    wheelDelta(): ValueFn<ZoomRefElement, Datum, number>;
-    /**
+  wheelDelta(): ValueFn<ZoomRefElement, Datum, number>;
+  /**
      * Sets the wheel delta function to the specified function and returns the zoom behavior. The wheel delta function which is invoked in the wheel event handler
      * of each element to which the zoom behavior was applied.
      * The value Δ returned by the wheel delta function determines the amount of scaling applied in response to a WheelEvent.
@@ -235,17 +264,20 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      * in order, being passed the current datum (d), the current index (i), and the current group (nodes),
      * with this as the current DOM element. The function returns a numeric value.
      */
-    wheelDelta(delta: ValueFn<ZoomRefElement, Datum, number>): this;
+  wheelDelta(delta: ValueFn<ZoomRefElement, Datum, number>): this;
 
-    /**
+  /**
      * Return the current extent accessor, which defaults to [[0, 0], [width, height]] where width is the client width of the element and height is its client height;
      * for SVG elements, the nearest ancestor SVG element’s width and height is used. In this case,
      * the owner SVG element must have defined width and height attributes rather than (for example) relying on CSS properties or the viewBox attribute;
      * SVG provides no programmatic method for retrieving the initial viewport size. Alternatively, consider using element.getBoundingClientRect.
      * (In Firefox, element.clientWidth and element.clientHeight is zero for SVG elements!)
      */
-    extent(): (this: ZoomRefElement, datum: Datum) => [[number, number], [number, number]];
-    /**
+  extent(): (
+    this: ZoomRefElement,
+    datum: Datum,
+  ) => [[number, number], [number, number]];
+  /**
      * Set the viewport extent to the specified array of points [[x0, y0], [x1, y1]],
      * where [x0, y0] is the top-left corner of the viewport and [x1, y1] is the bottom-right corner of the viewport,
      * and return this zoom behavior.
@@ -255,8 +287,8 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      *
      * @param extent An extent specified as an array of two coordinates.
      */
-    extent(extent: [[number, number], [number, number]]): this;
-    /**
+  extent(extent: [[number, number], [number, number]]): this;
+  /**
      * Set the viewport extent to the array of points [[x0, y0], [x1, y1]] returned by the
      * extent accessor function, and return this zoom behavior.
      * The extent accessor function is evaluated for each element.
@@ -275,13 +307,18 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      * @extent An extent accessor function which is evaluated for each selected element, being passed the current datum d, with the this context as the current DOM element.
      * The function returns the extent array.
      */
-    extent(extent: (this: ZoomRefElement, datum: Datum) => [[number, number], [number, number]]): this;
+  extent(
+    extent: (
+      this: ZoomRefElement,
+      datum: Datum,
+    ) => [[number, number], [number, number]],
+  ): this;
 
-    /**
+  /**
      * Return the current scale extent.
      */
-    scaleExtent(): [number, number];
-    /**
+  scaleExtent(): [number, number];
+  /**
      * Set the scale extent to the specified array of numbers [k0, k1] where k0 is the minimum allowed scale factor and k1 is the maximum allowed scale factor,
      * and return this zoom behavior.
      *
@@ -296,13 +333,13 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      *
      * @param extent A scale extent array of two numbers representing the scale boundaries.
      */
-    scaleExtent(extent: [number, number]): this;
+  scaleExtent(extent: [number, number]): this;
 
-    /**
+  /**
      * Return the current translate extent.
      */
-    translateExtent(): [[number, number], [number, number]];
-    /**
+  translateExtent(): [[number, number], [number, number]];
+  /**
      * Set the translate extent to the specified array of points [[x0, y0], [x1, y1]], where [x0, y0] is the top-left corner of the world and [x1, y1]
      * is the bottom-right corner of the world, and return this zoom behavior.
      *
@@ -313,13 +350,13 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      *
      * @param extent A translate extent array, i.e. an array of two arrays, each representing a point.
      */
-    translateExtent(extent: [[number, number], [number, number]]): this;
+  translateExtent(extent: [[number, number], [number, number]]): this;
 
-    /**
+  /**
      * Return the current click distance threshold, which defaults to zero.
      */
-    clickDistance(): number;
-    /**
+  clickDistance(): number;
+  /**
      * Set the maximum distance that the mouse can move between mousedown and mouseup that will trigger
      * a subsequent click event. If at any point between mousedown and mouseup the mouse is greater than or equal to
      * distance from its position on mousedown, the click event following mouseup will be suppressed.
@@ -327,39 +364,44 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      * @param distance The distance threshold between mousedown and mouseup measured in client coordinates (event.clientX and event.clientY).
      * The default is zero.
      */
-    clickDistance(distance: number): this;
+  clickDistance(distance: number): this;
 
-    /**
+  /**
      * Return the current tap distance threshold, which defaults to 10.
      */
-    tapDistance(): number;
-    /**
+  tapDistance(): number;
+  /**
      * Sets the maximum distance that a double-tap gesture can move between first touchstart and second touchend that will trigger a subsequent double-click event.
      *
      * @param distance The distance threshold between mousedown and mouseup measured in client coordinates (event.clientX and event.clientY).
      * The default is 10.
      */
-    tapDistance(distance: number): this;
+  tapDistance(distance: number): this;
 
-    /**
+  /**
      * Get the duration for zoom transitions on double-click and double-tap in milliseconds.
      */
-    duration(): number;
-    /**
+  duration(): number;
+  /**
      * Set the duration for zoom transitions on double-click and double-tap to the specified number of milliseconds and returns the zoom behavior.
      *
      * To disable double-click and double-tap transitions, you can remove the zoom behavior’s dblclick event listener after applying the zoom behavior to the selection.
      *
      * @param duration in milliseconds.
      */
-    duration(duration: number): this;
+  duration(duration: number): this;
 
-    /**
+  /**
      * Returns the current interpolation factory, which defaults to d3.interpolateZoom to implement smooth zooming.
      */
-    interpolate<InterpolationFactory extends (a: ZoomView, b: ZoomView) => ((t: number) => ZoomView)>(): InterpolationFactory;
+  interpolate<
+    InterpolationFactory extends (
+      a: ZoomView,
+      b: ZoomView,
+    ) => ((t: number) => ZoomView),
+  >(): InterpolationFactory;
 
-    /**
+  /**
      * Sets the interpolation factory for zoom transitions to the specified function.
      * Use the default d3.interpolateZoom to implement smooth zooming.
      * To apply direct interpolation between two views, try d3.interpolate instead.
@@ -369,9 +411,14 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      *
      * @param interpolatorFactory An interpolator factory to be used to generate interpolators between zooms for transitions.
      */
-    interpolate(interpolatorFactory: (a: ZoomView, b: ZoomView) => ((t: number) => ZoomView)): this;
+  interpolate(
+    interpolatorFactory: (
+      a: ZoomView,
+      b: ZoomView,
+    ) => ((t: number) => ZoomView),
+  ): this;
 
-    /**
+  /**
      * Return the first currently-assigned listener matching the specified typenames, if any.
      *
      * @param typenames The typenames is a string containing one or more typename separated by whitespace.
@@ -380,8 +427,10 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      * start (after zooming begins [such as mousedown]), zoom (after a change to the zoom  transform [such as mousemove], or
      * end (after an active pointer becomes inactive [such as on mouseup].)
      */
-    on(typenames: string): ((this: ZoomRefElement, event: any, d: Datum) => void) | undefined;
-    /**
+  on(
+    typenames: string,
+  ): ((this: ZoomRefElement, event: any, d: Datum) => void) | undefined;
+  /**
      * Remove the current event listeners for the specified typenames, if any, return the drag behavior.
      *
      * @param typenames The typenames is a string containing one or more typename separated by whitespace.
@@ -391,8 +440,8 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      * end (after an active pointer becomes inactive [such as on mouseup].)
      * @param listener Use null to remove the listener.
      */
-    on(typenames: string, listener: null): this;
-    /**
+  on(typenames: string, listener: null): this;
+  /**
      * Set the event listener for the specified typenames and return the zoom behavior.
      * If an event listener was already registered for the same type and name,
      * the existing listener is removed before the new listener is added.
@@ -406,7 +455,10 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
      * @param listener An event listener function which is evaluated for each selected element,
      * in order, being passed the current event (event) and datum d, with the this context as the current DOM element.
      */
-    on(typenames: string, listener: (this: ZoomRefElement, event: any, d: Datum) => void): this;
+  on(
+    typenames: string,
+    listener: (this: ZoomRefElement, event: any, d: Datum) => void,
+  ): this;
 }
 
 /**
@@ -416,7 +468,10 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Datu
  * The first generic refers to the type of reference element to which the zoom behavior is attached.
  * The second generic refers to the type of the datum of the reference element.
  */
-export function zoom<ZoomRefElement extends ZoomedElementBaseType, Datum>(): ZoomBehavior<ZoomRefElement, Datum>;
+export function zoom<
+  ZoomRefElement extends ZoomedElementBaseType,
+  Datum,
+>(): ZoomBehavior<ZoomRefElement, Datum>;
 
 // --------------------------------------------------------------------------
 // Zoom Event
@@ -428,23 +483,26 @@ export function zoom<ZoomRefElement extends ZoomedElementBaseType, Datum>(): Zoo
  * The first generic refers to the type of reference element to which the zoom behavior is attached.
  * The second generic refers to the type of the datum of the reference element.
  */
-export interface D3ZoomEvent<ZoomRefElement extends ZoomedElementBaseType, Datum> {
-    /**
+export interface D3ZoomEvent<
+  ZoomRefElement extends ZoomedElementBaseType,
+  Datum,
+> {
+  /**
      * The ZoomBehavior associated with the event
      */
-    target: ZoomBehavior<ZoomRefElement, Datum>;
-    /**
+  target: ZoomBehavior<ZoomRefElement, Datum>;
+  /**
      * The event type for the zoom event
      */
-    type: 'start' | 'zoom' | 'end' | string; // Leave failsafe string type for cases like 'zoom.foo'
-    /**
+  type: "start" | "zoom" | "end" | string; // Leave failsafe string type for cases like 'zoom.foo'
+  /**
      * The current zoom transform
      */
-    transform: ZoomTransform;
-    /**
+  transform: ZoomTransform;
+  /**
      * The underlying input event, such as mousemove or touchmove.
      */
-    sourceEvent: any;
+  sourceEvent: any;
 }
 
 // --------------------------------------------------------------------------
@@ -465,75 +523,75 @@ export interface D3ZoomEvent<ZoomRefElement extends ZoomedElementBaseType, Datum
  * For details see {@link https://github.com/d3/d3-zoom#zoom-transforms}
  */
 export interface ZoomTransform {
-    /**
+  /**
      * The translation amount tx along the x-axis.
      * This property should be considered read-only; instead of mutating a transform,
      * use transform.scale and transform.translate to derive a new transform.
      * Also see zoom.scaleBy, zoom.scaleTo and zoom.translateBy for convenience methods on the zoom behavior.
      */
-    readonly x: number;
+  readonly x: number;
 
-    /**
+  /**
      * The translation amount ty along the y-axis
      * This property should be considered read-only; instead of mutating a transform,
      * use transform.scale and transform.translate to derive a new transform.
      * Also see zoom.scaleBy, zoom.scaleTo and zoom.translateBy for convenience methods on the zoom behavior.
      */
-    readonly y: number;
+  readonly y: number;
 
-    /**
+  /**
      * The scale factor k.
      * This property should be considered read-only; instead of mutating a transform,
      * use transform.scale and transform.translate to derive a new transform.
      * Also see zoom.scaleBy, zoom.scaleTo and zoom.translateBy for convenience methods on the zoom behavior.
      */
-    readonly k: number;
+  readonly k: number;
 
-    /**
+  /**
      * Return the transformation of the specified point which is a two-element array of numbers [x, y].
      * The returned point is equal to [xk + tx, yk + ty].
      *
      * @param point Point coordinates [x, y]
      */
-    apply(point: [number, number]): [number, number];
+  apply(point: [number, number]): [number, number];
 
-    /**
+  /**
      * Return the transformation of the specified x-coordinate, xk + tx.
      *
      * @param x Value of x-coordinate.
      */
-    applyX(x: number): number;
+  applyX(x: number): number;
 
-    /**
+  /**
      * Return the transformation of the specified y-coordinate, yk + ty.
      *
      * @param y Value of y-coordinate.
      */
-    applyY(y: number): number;
+  applyY(y: number): number;
 
-    /**
+  /**
      * Return the inverse transformation of the specified point which is a two-element array of numbers [x, y].
      * The returned point is equal to [(x - tx) / k, (y - ty) / k].
      *
      * @param point Point coordinates [x, y]
      */
-    invert(point: [number, number]): [number, number];
+  invert(point: [number, number]): [number, number];
 
-    /**
+  /**
      * Return the inverse transformation of the specified x-coordinate, (x - tx) / k.
      *
      * @param x Value of x-coordinate.
      */
-    invertX(x: number): number;
+  invertX(x: number): number;
 
-    /**
+  /**
      * Return the inverse transformation of the specified y-coordinate, (y - ty) / k.
      *
      * @param y Value of y-coordinate.
      */
-    invertY(y: number): number;
+  invertY(y: number): number;
 
-    /**
+  /**
      * Returns a copy of the continuous scale x whose domain is transformed.
      * This is implemented by first applying the inverse x-transform on the scale’s range,
      * and then applying the inverse scale to compute the corresponding domain
@@ -545,9 +603,9 @@ export interface ZoomTransform {
      *
      * @param xScale A continuous scale for x-dimension.
      */
-    rescaleX<S extends ZoomScale>(xScale: S): S;
+  rescaleX<S extends ZoomScale>(xScale: S): S;
 
-    /**
+  /**
      * Returns a copy of the continuous scale y whose domain is transformed.
      * This is implemented by first applying the inverse y-transform on the scale’s range,
      * and then applying the inverse scale to compute the corresponding domain
@@ -559,28 +617,28 @@ export interface ZoomTransform {
      *
      * @param yScale A continuous scale for y-dimension.
      */
-    rescaleY<S extends ZoomScale>(yScale: S): S;
+  rescaleY<S extends ZoomScale>(yScale: S): S;
 
-    /**
+  /**
      * Return a transform whose scale k1 is equal to k0 × k, where k0 is this transform’s scale.
      *
      * @param k A scale factor.
      */
-    scale(k: number): ZoomTransform;
+  scale(k: number): ZoomTransform;
 
-    /**
+  /**
      * Return a string representing the SVG transform corresponding to this transform.
      */
-    toString(): string;
+  toString(): string;
 
-    /**
+  /**
      * Returns a transform whose translation tx1 and ty1 is equal to tx0 + tkx and ty0 + tky,
      * where tx0 and ty0 is this transform’s translation and tk is this transform’s scale.
      *
      * @param x Amount of translation in x-direction.
      * @param y Amount of translation in y-direction.
      */
-    translate(x: number, y: number): ZoomTransform;
+  translate(x: number, y: number): ZoomTransform;
 }
 
 /**

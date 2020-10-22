@@ -1,5 +1,4 @@
-/// <reference lib="dom" />
-import {tpmt} from "./math.js";
+import { tpmt } from "./math.js";
 
 export function expIn(t) {
   return tpmt(1 - +t);

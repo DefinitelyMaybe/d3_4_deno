@@ -1,3 +1,2 @@
-/// <reference types="./mod.d.ts" />
-/// <reference lib="dom" />
-export {default as quadtree} from "./quadtree.js";
+// @deno-types="./mod.d.ts"
+export { default as quadtree } from "./quadtree.js";

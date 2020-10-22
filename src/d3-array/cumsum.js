@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 export default function cumsum(values, valueof) {
   var sum = 0, index = 0;
   return Float64Array.from(values, valueof === undefined

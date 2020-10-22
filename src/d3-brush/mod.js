@@ -1,8 +1,2 @@
-/// <reference types="./mod.d.ts" />
-/// <reference lib="dom" />
-export {
-  default as brush,
-  brushX,
-  brushY,
-  brushSelection
-} from "./brush.js";
+// @deno-types="./mod.d.ts"
+export { brushSelection, brushX, brushY, default as brush } from "./brush.js";

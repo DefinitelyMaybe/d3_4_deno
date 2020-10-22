@@ -1,5 +1,4 @@
-/// <reference lib="dom" />
-import {path} from "../d3-path/mod.js";
+import { path } from "../d3-path/mod.js";
 import circle from "./symbol/circle.js";
 import cross from "./symbol/cross.js";
 import diamond from "./symbol/diamond.js";
@@ -16,13 +15,15 @@ export var symbols = [
   square,
   star,
   triangle,
-  wye
+  wye,
 ];
 
-export default function(type, size) {
+export default function (type, size) {
   var context = null;
   type = typeof type === "function" ? type : constant(type || circle);
-  size = typeof size === "function" ? size : constant(size === undefined ? 64 : +size);
+  size = typeof size === "function"
+    ? size
+    : constant(size === undefined ? 64 : +size);
 
   function symbol() {
     var buffer;
@@ -31,16 +32,22 @@ export default function(type, size) {
     if (buffer) return context = null, buffer + "" || null;
   }
 
-  symbol.type = function(_) {
-    return arguments.length ? (type = typeof _ === "function" ? _ : constant(_), symbol) : type;
+  symbol.type = function (_) {
+    return arguments.length
+      ? (type = typeof _ === "function" ? _ : constant(_), symbol)
+      : type;
   };
 
-  symbol.size = function(_) {
-    return arguments.length ? (size = typeof _ === "function" ? _ : constant(+_), symbol) : size;
+  symbol.size = function (_) {
+    return arguments.length
+      ? (size = typeof _ === "function" ? _ : constant(+_), symbol)
+      : size;
   };
 
-  symbol.context = function(_) {
-    return arguments.length ? (context = _ == null ? null : _, symbol) : context;
+  symbol.context = function (_) {
+    return arguments.length
+      ? (context = _ == null ? null : _, symbol)
+      : context;
   };
 
   return symbol;

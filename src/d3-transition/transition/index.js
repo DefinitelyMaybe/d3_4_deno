@@ -1,5 +1,4 @@
-/// <reference lib="dom" />
-import {selection} from "../../d3-selection/mod.js";
+import { selection } from "../../d3-selection/mod.js";
 import transition_attr from "./attr.js";
 import transition_attrTween from "./attrTween.js";
 import transition_delay from "./delay.js";
@@ -68,5 +67,5 @@ Transition.prototype = transition.prototype = {
   ease: transition_ease,
   easeVarying: transition_easeVarying,
   end: transition_end,
-  [Symbol.iterator]: selection_prototype[Symbol.iterator]
+  [Symbol.iterator]: selection_prototype[Symbol.iterator],
 };

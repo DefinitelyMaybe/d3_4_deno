@@ -1,11 +1,10 @@
-/// <reference lib="dom" />
-import {Transition, newId} from "./index.js";
-import schedule, {get} from "./schedule.js";
+import { newId, Transition } from "./index.js";
+import schedule, { get } from "./schedule.js";
 
-export default function() {
+export default function () {
   var name = this._name,
-      id0 = this._id,
-      id1 = newId();
+    id0 = this._id,
+    id1 = newId();
 
   for (var groups = this._groups, m = groups.length, j = 0; j < m; ++j) {
     for (var group = groups[j], n = group.length, node, i = 0; i < n; ++i) {
@@ -15,7 +14,7 @@ export default function() {
           time: inherit.time + inherit.delay + inherit.duration,
           delay: 0,
           duration: inherit.duration,
-          ease: inherit.ease
+          ease: inherit.ease,
         });
       }
     }

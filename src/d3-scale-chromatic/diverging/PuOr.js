@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import colors from "../colors.js";
 import ramp from "../ramp.js";
 
@@ -11,7 +10,7 @@ export var scheme = new Array(3).concat(
   "5427888073acb2abd2d8daebfee0b6fdb863e08214b35806",
   "5427888073acb2abd2d8daebf7f7f7fee0b6fdb863e08214b35806",
   "2d004b5427888073acb2abd2d8daebfee0b6fdb863e08214b358067f3b08",
-  "2d004b5427888073acb2abd2d8daebf7f7f7fee0b6fdb863e08214b358067f3b08"
+  "2d004b5427888073acb2abd2d8daebf7f7f7fee0b6fdb863e08214b358067f3b08",
 ).map(colors);
 
 export default ramp(scheme);

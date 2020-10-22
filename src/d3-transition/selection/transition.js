@@ -1,14 +1,13 @@
-/// <reference lib="dom" />
-import {Transition, newId} from "../transition/index.js";
+import { newId, Transition } from "../transition/index.js";
 import schedule from "../transition/schedule.js";
-import {easeCubicInOut} from "../../d3-ease/mod.js";
-import {now} from "../../d3-timer/mod.js";
+import { easeCubicInOut } from "../../d3-ease/mod.js";
+import { now } from "../../d3-timer/mod.js";
 
 var defaultTiming = {
   time: null, // Set on use.
   delay: 0,
   duration: 250,
-  ease: easeCubicInOut
+  ease: easeCubicInOut,
 };
 
 function inherit(node, id) {
@@ -21,14 +20,16 @@ function inherit(node, id) {
   return timing;
 }
 
-export default function(name) {
+export default function (name) {
   var id,
-      timing;
+    timing;
 
   if (name instanceof Transition) {
     id = name._id, name = name._name;
   } else {
-    id = newId(), (timing = defaultTiming).time = now(), name = name == null ? null : name + "";
+    id = newId(),
+      (timing = defaultTiming).time = now(),
+      name = name == null ? null : name + "";
   }
 
   for (var groups = this._groups, m = groups.length, j = 0; j < m; ++j) {

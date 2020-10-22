@@ -1,14 +1,13 @@
-/// <reference lib="dom" />
 import interval from "./interval.js";
-import {durationHour} from "./duration.js";
+import { durationHour } from "./duration.js";
 
-var utcHour = interval(function(date) {
+var utcHour = interval(function (date) {
   date.setUTCMinutes(0, 0, 0);
-}, function(date, step) {
+}, function (date, step) {
   date.setTime(+date + step * durationHour);
-}, function(start, end) {
+}, function (start, end) {
   return (end - start) / durationHour;
-}, function(date) {
+}, function (date) {
   return date.getUTCHours();
 });
 

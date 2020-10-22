@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 export function cubicIn(t) {
   return t * t * t;
 }

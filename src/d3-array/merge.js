@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 function* flatten(arrays) {
   for (const array of arrays) {
     yield* array;

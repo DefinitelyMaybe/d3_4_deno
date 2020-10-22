@@ -1,6 +1,5 @@
-/// <reference lib="dom" />
 import pointEqual from "../pointEqual.js";
-import {epsilon} from "../math.js";
+import { epsilon } from "../math.js";
 
 function Intersection(point, points, other, entry) {
   this.x = point;
@@ -14,13 +13,19 @@ function Intersection(point, points, other, entry) {
 // A generalized polygon clipping algorithm: given a polygon that has been cut
 // into its visible line segments, and rejoins the segments by interpolating
 // along the clip edge.
-export default function(segments, compareIntersection, startInside, interpolate, stream) {
+export default function (
+  segments,
+  compareIntersection,
+  startInside,
+  interpolate,
+  stream,
+) {
   var subject = [],
-      clip = [],
-      i,
-      n;
+    clip = [],
+    i,
+    n;
 
-  segments.forEach(function(segment) {
+  segments.forEach(function (segment) {
     if ((n = segment.length - 1) <= 0) return;
     var n, p0 = segment[0], p1 = segment[n], x;
 
@@ -52,13 +57,13 @@ export default function(segments, compareIntersection, startInside, interpolate,
   }
 
   var start = subject[0],
-      points,
-      point;
+    points,
+    point;
 
   while (1) {
     // Find first unvisited intersection.
     var current = start,
-        isSubject = true;
+      isSubject = true;
     while (current.v) if ((current = current.n) === start) return;
     points = current.z;
     stream.lineStart();
@@ -66,7 +71,9 @@ export default function(segments, compareIntersection, startInside, interpolate,
       current.v = current.o.v = true;
       if (current.e) {
         if (isSubject) {
-          for (i = 0, n = points.length; i < n; ++i) stream.point((point = points[i])[0], point[1]);
+          for (i = 0, n = points.length; i < n; ++i) {
+            stream.point((point = points[i])[0], point[1]);
+          }
         } else {
           interpolate(current.x, current.n.x, 1, stream);
         }
@@ -74,7 +81,9 @@ export default function(segments, compareIntersection, startInside, interpolate,
       } else {
         if (isSubject) {
           points = current.p.z;
-          for (i = points.length - 1; i >= 0; --i) stream.point((point = points[i])[0], point[1]);
+          for (i = points.length - 1; i >= 0; --i) {
+            stream.point((point = points[i])[0], point[1]);
+          }
         } else {
           interpolate(current.x, current.p.x, -1, stream);
         }
@@ -91,9 +100,9 @@ export default function(segments, compareIntersection, startInside, interpolate,
 function link(array) {
   if (!(n = array.length)) return;
   var n,
-      i = 0,
-      a = array[0],
-      b;
+    i = 0,
+    a = array[0],
+    b;
   while (++i < n) {
     a.n = b = array[i];
     b.p = a;

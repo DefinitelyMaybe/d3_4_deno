@@ -1,9 +1,10 @@
-/// <reference lib="dom" />
 import none from "./none.js";
 
-export default function(series) {
+export default function (series) {
   var peaks = series.map(peak);
-  return none(series).sort(function(a, b) { return peaks[a] - peaks[b]; });
+  return none(series).sort(function (a, b) {
+    return peaks[a] - peaks[b];
+  });
 }
 
 function peak(series) {

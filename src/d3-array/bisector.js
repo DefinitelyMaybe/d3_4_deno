@@ -1,7 +1,6 @@
-/// <reference lib="dom" />
 import ascending from "./ascending.js";
 
-export default function(f) {
+export default function (f) {
   let delta = f;
   let compare = f;
 
@@ -39,7 +38,7 @@ export default function(f) {
     return i > lo && delta(a[i - 1], x) > -delta(a[i], x) ? i - 1 : i;
   }
 
-  return {left, center, right};
+  return { left, center, right };
 }
 
 function ascendingComparator(f) {

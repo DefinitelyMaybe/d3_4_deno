@@ -1,3 +1,2 @@
-/// <reference types="./mod.d.ts" />
-/// <reference lib="dom" />
-export {default as dispatch} from "./dispatch.js";
+// @deno-types="./mod.d.ts"
+export { default as dispatch } from "./dispatch.js";

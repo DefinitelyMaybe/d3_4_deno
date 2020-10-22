@@ -1,6 +1,5 @@
-/// <reference lib="dom" />
-import {dispatch} from "../d3-dispatch/mod.js";
-import {timer} from "../d3-timer/mod.js";
+import { dispatch } from "../d3-dispatch/mod.js";
+import { timer } from "../d3-timer/mod.js";
 import lcg from "./lcg.js";
 
 export function x(d) {
@@ -12,19 +11,19 @@ export function y(d) {
 }
 
 var initialRadius = 10,
-    initialAngle = Math.PI * (3 - Math.sqrt(5));
+  initialAngle = Math.PI * (3 - Math.sqrt(5));
 
-export default function(nodes) {
+export default function (nodes) {
   var simulation,
-      alpha = 1,
-      alphaMin = 0.001,
-      alphaDecay = 1 - Math.pow(alphaMin, 1 / 300),
-      alphaTarget = 0,
-      velocityDecay = 0.6,
-      forces = new Map(),
-      stepper = timer(step),
-      event = dispatch("tick", "end"),
-      random = lcg();
+    alpha = 1,
+    alphaMin = 0.001,
+    alphaDecay = 1 - Math.pow(alphaMin, 1 / 300),
+    alphaTarget = 0,
+    velocityDecay = 0.6,
+    forces = new Map(),
+    stepper = timer(step),
+    event = dispatch("tick", "end"),
+    random = lcg();
 
   if (nodes == null) nodes = [];
 
@@ -45,7 +44,7 @@ export default function(nodes) {
     for (var k = 0; k < iterations; ++k) {
       alpha += (alphaTarget - alpha) * alphaDecay;
 
-      forces.forEach(function(force) {
+      forces.forEach(function (force) {
         force(alpha);
       });
 
@@ -67,7 +66,8 @@ export default function(nodes) {
       if (node.fx != null) node.x = node.fx;
       if (node.fy != null) node.y = node.fy;
       if (isNaN(node.x) || isNaN(node.y)) {
-        var radius = initialRadius * Math.sqrt(0.5 + i), angle = i * initialAngle;
+        var radius = initialRadius * Math.sqrt(0.5 + i),
+          angle = i * initialAngle;
         node.x = radius * Math.cos(angle);
         node.y = radius * Math.sin(angle);
       }
@@ -87,54 +87,68 @@ export default function(nodes) {
   return simulation = {
     tick: tick,
 
-    restart: function() {
+    restart: function () {
       return stepper.restart(step), simulation;
     },
 
-    stop: function() {
+    stop: function () {
       return stepper.stop(), simulation;
     },
 
-    nodes: function(_) {
-      return arguments.length ? (nodes = _, initializeNodes(), forces.forEach(initializeForce), simulation) : nodes;
+    nodes: function (_) {
+      return arguments.length
+        ? (nodes = _,
+          initializeNodes(),
+          forces.forEach(initializeForce),
+          simulation)
+        : nodes;
     },
 
-    alpha: function(_) {
+    alpha: function (_) {
       return arguments.length ? (alpha = +_, simulation) : alpha;
     },
 
-    alphaMin: function(_) {
+    alphaMin: function (_) {
       return arguments.length ? (alphaMin = +_, simulation) : alphaMin;
     },
 
-    alphaDecay: function(_) {
+    alphaDecay: function (_) {
       return arguments.length ? (alphaDecay = +_, simulation) : +alphaDecay;
     },
 
-    alphaTarget: function(_) {
+    alphaTarget: function (_) {
       return arguments.length ? (alphaTarget = +_, simulation) : alphaTarget;
     },
 
-    velocityDecay: function(_) {
-      return arguments.length ? (velocityDecay = 1 - _, simulation) : 1 - velocityDecay;
+    velocityDecay: function (_) {
+      return arguments.length
+        ? (velocityDecay = 1 - _, simulation)
+        : 1 - velocityDecay;
     },
 
-    randomSource: function(_) {
-      return arguments.length ? (random = _, forces.forEach(initializeForce), simulation) : random;
+    randomSource: function (_) {
+      return arguments.length
+        ? (random = _, forces.forEach(initializeForce), simulation)
+        : random;
     },
 
-    force: function(name, _) {
-      return arguments.length > 1 ? ((_ == null ? forces.delete(name) : forces.set(name, initializeForce(_))), simulation) : forces.get(name);
+    force: function (name, _) {
+      return arguments.length > 1
+        ? ((_ == null
+          ? forces.delete(name)
+          : forces.set(name, initializeForce(_))),
+          simulation)
+        : forces.get(name);
     },
 
-    find: function(x, y, radius) {
+    find: function (x, y, radius) {
       var i = 0,
-          n = nodes.length,
-          dx,
-          dy,
-          d2,
-          node,
-          closest;
+        n = nodes.length,
+        dx,
+        dy,
+        d2,
+        node,
+        closest;
 
       if (radius == null) radius = Infinity;
       else radius *= radius;
@@ -150,8 +164,10 @@ export default function(nodes) {
       return closest;
     },
 
-    on: function(name, _) {
-      return arguments.length > 1 ? (event.on(name, _), simulation) : event.on(name);
-    }
+    on: function (name, _) {
+      return arguments.length > 1
+        ? (event.on(name, _), simulation)
+        : event.on(name);
+    },
   };
 }

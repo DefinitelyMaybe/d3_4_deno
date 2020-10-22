@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import node_count from "./count.js";
 import node_each from "./each.js";
 import node_eachBefore from "./eachBefore.js";
@@ -22,15 +21,18 @@ export default function hierarchy(data, children) {
   }
 
   var root = new Node(data),
-      node,
-      nodes = [root],
-      child,
-      childs,
-      i,
-      n;
+    node,
+    nodes = [root],
+    child,
+    childs,
+    i,
+    n;
 
   while (node = nodes.pop()) {
-    if ((childs = children(node.data)) && (n = (childs = Array.from(childs)).length)) {
+    if (
+      (childs = children(node.data)) &&
+      (n = (childs = Array.from(childs)).length)
+    ) {
       node.children = childs;
       for (i = n - 1; i >= 0; --i) {
         nodes.push(child = childs[i] = new Node(childs[i]));
@@ -62,14 +64,14 @@ function copyData(node) {
 
 export function computeHeight(node) {
   var height = 0;
-  do node.height = height;
-  while ((node = node.parent) && (node.height < ++height));
+  do node.height = height; while (
+    (node = node.parent) && (node.height < ++height)
+  );
 }
 
 export function Node(data) {
   this.data = data;
-  this.depth =
-  this.height = 0;
+  this.depth = this.height = 0;
   this.parent = null;
 }
 
@@ -88,5 +90,5 @@ Node.prototype = hierarchy.prototype = {
   leaves: node_leaves,
   links: node_links,
   copy: node_copy,
-  [Symbol.iterator]: node_iterator
+  [Symbol.iterator]: node_iterator,
 };

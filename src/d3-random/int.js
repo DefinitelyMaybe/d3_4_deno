@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import defaultSource from "./defaultSource.js";
 
 export default (function sourceRandomInt(source) {
@@ -6,7 +5,7 @@ export default (function sourceRandomInt(source) {
     if (arguments.length < 2) max = min, min = 0;
     min = Math.floor(min);
     max = Math.floor(max) - min;
-    return function() {
+    return function () {
       return Math.floor(source() * max + min);
     };
   }

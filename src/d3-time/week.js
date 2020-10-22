@@ -1,15 +1,16 @@
-/// <reference lib="dom" />
 import interval from "./interval.js";
-import {durationMinute, durationWeek} from "./duration.js";
+import { durationMinute, durationWeek } from "./duration.js";
 
 function weekday(i) {
-  return interval(function(date) {
+  return interval(function (date) {
     date.setDate(date.getDate() - (date.getDay() + 7 - i) % 7);
     date.setHours(0, 0, 0, 0);
-  }, function(date, step) {
+  }, function (date, step) {
     date.setDate(date.getDate() + step * 7);
-  }, function(start, end) {
-    return (end - start - (end.getTimezoneOffset() - start.getTimezoneOffset()) * durationMinute) / durationWeek;
+  }, function (start, end) {
+    return (end - start -
+      (end.getTimezoneOffset() - start.getTimezoneOffset()) * durationMinute) /
+      durationWeek;
   });
 }
 

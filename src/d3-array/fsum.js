@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 // https://github.com/python/cpython/blob/a74eea238f5baba15797e2e8b570d153bc8690a7/Modules/mathmodule.c#L1423
 export class Adder {
   constructor() {
@@ -41,7 +40,7 @@ export class Adder {
   }
 }
 
-export default function(values, valueof) {
+export default function (values, valueof) {
   const adder = new Adder();
   if (valueof === undefined) {
     for (let value of values) {

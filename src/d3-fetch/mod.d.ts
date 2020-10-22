@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 // Type definitions for d3-fetch 2.0
 // Project: https://d3js.org/d3-fetch/
 // Definitions by: Hugues Stefanski <https://github.com/ledragon>
@@ -9,7 +8,7 @@
 
 // Last module patch version validated against: 2.0.0
 
-import { DSVParsedArray, DSVRowArray, DSVRowString } from "../d3-dsv/mod.js";
+import { DSVParsedArray, DSVRowArray, DSVRowString } from "../d3-dsv/mod.d.ts";
 
 /**
  * Fetches the binary file at the specified input URL and returns it as a Promise of a Blob.
@@ -42,8 +41,8 @@ export function buffer(url: string, init?: RequestInit): Promise<ArrayBuffer>;
  * @param init An optional request initialization object.
  */
 export function csv<Columns extends string>(
-    url: string,
-    init?: RequestInit
+  url: string,
+  init?: RequestInit,
 ): Promise<DSVRowArray<Columns>>;
 /**
  * Fetches the CSV file at the specified input URL and returns
@@ -62,8 +61,12 @@ export function csv<Columns extends string>(
  * In effect, row is similar to applying a map and filter operator to the returned rows.
  */
 export function csv<ParsedRow extends object, Columns extends string = string>(
-    url: string,
-    row: (rawRow: DSVRowString<Columns>, index: number, columns: Columns[]) => ParsedRow | undefined | null
+  url: string,
+  row: (
+    rawRow: DSVRowString<Columns>,
+    index: number,
+    columns: Columns[],
+  ) => ParsedRow | undefined | null,
 ): Promise<DSVParsedArray<ParsedRow>>;
 /**
  * Fetches the CSV file at the specified input URL and returns
@@ -85,9 +88,13 @@ export function csv<ParsedRow extends object, Columns extends string = string>(
  * In effect, row is similar to applying a map and filter operator to the returned rows.
  */
 export function csv<ParsedRow extends object, Columns extends string = string>(
-    url: string,
-    init: RequestInit,
-    row: (rawRow: DSVRowString<Columns>, index: number, columns: Columns[]) => ParsedRow | undefined | null
+  url: string,
+  init: RequestInit,
+  row: (
+    rawRow: DSVRowString<Columns>,
+    index: number,
+    columns: Columns[],
+  ) => ParsedRow | undefined | null,
 ): Promise<DSVParsedArray<ParsedRow>>;
 
 /**
@@ -104,9 +111,9 @@ export function csv<ParsedRow extends object, Columns extends string = string>(
  * @param init An optional request initialization object.
  */
 export function dsv<Columns extends string>(
-    delimiter: string,
-    url: string,
-    init?: RequestInit
+  delimiter: string,
+  url: string,
+  init?: RequestInit,
 ): Promise<DSVRowArray<Columns>>;
 /**
  * Fetches the DSV file with the specified delimiter character at the specified input URL and returns
@@ -126,9 +133,13 @@ export function dsv<Columns extends string>(
  * In effect, row is similar to applying a map and filter operator to the returned rows.
  */
 export function dsv<ParsedRow extends object, Columns extends string = string>(
-    delimiter: string,
-    url: string,
-    row: (rawRow: DSVRowString<Columns>, index: number, columns: Columns[]) => ParsedRow | undefined | null
+  delimiter: string,
+  url: string,
+  row: (
+    rawRow: DSVRowString<Columns>,
+    index: number,
+    columns: Columns[],
+  ) => ParsedRow | undefined | null,
 ): Promise<DSVParsedArray<ParsedRow>>;
 /**
  * Fetches the DSV file with the specified delimiter character at the specified input URL and returns
@@ -151,10 +162,14 @@ export function dsv<ParsedRow extends object, Columns extends string = string>(
  * In effect, row is similar to applying a map and filter operator to the returned rows.
  */
 export function dsv<ParsedRow extends object, Columns extends string = string>(
-    delimiter: string,
-    url: string,
-    init: RequestInit,
-    row: (rawRow: DSVRowString<Columns>, index: number, columns: Columns[]) => ParsedRow | undefined | null
+  delimiter: string,
+  url: string,
+  init: RequestInit,
+  row: (
+    rawRow: DSVRowString<Columns>,
+    index: number,
+    columns: Columns[],
+  ) => ParsedRow | undefined | null,
 ): Promise<DSVParsedArray<ParsedRow>>;
 
 /**
@@ -175,7 +190,10 @@ export function html(url: string, init?: RequestInit): Promise<Document>;
  * @param url A valid URL string.
  * @param init An optional object of image properties to set.
  */
-export function image(url: string, init?: Partial<HTMLImageElement>): Promise<HTMLImageElement>;
+export function image(
+  url: string,
+  init?: Partial<HTMLImageElement>,
+): Promise<HTMLImageElement>;
 
 /**
  * Fetches the json file at the specified input URL and returns it as a Promise of a parsed JSON object.
@@ -190,7 +208,10 @@ export function image(url: string, init?: Partial<HTMLImageElement>): Promise<HT
  * @param url A valid URL string.
  * @param init An optional request initialization object.
  */
-export function json<ParsedJSONObject extends any>(url: string, init?: RequestInit): Promise<ParsedJSONObject | undefined>;
+export function json<ParsedJSONObject extends any>(
+  url: string,
+  init?: RequestInit,
+): Promise<ParsedJSONObject | undefined>;
 
 /**
  * Fetches the file at the specified input URL as text, parses it as SVG and returns a Promise of an SVG Document.
@@ -224,8 +245,8 @@ export function text(url: string, init?: RequestInit): Promise<string>;
  * @param init An optional request initialization object.
  */
 export function tsv<Columns extends string>(
-    url: string,
-    init?: RequestInit
+  url: string,
+  init?: RequestInit,
 ): Promise<DSVRowArray<Columns>>;
 /**
  * Fetches the TSV file at the specified input URL and returns
@@ -245,8 +266,12 @@ export function tsv<Columns extends string>(
  * In effect, row is similar to applying a map and filter operator to the returned rows.
  */
 export function tsv<ParsedRow extends object, Columns extends string = string>(
-    url: string,
-    row: (rawRow: DSVRowString<Columns>, index: number, columns: Columns[]) => ParsedRow | undefined | null
+  url: string,
+  row: (
+    rawRow: DSVRowString<Columns>,
+    index: number,
+    columns: Columns[],
+  ) => ParsedRow | undefined | null,
 ): Promise<DSVParsedArray<ParsedRow>>;
 /**
  * Fetches the TSV file at the specified input URL and returns
@@ -268,9 +293,13 @@ export function tsv<ParsedRow extends object, Columns extends string = string>(
  * In effect, row is similar to applying a map and filter operator to the returned rows.
  */
 export function tsv<ParsedRow extends object, Columns extends string = string>(
-    url: string,
-    init: RequestInit,
-    row: (rawRow: DSVRowString<Columns>, index: number, columns: Columns[]) => ParsedRow | undefined | null
+  url: string,
+  init: RequestInit,
+  row: (
+    rawRow: DSVRowString<Columns>,
+    index: number,
+    columns: Columns[],
+  ) => ParsedRow | undefined | null,
 ): Promise<DSVParsedArray<ParsedRow>>;
 
 /**

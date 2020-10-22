@@ -1,6 +1,5 @@
-/// <reference lib="dom" />
-import {dispatch} from "../../d3-dispatch/mod.js";
-import {timer, timeout} from "../../d3-timer/mod.js";
+import { dispatch } from "../../d3-dispatch/mod.js";
+import { timeout, timer } from "../../d3-timer/mod.js";
 
 var emptyOn = dispatch("start", "end", "cancel", "interrupt");
 var emptyTween = [];
@@ -13,7 +12,7 @@ export var RUNNING = 4;
 export var ENDING = 5;
 export var ENDED = 6;
 
-export default function(node, name, id, index, group, timing) {
+export default function (node, name, id, index, group, timing) {
   var schedules = node.__transition;
   if (!schedules) node.__transition = {};
   else if (id in schedules) return;
@@ -28,7 +27,7 @@ export default function(node, name, id, index, group, timing) {
     duration: timing.duration,
     ease: timing.ease,
     timer: null,
-    state: CREATED
+    state: CREATED,
   });
 }
 
@@ -46,13 +45,15 @@ export function set(node, id) {
 
 export function get(node, id) {
   var schedule = node.__transition;
-  if (!schedule || !(schedule = schedule[id])) throw new Error("transition not found");
+  if (!schedule || !(schedule = schedule[id])) {
+    throw new Error("transition not found");
+  }
   return schedule;
 }
 
 function create(node, id, self) {
   var schedules = node.__transition,
-      tween;
+    tween;
 
   // Initialize the self timer when the transition is created.
   // Note the actual delay is not known until the first callback!
@@ -88,9 +89,7 @@ function create(node, id, self) {
         o.timer.stop();
         o.on.call("interrupt", node, node.__data__, o.index, o.group);
         delete schedules[i];
-      }
-
-      // Cancel any pre-empted transitions.
+      } // Cancel any pre-empted transitions.
       else if (+i < id) {
         o.state = ENDED;
         o.timer.stop();
@@ -103,7 +102,7 @@ function create(node, id, self) {
     // Note the transition may be canceled after start and before the first tick!
     // Note this must be scheduled before the start event; see d3/d3-transition#16!
     // Assuming this is successful, subsequent callbacks go straight to tick.
-    timeout(function() {
+    timeout(function () {
       if (self.state === STARTED) {
         self.state = RUNNING;
         self.timer.restart(tick, self.delay, self.time);
@@ -121,7 +120,14 @@ function create(node, id, self) {
     // Initialize the tween, deleting null tween.
     tween = new Array(n = self.tween.length);
     for (i = 0, j = -1; i < n; ++i) {
-      if (o = self.tween[i].value.call(node, node.__data__, self.index, self.group)) {
+      if (
+        o = self.tween[i].value.call(
+          node,
+          node.__data__,
+          self.index,
+          self.group,
+        )
+      ) {
         tween[++j] = o;
       }
     }
@@ -129,9 +135,11 @@ function create(node, id, self) {
   }
 
   function tick(elapsed) {
-    var t = elapsed < self.duration ? self.ease.call(null, elapsed / self.duration) : (self.timer.restart(stop), self.state = ENDING, 1),
-        i = -1,
-        n = tween.length;
+    var t = elapsed < self.duration
+        ? self.ease.call(null, elapsed / self.duration)
+        : (self.timer.restart(stop), self.state = ENDING, 1),
+      i = -1,
+      n = tween.length;
 
     while (++i < n) {
       tween[i].call(node, t);

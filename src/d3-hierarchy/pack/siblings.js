@@ -1,11 +1,8 @@
-/// <reference lib="dom" />
 import array from "../array.js";
 import enclose from "./enclose.js";
 
 function place(b, a, c) {
-  var dx = b.x - a.x, x, a2,
-      dy = b.y - a.y, y, b2,
-      d2 = dx * dx + dy * dy;
+  var dx = b.x - a.x, x, a2, dy = b.y - a.y, y, b2, d2 = dx * dx + dy * dy;
   if (d2) {
     a2 = a.r + c.r, a2 *= a2;
     b2 = b.r + c.r, b2 *= b2;
@@ -33,10 +30,10 @@ function intersects(a, b) {
 
 function score(node) {
   var a = node._,
-      b = node.next._,
-      ab = a.r + b.r,
-      dx = (a.x * b.r + b.x * a.r) / ab,
-      dy = (a.y * b.r + b.y * a.r) / ab;
+    b = node.next._,
+    ab = a.r + b.r,
+    dx = (a.x * b.r + b.x * a.r) / ab,
+    dy = (a.y * b.r + b.y * a.r) / ab;
   return dx * dx + dy * dy;
 }
 
@@ -69,7 +66,8 @@ export function packEnclose(circles) {
   c.next = b.previous = a;
 
   // Attempt to place each remaining circle…
-  pack: for (i = 3; i < n; ++i) {
+  pack:
+  for (i = 3; i < n; ++i) {
     place(a._, b._, c = circles[i]), c = new Node(c);
 
     // Find the closest intersecting circle on the front-chain, if any.
@@ -106,7 +104,9 @@ export function packEnclose(circles) {
   }
 
   // Compute the enclosing circle of the front chain.
-  a = [b._], c = b; while ((c = c.next) !== b) a.push(c._); c = enclose(a);
+  a = [b._], c = b;
+  while ((c = c.next) !== b) a.push(c._);
+  c = enclose(a);
 
   // Translate the circles to put the enclosing circle around the origin.
   for (i = 0; i < n; ++i) a = circles[i], a.x -= c.x, a.y -= c.y;
@@ -114,7 +114,7 @@ export function packEnclose(circles) {
   return c.r;
 }
 
-export default function(circles) {
+export default function (circles) {
   packEnclose(circles);
   return circles;
 }

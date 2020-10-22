@@ -1,9 +1,11 @@
-/// <reference lib="dom" />
 // [[fill]align][sign][symbol][0][width][,][.precision][~][type]
-var re = /^(?:(.)?([<>=^]))?([+\-( ])?([$#])?(0)?(\d+)?(,)?(\.\d+)?(~)?([a-z%])?$/i;
+var re =
+  /^(?:(.)?([<>=^]))?([+\-( ])?([$#])?(0)?(\d+)?(,)?(\.\d+)?(~)?([a-z%])?$/i;
 
 export default function formatSpecifier(specifier) {
-  if (!(match = re.exec(specifier))) throw new Error("invalid format: " + specifier);
+  if (!(match = re.exec(specifier))) {
+    throw new Error("invalid format: " + specifier);
+  }
   var match;
   return new FormatSpecifier({
     fill: match[1],
@@ -15,7 +17,7 @@ export default function formatSpecifier(specifier) {
     comma: match[7],
     precision: match[8] && match[8].slice(1),
     trim: match[9],
-    type: match[10]
+    type: match[10],
   });
 }
 
@@ -29,20 +31,24 @@ export function FormatSpecifier(specifier) {
   this.zero = !!specifier.zero;
   this.width = specifier.width === undefined ? undefined : +specifier.width;
   this.comma = !!specifier.comma;
-  this.precision = specifier.precision === undefined ? undefined : +specifier.precision;
+  this.precision = specifier.precision === undefined
+    ? undefined
+    : +specifier.precision;
   this.trim = !!specifier.trim;
   this.type = specifier.type === undefined ? "" : specifier.type + "";
 }
 
-FormatSpecifier.prototype.toString = function() {
-  return this.fill
-      + this.align
-      + this.sign
-      + this.symbol
-      + (this.zero ? "0" : "")
-      + (this.width === undefined ? "" : Math.max(1, this.width | 0))
-      + (this.comma ? "," : "")
-      + (this.precision === undefined ? "" : "." + Math.max(0, this.precision | 0))
-      + (this.trim ? "~" : "")
-      + this.type;
+FormatSpecifier.prototype.toString = function () {
+  return this.fill +
+    this.align +
+    this.sign +
+    this.symbol +
+    (this.zero ? "0" : "") +
+    (this.width === undefined ? "" : Math.max(1, this.width | 0)) +
+    (this.comma ? "," : "") +
+    (this.precision === undefined
+      ? ""
+      : "." + Math.max(0, this.precision | 0)) +
+    (this.trim ? "~" : "") +
+    this.type;
 };

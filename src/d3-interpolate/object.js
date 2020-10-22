@@ -1,10 +1,9 @@
-/// <reference lib="dom" />
 import value from "./value.js";
 
-export default function(a, b) {
+export default function (a, b) {
   var i = {},
-      c = {},
-      k;
+    c = {},
+    k;
 
   if (a === null || typeof a !== "object") a = {};
   if (b === null || typeof b !== "object") b = {};
@@ -17,7 +16,7 @@ export default function(a, b) {
     }
   }
 
-  return function(t) {
+  return function (t) {
     for (k in i) c[k] = i[k](t);
     return c;
   };

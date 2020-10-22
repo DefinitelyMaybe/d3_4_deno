@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 export default class Polygon {
   constructor() {
     this._ = [];

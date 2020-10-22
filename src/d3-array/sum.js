@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 export default function sum(values, valueof) {
   let sum = 0;
   if (valueof === undefined) {

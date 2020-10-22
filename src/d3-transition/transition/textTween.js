@@ -1,6 +1,5 @@
-/// <reference lib="dom" />
 function textInterpolate(i) {
-  return function(t) {
+  return function (t) {
     this.textContent = i.call(this, t);
   };
 }
@@ -16,10 +15,10 @@ function textTween(value) {
   return tween;
 }
 
-export default function(value) {
+export default function (value) {
   var key = "text";
   if (arguments.length < 1) return (key = this.tween(key)) && key._value;
   if (value == null) return this.tween(key, null);
-  if (typeof value !== "function") throw new Error;
+  if (typeof value !== "function") throw new Error();
   return this.tween(key, textTween(value));
 }

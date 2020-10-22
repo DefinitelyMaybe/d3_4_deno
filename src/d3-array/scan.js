@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import leastIndex from "./leastIndex.js";
 
 export default function scan(values, compare) {

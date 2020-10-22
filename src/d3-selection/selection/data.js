@@ -1,14 +1,13 @@
-/// <reference lib="dom" />
-import {Selection} from "./index.js";
-import {EnterNode} from "./enter.js";
+import { Selection } from "./index.js";
+import { EnterNode } from "./enter.js";
 import array from "../array.js";
 import constant from "../constant.js";
 
 function bindIndex(parent, group, enter, update, exit, data) {
   var i = 0,
-      node,
-      groupLength = group.length,
-      dataLength = data.length;
+    node,
+    groupLength = group.length,
+    dataLength = data.length;
 
   // Put any non-null nodes that fit into update.
   // Put any null nodes into enter.
@@ -32,12 +31,12 @@ function bindIndex(parent, group, enter, update, exit, data) {
 
 function bindKey(parent, group, enter, update, exit, data, key) {
   var i,
-      node,
-      nodeByKeyValue = new Map,
-      groupLength = group.length,
-      dataLength = data.length,
-      keyValues = new Array(groupLength),
-      keyValue;
+    node,
+    nodeByKeyValue = new Map(),
+    groupLength = group.length,
+    dataLength = data.length,
+    keyValues = new Array(groupLength),
+    keyValue;
 
   // Compute the key for each node.
   // If multiple nodes have the same key, the duplicates are added to exit.
@@ -78,24 +77,32 @@ function datum(node) {
   return node.__data__;
 }
 
-export default function(value, key) {
+export default function (value, key) {
   if (!arguments.length) return Array.from(this, datum);
 
   var bind = key ? bindKey : bindIndex,
-      parents = this._parents,
-      groups = this._groups;
+    parents = this._parents,
+    groups = this._groups;
 
   if (typeof value !== "function") value = constant(value);
 
-  for (var m = groups.length, update = new Array(m), enter = new Array(m), exit = new Array(m), j = 0; j < m; ++j) {
+  for (
+    var m = groups.length,
+      update = new Array(m),
+      enter = new Array(m),
+      exit = new Array(m),
+      j = 0;
+    j < m;
+    ++j
+  ) {
     var parent = parents[j],
-        group = groups[j],
-        groupLength = group.length,
-        data = array(value.call(parent, parent && parent.__data__, j, parents)),
-        dataLength = data.length,
-        enterGroup = enter[j] = new Array(dataLength),
-        updateGroup = update[j] = new Array(dataLength),
-        exitGroup = exit[j] = new Array(groupLength);
+      group = groups[j],
+      groupLength = group.length,
+      data = array(value.call(parent, parent && parent.__data__, j, parents)),
+      dataLength = data.length,
+      enterGroup = enter[j] = new Array(dataLength),
+      updateGroup = update[j] = new Array(dataLength),
+      exitGroup = exit[j] = new Array(groupLength);
 
     bind(parent, group, enterGroup, updateGroup, exitGroup, data, key);
 

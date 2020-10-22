@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
-export default function(update) {
+export default function (update) {
   return new Array(update.length);
 }

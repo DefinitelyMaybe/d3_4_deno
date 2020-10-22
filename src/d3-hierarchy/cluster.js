@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 function defaultSeparation(a, b) {
   return a.parent === b.parent ? 1 : 2;
 }
@@ -31,18 +30,18 @@ function leafRight(node) {
   return node;
 }
 
-export default function() {
+export default function () {
   var separation = defaultSeparation,
-      dx = 1,
-      dy = 1,
-      nodeSize = false;
+    dx = 1,
+    dy = 1,
+    nodeSize = false;
 
   function cluster(root) {
     var previousNode,
-        x = 0;
+      x = 0;
 
     // First walk, computing the initial x & y values.
-    root.eachAfter(function(node) {
+    root.eachAfter(function (node) {
       var children = node.children;
       if (children) {
         node.x = meanX(children);
@@ -55,30 +54,38 @@ export default function() {
     });
 
     var left = leafLeft(root),
-        right = leafRight(root),
-        x0 = left.x - separation(left, right) / 2,
-        x1 = right.x + separation(right, left) / 2;
+      right = leafRight(root),
+      x0 = left.x - separation(left, right) / 2,
+      x1 = right.x + separation(right, left) / 2;
 
     // Second walk, normalizing x & y to the desired size.
-    return root.eachAfter(nodeSize ? function(node) {
-      node.x = (node.x - root.x) * dx;
-      node.y = (root.y - node.y) * dy;
-    } : function(node) {
-      node.x = (node.x - x0) / (x1 - x0) * dx;
-      node.y = (1 - (root.y ? node.y / root.y : 1)) * dy;
-    });
+    return root.eachAfter(
+      nodeSize
+        ? function (node) {
+          node.x = (node.x - root.x) * dx;
+          node.y = (root.y - node.y) * dy;
+        }
+        : function (node) {
+          node.x = (node.x - x0) / (x1 - x0) * dx;
+          node.y = (1 - (root.y ? node.y / root.y : 1)) * dy;
+        },
+    );
   }
 
-  cluster.separation = function(x) {
+  cluster.separation = function (x) {
     return arguments.length ? (separation = x, cluster) : separation;
   };
 
-  cluster.size = function(x) {
-    return arguments.length ? (nodeSize = false, dx = +x[0], dy = +x[1], cluster) : (nodeSize ? null : [dx, dy]);
+  cluster.size = function (x) {
+    return arguments.length
+      ? (nodeSize = false, dx = +x[0], dy = +x[1], cluster)
+      : (nodeSize ? null : [dx, dy]);
   };
 
-  cluster.nodeSize = function(x) {
-    return arguments.length ? (nodeSize = true, dx = +x[0], dy = +x[1], cluster) : (nodeSize ? [dx, dy] : null);
+  cluster.nodeSize = function (x) {
+    return arguments.length
+      ? (nodeSize = true, dx = +x[0], dy = +x[1], cluster)
+      : (nodeSize ? [dx, dy] : null);
   };
 
   return cluster;

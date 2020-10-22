@@ -1,2 +1,1 @@
-/// <reference lib="dom" />
-export const linear = t => +t;
+export const linear = (t) => +t;

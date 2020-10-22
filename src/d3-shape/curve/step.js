@@ -1,30 +1,37 @@
-/// <reference lib="dom" />
 function Step(context, t) {
   this._context = context;
   this._t = t;
 }
 
 Step.prototype = {
-  areaStart: function() {
+  areaStart: function () {
     this._line = 0;
   },
-  areaEnd: function() {
+  areaEnd: function () {
     this._line = NaN;
   },
-  lineStart: function() {
+  lineStart: function () {
     this._x = this._y = NaN;
     this._point = 0;
   },
-  lineEnd: function() {
-    if (0 < this._t && this._t < 1 && this._point === 2) this._context.lineTo(this._x, this._y);
-    if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
+  lineEnd: function () {
+    if (0 < this._t && this._t < 1 && this._point === 2) {
+      this._context.lineTo(this._x, this._y);
+    }
+    if (this._line || (this._line !== 0 && this._point === 1)) {
+      this._context.closePath();
+    }
     if (this._line >= 0) this._t = 1 - this._t, this._line = 1 - this._line;
   },
-  point: function(x, y) {
+  point: function (x, y) {
     x = +x, y = +y;
     switch (this._point) {
-      case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
-      case 1: this._point = 2; // proceed
+      case 0:
+        this._point = 1;
+        this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y);
+        break;
+      case 1: // proceed
+        this._point = 2;
       default: {
         if (this._t <= 0) {
           this._context.lineTo(this._x, y);
@@ -38,10 +45,10 @@ Step.prototype = {
       }
     }
     this._x = x, this._y = y;
-  }
+  },
 };
 
-export default function(context) {
+export default function (context) {
   return new Step(context, 0.5);
 }
 
