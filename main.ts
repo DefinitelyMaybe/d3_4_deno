@@ -232,7 +232,7 @@ function initIndex(moduleName: string) {
         // add deno ref to types and dom
         text = text.replace(
           /^/,
-          `// @deno-types="./${relativePathTS}"\n`,
+          `/// <reference lib="dom" />\n// @deno-types="./${relativePathTS}"\n`,
         );
 
         Deno.writeTextFileSync(path + relativePathJS, text);
@@ -310,14 +310,24 @@ src = src.replace(/import { MultiPolygon } from 'geojson';/g, (m)=> {
 })
 Deno.writeTextFileSync(d3contourFile, src)
 
+// create the delaunator file and reference it from the delaunay file
+// this is because raw.github... responds with MIME type of "text/plain".
+// if someone wanted to use this part of d3 within their script they
+// couldn't use delaunay and would run into troubles trying to import
+// directly from src/mod.js
+const res = await fetch(delaunayURL)
+const resSRC = await res.text()
+Deno.writeTextFileSync("d3/d3-delaunay/delaunator.js", resSRC)
 src = Deno.readTextFileSync(delaunayFile)
 src = src.replace(/import Delaunator from "delaunator";/g, (m)=> {
-  m = m.replace(/"delaunator"/g, `"${delaunayURL}"`)
+  m = m.replace(/"delaunator"/g, `"./delaunator.js"`)
   m = m.replace(/^/g, `// @deno-types="${delaunayTypesURL}"\n`)
   return m
 })
 Deno.writeTextFileSync(delaunayFile, src)
 
-Deno.run({
+const p = Deno.run({
   cmd: ["deno", "fmt", "d3"],
 });
+
+await p.status();
