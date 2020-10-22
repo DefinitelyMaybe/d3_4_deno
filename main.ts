@@ -44,7 +44,7 @@ function fetchTypes(path: string, url: string) {
     if (res.status == 200) {
       res.text().then((text) => {
         ensureFileSync(path);
-        text = text.replace(/^/, '/// <reference lib="dom" />\n')
+        // text = text.replace(/^/, '/// <reference lib="dom" />\n')
         Deno.writeTextFileSync(path, text);
       });
     } else {
@@ -58,7 +58,7 @@ function identifyMissingFiles() {
   const missedFiles: string[] = [];
   for (const entry of walkSync("d3")) {
     if (entry.isFile && entry.name.endsWith(".js")) {
-      let src = Deno.readTextFileSync(entry.path);
+      const src = Deno.readTextFileSync(entry.path);
       // match against .js imports
       const importMatches = src.matchAll(/import .+?\.js/gs); // maybe add regex 's' flag?
       for (const match of importMatches) {
@@ -158,7 +158,8 @@ function fetchFile(path:string) {
       ensureFileSync(path + relativePathJS);
 
       // add deno ref to dom
-      text = text.replace(/^/, `/// <reference lib="dom" />\n`);
+      // text = text.replace(/^/, `/// <reference lib="dom" />\n`);
+      // maybe we'll add this back in soon but only for specific files?
 
       Deno.writeTextFileSync(path + relativePathJS, text); 
       return true
@@ -174,7 +175,20 @@ function adjustscriptURLS(path:string) {
   const scriptDepth = path.split("/").length;
 
   src = src.replaceAll(/import .+? from ("|')d3-.+?("|')/g, (m) => {
-    return changeImportURL(m, scriptDepth);
+    if (!m.includes("mod.js")) {
+      // split via different double or single quotes
+      if (m.includes("'")) {
+        let newValue = m.replace(/'d3-/g, `'${"../".repeat(scriptDepth-2)}d3-`);
+        newValue = path.endsWith(".js") ?  newValue.replace(/'$/g, "/mod.js'") : newValue.replace(/'$/g, "/mod.d.ts'");
+        return newValue;
+      } else {
+        let newValue = m.replace(/"d3-/g, `"${"../".repeat(scriptDepth-2)}d3-`);
+        newValue = path.endsWith(".js") ? newValue.replace(/"$/g, '/mod.js"') : newValue.replace(/"$/g, '/mod.d.ts"');
+        return newValue;
+      }
+    } else {
+      return m;
+    }
   });
   // single edge case for this multiline import
   src = src.replaceAll(/import {.+? from ("|')d3-.+?("|')/gs, (m)=> {
@@ -219,7 +233,7 @@ function initIndex(moduleName: string) {
         // add deno ref to types and dom
         text = text.replace(
           /^/,
-          `/// <reference types="./${relativePathTS}" />\n/// <reference lib="dom" />\n`,
+          `// @deno-types="./${relativePathTS}"\n`,
         );
 
         Deno.writeTextFileSync(path + relativePathJS, text);
@@ -232,22 +246,6 @@ function initIndex(moduleName: string) {
     });
 }
 
-function changeImportURL(match: string, depth:number) {
-  if (!match.includes("mod.js")) {
-    if (match.includes("'")) {
-      let newValue = match.replace(/'d3-/g, `'${"../".repeat(depth-2)}d3-`);
-      newValue = newValue.replace(/'$/g, "/mod.js'");
-      return newValue;
-    } else {
-      let newValue = match.replace(/"d3-/g, `"${"../".repeat(depth-2)}d3-`);
-      newValue = newValue.replace(/"$/g, '/mod.js"');
-      return newValue;
-    }
-  } else {
-    return match;
-  }
-}
-
 ensureDirSync(d3Dir);
 
 if (!existsSync(`${d3Dir}mod.js`)) {
@@ -256,17 +254,11 @@ if (!existsSync(`${d3Dir}mod.js`)) {
     await initIndex(moduleName);
   }
   // create the mod.js and mod.d.ts files
-  let modSRC = '/// <reference lib="dom" />\n';
+  let modSRC = ''; // /// <reference lib="dom" />\n';
   d3modules.forEach((name) => {
     modSRC += `// @deno-types="./${name}/mod.d.ts"\nexport * from "./${name}/mod.js"\n`;
   });
   Deno.writeTextFileSync(`${d3Dir}mod.js`, modSRC);
-
-  // let modTypes = "";
-  // d3modules.forEach((name) => {
-  //   modTypes += `export * from "./${name}/mod.d.ts"\n`;
-  // });
-  // Deno.writeTextFileSync(`${d3Dir}mod.d.ts`, modTypes);
 }
 
 let c = 1
@@ -322,10 +314,7 @@ Deno.writeTextFileSync(d3contourFile, src)
 src = Deno.readTextFileSync(delaunayFile)
 src = src.replace(/import Delaunator from "delaunator";/g, (m)=> {
   m = m.replace(/"delaunator"/g, `"${delaunayURL}"`)
-  m = m.replace(/^/g, `/// <reference types="${delaunayTypesURL}" />\n`)
+  m = m.replace(/^/g, `// @deno-types="${delaunayTypesURL}"\n`)
   return m
 })
 Deno.writeTextFileSync(delaunayFile, src)
-
-// DONE!
-// later on I shall deal with the now onto type errors
