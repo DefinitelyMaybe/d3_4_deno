@@ -297,11 +297,9 @@ export default function () {
   }
 
   arc.centroid = function () {
-    var r =
-        (+innerRadius.apply(this, arguments) +
-          +outerRadius.apply(this, arguments)) / 2,
-      a =
-        (+startAngle.apply(this, arguments) +
+    var r = (+innerRadius.apply(this, arguments) +
+        +outerRadius.apply(this, arguments)) / 2,
+      a = (+startAngle.apply(this, arguments) +
             +endAngle.apply(this, arguments)) / 2 - pi / 2;
     return [cos(a) * r, sin(a) * r];
   };

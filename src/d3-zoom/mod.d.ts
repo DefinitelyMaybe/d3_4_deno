@@ -195,12 +195,11 @@ export interface ZoomBehavior<
      * The default implementation attempts to ensure that the viewport extent does not go outside the translate extent.
      */
   constrain(
-    constraint:
-      ((
-        transform: ZoomTransform,
-        extent: [[number, number], [number, number]],
-        translateExtent: [[number, number], [number, number]],
-      ) => ZoomTransform),
+    constraint: ((
+      transform: ZoomTransform,
+      extent: [[number, number], [number, number]],
+      translateExtent: [[number, number], [number, number]],
+    ) => ZoomTransform),
   ): this;
 
   /**

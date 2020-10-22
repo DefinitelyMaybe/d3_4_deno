@@ -59,14 +59,10 @@ function ribbon(headRadius) {
 
     if (ap > epsilon) {
       if (abs(sa1 - sa0) > ap * 2 + epsilon) {
-        sa1 > sa0
-          ? (sa0 += ap, sa1 -= ap)
-          : (sa0 -= ap, sa1 += ap);
+        sa1 > sa0 ? (sa0 += ap, sa1 -= ap) : (sa0 -= ap, sa1 += ap);
       } else sa0 = sa1 = (sa0 + sa1) / 2;
       if (abs(ta1 - ta0) > ap * 2 + epsilon) {
-        ta1 > ta0
-          ? (ta0 += ap, ta1 -= ap)
-          : (ta0 -= ap, ta1 += ap);
+        ta1 > ta0 ? (ta0 += ap, ta1 -= ap) : (ta0 -= ap, ta1 += ap);
       } else ta0 = ta1 = (ta0 + ta1) / 2;
     }
 
