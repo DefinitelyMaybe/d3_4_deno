@@ -14,10 +14,8 @@ function childrenFilter(match) {
 
 export default function (match) {
   return this.selectAll(
-    match == null
-      ? children
-      : childrenFilter(
-        typeof match === "function" ? match : childMatcher(match),
-      ),
+    match == null ? children : childrenFilter(
+      typeof match === "function" ? match : childMatcher(match),
+    ),
   );
 }

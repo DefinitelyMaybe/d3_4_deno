@@ -23,9 +23,7 @@ function styleFunction(name, value, priority) {
 export default function (name, value, priority) {
   return arguments.length > 1
     ? this.each(
-      (value == null
-        ? styleRemove
-        : typeof value === "function"
+      (value == null ? styleRemove : typeof value === "function"
         ? styleFunction
         : styleConstant)(name, value, priority == null ? "" : priority),
     )

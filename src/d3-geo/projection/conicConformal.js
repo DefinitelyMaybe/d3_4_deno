@@ -28,8 +28,10 @@ export function conicConformalRaw(y0, y1) {
   if (!n) return mercatorRaw;
 
   function project(x, y) {
-    if (f > 0) if (y < -halfPi + epsilon) y = -halfPi + epsilon;
-    else if (y > halfPi - epsilon) y = halfPi - epsilon;
+    if (f > 0) {
+      if (y < -halfPi + epsilon) y = -halfPi + epsilon;
+      else if (y > halfPi - epsilon) y = halfPi - epsilon;
+    }
     var r = f / pow(tany(y), n);
     return [r * sin(n * x), f - r * cos(n * x)];
   }

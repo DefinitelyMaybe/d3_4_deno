@@ -32,11 +32,8 @@ function defaultTransform() {
 }
 
 function defaultWheelDelta(event) {
-  return -event.deltaY * (event.deltaMode === 1
-    ? 0.05
-    : event.deltaMode
-    ? 1
-    : 0.002) *
+  return -event.deltaY *
+    (event.deltaMode === 1 ? 0.05 : event.deltaMode ? 1 : 0.002) *
     (event.ctrlKey ? 10 : 1);
 }
 
@@ -127,7 +124,9 @@ export default function () {
       function () {
         var e = extent.apply(this, arguments),
           t0 = this.__zoom,
-          p0 = p == null ? centroid(e) : typeof p === "function"
+          p0 = p == null
+            ? centroid(e)
+            : typeof p === "function"
             ? p.apply(this, arguments)
             : p,
           p1 = t0.invert(p0),
@@ -163,14 +162,14 @@ export default function () {
       function () {
         var e = extent.apply(this, arguments),
           t = this.__zoom,
-          p0 = p == null ? centroid(e) : typeof p === "function"
+          p0 = p == null
+            ? centroid(e)
+            : typeof p === "function"
             ? p.apply(this, arguments)
             : p;
         return constrain(
           identity.translate(p0[0], p0[1]).scale(t.k).translate(
-            typeof x === "function"
-              ? -x.apply(this, arguments)
-              : -x,
+            typeof x === "function" ? -x.apply(this, arguments) : -x,
             typeof y === "function" ? -y.apply(this, arguments) : -y,
           ),
           e,
