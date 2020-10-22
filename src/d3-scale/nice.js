@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function nice(domain, interval) {
   domain = domain.slice();
 

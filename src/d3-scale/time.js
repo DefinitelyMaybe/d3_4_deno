@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { bisector, tickStep } from "../d3-array/mod.js";
 import {
   timeDay,
@@ -107,11 +108,12 @@ export function calendar(
         step = tickStep(start / durationYear, stop / durationYear, interval);
         interval = year;
       } else if (i) {
-        i = tickIntervals[
-          target / tickIntervals[i - 1][2] < tickIntervals[i][2] / target
-            ? i - 1
-            : i
-        ];
+        i =
+          tickIntervals[
+            target / tickIntervals[i - 1][2] < tickIntervals[i][2] / target
+              ? i - 1
+              : i
+          ];
         step = i[1];
         interval = i[0];
       } else {

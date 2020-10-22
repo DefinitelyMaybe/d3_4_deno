@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import Quad from "./quad.js";
 
 export default function (callback) {

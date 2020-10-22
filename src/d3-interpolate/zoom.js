@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 var epsilon2 = 1e-12;
 
 function cosh(x) {

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 var sqrt3 = Math.sqrt(3);
 
 export default {

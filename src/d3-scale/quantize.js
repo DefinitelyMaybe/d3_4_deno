@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { bisect } from "../d3-array/mod.js";
 import { linearish } from "./linear.js";
 import { initRange } from "./init.js";

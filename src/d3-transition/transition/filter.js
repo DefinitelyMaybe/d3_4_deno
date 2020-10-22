@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { matcher } from "../../d3-selection/mod.js";
 import { Transition } from "./index.js";
 

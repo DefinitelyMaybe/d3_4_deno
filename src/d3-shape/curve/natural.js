@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function Natural(context) {
   this._context = context;
 }

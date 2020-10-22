@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { hue } from "./color.js";
 
 export default function (a, b) {

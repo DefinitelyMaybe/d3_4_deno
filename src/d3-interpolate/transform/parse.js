@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import decompose, { identity } from "./decompose.js";
 
 var svgNode;

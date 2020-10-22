@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Selection } from "./index.js";
 import { EnterNode } from "./enter.js";
 import array from "../array.js";

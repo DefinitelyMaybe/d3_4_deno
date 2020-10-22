@@ -1,3 +1,4 @@
+/// <reference li./dsv.js.js/>
 import dsv from "./dsv.js";
 
 var csv = dsv(",");

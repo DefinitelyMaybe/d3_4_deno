@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 var EOL = {},
   EOF = {},
   QUOTE = 34,

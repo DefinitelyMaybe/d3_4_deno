@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import array from "../array.js";
 import enclose from "./enclose.js";
 

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import constant from "./constant.js";
 import jiggle from "./jiggle.js";
 

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { color } from "../d3-color/mod.js";
 import rgb from "./rgb.js";
 import { genericArray } from "./array.js";

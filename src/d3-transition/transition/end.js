@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { set } from "./schedule.js";
 
 export default function () {

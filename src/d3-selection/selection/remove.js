@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function remove() {
   var parent = this.parentNode;
   if (parent) parent.removeChild(this);

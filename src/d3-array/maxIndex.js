@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function maxIndex(values, valueof) {
   let max;
   let maxIndex = -1;

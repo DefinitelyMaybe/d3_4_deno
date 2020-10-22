@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for D3JS d3-quadtree module 2.0
 // Project: https://github.com/d3/d3-quadtree/, https://d3js.org/d3-quadtree
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>

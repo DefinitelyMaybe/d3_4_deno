@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export function Transform(k, x, y) {
   this.k = k;
   this.x = x;

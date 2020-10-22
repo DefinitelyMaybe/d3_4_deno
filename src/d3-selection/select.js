@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { root, Selection } from "./selection/index.js";
 
 export default function (selector) {

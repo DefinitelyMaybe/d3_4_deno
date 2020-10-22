@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import roundNode from "./round.js";
 import squarify from "./squarify.js";
 import { required } from "../accessors.js";

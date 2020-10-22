@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { tau } from "../math.js";
 import noop from "../noop.js";
 

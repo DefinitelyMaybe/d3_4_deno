@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for D3JS d3-geo module 2.0
 // Project: https://github.com/d3/d3-geo/, https://d3js.org/d3-geo
 // Definitions by: Hugues Stefanski <https://github.com/ledragon>

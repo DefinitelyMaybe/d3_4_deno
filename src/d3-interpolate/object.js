@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import value from "./value.js";
 
 export default function (a, b) {

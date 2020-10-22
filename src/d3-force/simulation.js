@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { dispatch } from "../d3-dispatch/mod.js";
 import { timer } from "../d3-timer/mod.js";
 import lcg from "./lcg.js";

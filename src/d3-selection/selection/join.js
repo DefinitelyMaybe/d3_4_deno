@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (onenter, onupdate, onexit) {
   var enter = this.enter(), update = this, exit = this.exit();
   enter = typeof onenter === "function"

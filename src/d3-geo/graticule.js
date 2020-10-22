@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { range } from "../d3-array/mod.js";
 import { abs, ceil, epsilon } from "./math.js";
 

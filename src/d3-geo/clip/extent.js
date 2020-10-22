@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import clipRectangle from "./rectangle.js";
 
 export default function () {

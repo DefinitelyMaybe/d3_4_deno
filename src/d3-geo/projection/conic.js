@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { degrees, pi, radians } from "../math.js";
 import { projectionMutator } from "./index.js";
 

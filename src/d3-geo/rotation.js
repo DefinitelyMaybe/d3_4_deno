@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import compose from "./compose.js";
 import {
   abs,

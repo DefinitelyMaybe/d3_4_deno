@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { tpmt } from "./math.js";
 
 var tau = 2 * Math.PI,

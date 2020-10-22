@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { abs, atan2, cos, epsilon, pi, sign, sin, sqrt } from "../math.js";
 import { conicProjection } from "./conic.js";
 import { equirectangularRaw } from "./equirectangular.js";

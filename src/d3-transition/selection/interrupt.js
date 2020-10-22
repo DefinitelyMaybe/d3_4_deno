@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import interrupt from "../interrupt.js";
 
 export default function (name) {

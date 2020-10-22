@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for d3JS d3-zoom module 2.0
 // Project: https://github.com/d3/d3-zoom/, https://d3js.org/d3-zoom
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>
@@ -194,11 +195,12 @@ export interface ZoomBehavior<
      * The default implementation attempts to ensure that the viewport extent does not go outside the translate extent.
      */
   constrain(
-    constraint: ((
-      transform: ZoomTransform,
-      extent: [[number, number], [number, number]],
-      translateExtent: [[number, number], [number, number]],
-    ) => ZoomTransform),
+    constraint:
+      ((
+        transform: ZoomTransform,
+        extent: [[number, number], [number, number]],
+        translateExtent: [[number, number], [number, number]],
+      ) => ZoomTransform),
   ): this;
 
   /**

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { abs, epsilon } from "./math.js";
 
 export default function (a, b) {

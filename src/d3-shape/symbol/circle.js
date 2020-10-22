@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { pi, tau } from "../math.js";
 
 export default {

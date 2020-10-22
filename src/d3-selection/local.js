@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 var nextId = 0;
 
 export default function local() {

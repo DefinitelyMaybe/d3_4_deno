@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { CardinalClosed } from "./cardinalClosed.js";
 import noop from "../noop.js";
 import { point } from "./catmullRom.js";

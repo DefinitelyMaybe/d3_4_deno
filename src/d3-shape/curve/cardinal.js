@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export function point(that, x, y) {
   that._context.bezierCurveTo(
     that._x1 + that._k * (that._x2 - that._x0),

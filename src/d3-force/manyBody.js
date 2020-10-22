@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { quadtree } from "../d3-quadtree/mod.js";
 import constant from "./constant.js";
 import jiggle from "./jiggle.js";

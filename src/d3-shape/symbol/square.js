@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default {
   draw: function (context, size) {
     var w = Math.sqrt(size),

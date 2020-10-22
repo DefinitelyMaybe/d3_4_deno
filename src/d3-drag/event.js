@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function DragEvent(type, {
   sourceEvent,
   subject,

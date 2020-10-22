@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import noop from "../noop.js";
 import { point } from "./basis.js";
 

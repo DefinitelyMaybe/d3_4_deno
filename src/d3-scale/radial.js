@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import continuous from "./continuous.js";
 import { initRange } from "./init.js";
 import { linearish } from "./linear.js";

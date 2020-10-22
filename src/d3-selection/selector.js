@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function none() {}
 
 export default function (selector) {

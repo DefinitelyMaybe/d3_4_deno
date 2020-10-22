@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { point } from "./cardinal.js";
 
 export function CardinalOpen(context, tension) {

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { selector } from "../../d3-selection/mod.js";
 import { Transition } from "./index.js";
 import schedule, { get } from "./schedule.js";

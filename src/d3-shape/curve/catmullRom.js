@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { epsilon } from "../math.js";
 import { Cardinal } from "./cardinal.js";
 

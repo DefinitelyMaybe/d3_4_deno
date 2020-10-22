@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function lower() {
   if (this.previousSibling) {
     this.parentNode.insertBefore(this, this.parentNode.firstChild);

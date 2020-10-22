@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import ascending from "./ascending.js";
 import bisector from "./bisector.js";
 import number from "./number.js";

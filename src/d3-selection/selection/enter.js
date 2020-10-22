@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import sparse from "./sparse.js";
 import { Selection } from "./index.js";
 

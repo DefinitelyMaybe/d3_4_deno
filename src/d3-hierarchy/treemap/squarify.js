@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import treemapDice from "./dice.js";
 import treemapSlice from "./slice.js";
 

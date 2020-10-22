@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { shuffle } from "../array.js";
 
 export default function (circles) {

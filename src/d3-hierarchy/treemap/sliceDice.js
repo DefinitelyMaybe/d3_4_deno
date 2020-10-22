@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import dice from "./dice.js";
 import slice from "./slice.js";
 

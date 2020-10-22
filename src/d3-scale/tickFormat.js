@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { tickStep } from "../d3-array/mod.js";
 import {
   format,

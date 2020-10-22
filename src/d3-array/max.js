@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function max(values, valueof) {
   let max;
   if (valueof === undefined) {

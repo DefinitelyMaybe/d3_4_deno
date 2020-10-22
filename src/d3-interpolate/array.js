@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import value from "./value.js";
 import numberArray, { isNumberArray } from "./numberArray.js";
 

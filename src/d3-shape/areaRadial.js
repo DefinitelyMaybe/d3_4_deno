@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import curveRadial, { curveRadialLinear } from "./curve/radial.js";
 import area from "./area.js";
 import { lineRadial } from "./lineRadial.js";

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import set from "./set.js";
 
 export default function intersection(values, ...others) {

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import projection from "./index.js";
 import { abs, epsilon } from "../math.js";
 
@@ -18,11 +19,12 @@ naturalEarth1Raw.invert = function (x, y) {
   var phi = y, i = 25, delta;
   do {
     var phi2 = phi * phi, phi4 = phi2 * phi2;
-    phi -= delta = (phi *
-        (1.007226 +
-          phi2 *
-            (0.015085 +
-              phi4 * (-0.044475 + 0.028874 * phi2 - 0.005916 * phi4))) - y) /
+    phi -= delta =
+      (phi *
+          (1.007226 +
+            phi2 *
+              (0.015085 +
+                phi4 * (-0.044475 + 0.028874 * phi2 - 0.005916 * phi4))) - y) /
       (1.007226 +
         phi2 *
           (0.015085 * 3 +

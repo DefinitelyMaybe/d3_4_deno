@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { namespace } from "../../d3-selection/mod.js";
 
 function attrInterpolate(name, i) {

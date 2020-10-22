@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function Linear(context) {
   this._context = context;
 }

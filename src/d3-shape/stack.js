@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import array from "./array.js";
 import constant from "./constant.js";
 import offsetNone from "./offset/none.js";

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export var epsilon = 1e-6;
 export var epsilon2 = 1e-12;
 export var pi = Math.PI;

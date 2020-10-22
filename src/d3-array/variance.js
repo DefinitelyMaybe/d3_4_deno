@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function variance(values, valueof) {
   let count = 0;
   let delta;

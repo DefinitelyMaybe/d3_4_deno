@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (d) {
   const x = +this._x.call(null, d),
     y = +this._y.call(null, d);

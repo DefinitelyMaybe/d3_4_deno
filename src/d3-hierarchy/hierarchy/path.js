@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (end) {
   var start = this,
     ancestor = leastCommonAncestor(start, end),

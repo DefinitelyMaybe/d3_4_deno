@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 var frame = 0, // is an animation frame pending?
   timeout = 0, // is a timeout pending?
   interval = 0, // are any timers active?

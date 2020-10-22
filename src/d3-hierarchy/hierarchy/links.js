@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function () {
   var root = this, links = [];
   root.each(function (node) {

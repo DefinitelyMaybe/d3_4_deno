@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // @deno-types="./d3-array/mod.d.ts"
 export * from "./d3-array/mod.js";
 // @deno-types="./d3-axis/mod.d.ts"

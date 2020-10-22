@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function responseBlob(response) {
   if (!response.ok) {
     throw new Error(response.status + " " + response.statusText);

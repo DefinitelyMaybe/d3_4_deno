@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { atan, cos, sin } from "../math.js";
 import { azimuthalInvert } from "./azimuthal.js";
 import projection from "./index.js";

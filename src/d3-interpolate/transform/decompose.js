@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 var degrees = 180 / Math.PI;
 
 export var identity = {

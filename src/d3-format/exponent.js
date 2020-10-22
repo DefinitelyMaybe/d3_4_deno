@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { formatDecimalParts } from "./formatDecimal.js";
 
 export default function (x) {

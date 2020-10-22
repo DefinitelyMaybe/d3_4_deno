@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for d3JS d3-time-format module 3.0
 // Project: https://github.com/d3/d3-time-format/, https://d3js.org/d3-time-format
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>

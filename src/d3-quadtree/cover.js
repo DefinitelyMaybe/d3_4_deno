@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (x, y) {
   if (isNaN(x = +x) || isNaN(y = +y)) return this; // ignore invalid points
 

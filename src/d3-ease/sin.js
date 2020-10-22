@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 var pi = Math.PI,
   halfPi = pi / 2;
 

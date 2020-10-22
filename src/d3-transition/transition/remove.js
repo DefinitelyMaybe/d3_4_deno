@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function removeFunction(id) {
   return function () {
     var parent = this.parentNode;

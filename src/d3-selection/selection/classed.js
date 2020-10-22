@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function classArray(string) {
   return string.trim().split(/^|\s+/);
 }

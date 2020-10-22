@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import projection from "./index.js";
 import { abs, asin, cos, epsilon2, sin, sqrt } from "../math.js";
 

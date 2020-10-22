@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function autoType(object) {
   for (var key in object) {
     var value = object[key].trim(), number, m;

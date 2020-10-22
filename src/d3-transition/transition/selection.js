@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { selection } from "../../d3-selection/mod.js";
 
 var Selection = selection.prototype.constructor;

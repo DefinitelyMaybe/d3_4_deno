@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Trims insignificant zeros, e.g., replaces 1.2000k with 1.2k.
 export default function (s) {
   out:

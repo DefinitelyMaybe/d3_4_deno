@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // TODO Optimize edge cases.
 // TODO Optimize index calculation.
 // TODO Optimize arguments.

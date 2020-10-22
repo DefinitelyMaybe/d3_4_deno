@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { lab as colorLab } from "../d3-color/mod.js";
 import color from "./color.js";
 

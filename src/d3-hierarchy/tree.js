@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Node } from "./hierarchy/index.js";
 
 function defaultSeparation(a, b) {

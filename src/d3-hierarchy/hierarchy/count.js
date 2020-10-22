@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function count(node) {
   var sum = 0,
     children = node.children,

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function styleInterpolate(name, i, priority) {
   return function (t) {
     this.style.setProperty(name, i.call(this, t), priority);

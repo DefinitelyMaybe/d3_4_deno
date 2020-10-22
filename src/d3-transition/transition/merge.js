@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Transition } from "./index.js";
 
 export default function (transition) {

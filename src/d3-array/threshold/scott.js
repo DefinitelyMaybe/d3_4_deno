@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import count from "../count.js";
 import deviation from "../deviation.js";
 

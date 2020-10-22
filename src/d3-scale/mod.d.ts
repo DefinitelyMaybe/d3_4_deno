@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for D3JS d3-scale module 3.2
 // Project: https://github.com/d3/d3-scale/, https://d3js.org/d3-scale
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>

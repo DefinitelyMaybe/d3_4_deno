@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export function defaultY(d) {
   return d[1];
 }

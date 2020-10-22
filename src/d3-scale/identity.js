@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { linearish } from "./linear.js";
 import number from "./number.js";
 

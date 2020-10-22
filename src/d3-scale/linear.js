@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { tickIncrement, ticks } from "../d3-array/mod.js";
 import continuous, { copy } from "./continuous.js";
 import { initRange } from "./init.js";

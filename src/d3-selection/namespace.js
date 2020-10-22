@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import namespaces from "./namespaces.js";
 
 export default function (name) {

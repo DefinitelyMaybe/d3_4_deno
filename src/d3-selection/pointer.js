@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import sourceEvent from "./sourceEvent.js";
 
 export default function (event, node) {

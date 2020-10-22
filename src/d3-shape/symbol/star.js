@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { pi, tau } from "../math.js";
 
 var ka = 0.89081309152928522810,

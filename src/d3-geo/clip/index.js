@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import clipBuffer from "./buffer.js";
 import clipRejoin from "./rejoin.js";
 import { epsilon, halfPi } from "../math.js";

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { asin, cos, sin } from "../math.js";
 
 export function cylindricalEqualAreaRaw(phi0) {

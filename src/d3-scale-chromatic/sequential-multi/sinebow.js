@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { rgb } from "../../d3-color/mod.js";
 
 var c = rgb(),

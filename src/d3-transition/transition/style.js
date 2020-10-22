@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { interpolateTransformCss as interpolateTransform } from "../../d3-interpolate/mod.js";
 import { style } from "../../d3-selection/mod.js";
 import { set } from "./schedule.js";

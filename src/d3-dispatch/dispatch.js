@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 var noop = { value: () => {} };
 
 function dispatch() {

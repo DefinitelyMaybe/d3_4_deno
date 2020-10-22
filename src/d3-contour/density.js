@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { max, range, tickStep } from "../d3-array/mod.js";
 import { slice } from "./array.js";
 import { blurX, blurY } from "./blur.js";

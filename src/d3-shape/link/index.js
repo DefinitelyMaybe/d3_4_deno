@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { path } from "../../d3-path/mod.js";
 import { slice } from "../array.js";
 import constant from "../constant.js";

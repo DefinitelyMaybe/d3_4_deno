@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Timer } from "./timer.js";
 
 export default function (callback, delay, time) {

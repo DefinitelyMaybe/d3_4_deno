@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function map(values, mapper) {
   if (typeof values[Symbol.iterator] !== "function") {
     throw new TypeError("values is not iterable");

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { newId, Transition } from "../transition/index.js";
 import schedule from "../transition/schedule.js";
 import { easeCubicInOut } from "../../d3-ease/mod.js";

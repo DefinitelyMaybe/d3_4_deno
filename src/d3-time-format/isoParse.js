@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { isoSpecifier } from "./isoFormat.js";
 import { utcParse } from "./defaultLocale.js";
 

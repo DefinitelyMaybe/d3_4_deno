@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import define, { extend } from "./define.js";
 
 export function Color() {}

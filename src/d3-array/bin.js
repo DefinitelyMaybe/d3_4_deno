@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { slice } from "./array.js";
 import bisect from "./bisect.js";
 import constant from "./constant.js";

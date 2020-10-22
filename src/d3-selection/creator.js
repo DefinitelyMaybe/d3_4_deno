@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import namespace from "./namespace.js";
 import { xhtml } from "./namespaces.js";
 

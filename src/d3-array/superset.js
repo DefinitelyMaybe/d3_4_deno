@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function superset(values, other) {
   const iterator = values[Symbol.iterator](), set = new Set();
   for (const o of other) {

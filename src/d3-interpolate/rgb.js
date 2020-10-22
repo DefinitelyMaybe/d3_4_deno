@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { rgb as colorRgb } from "../d3-color/mod.js";
 import basis from "./basis.js";
 import basisClosed from "./basisClosed.js";

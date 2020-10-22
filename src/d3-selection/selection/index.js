@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import selection_select from "./select.js";
 import selection_selectAll from "./selectAll.js";
 import selection_selectChild from "./selectChild.js";

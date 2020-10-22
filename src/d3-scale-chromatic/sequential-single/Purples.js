@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import colors from "../colors.js";
 import ramp from "../ramp.js";
 

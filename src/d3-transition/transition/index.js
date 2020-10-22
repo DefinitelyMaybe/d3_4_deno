@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { selection } from "../../d3-selection/mod.js";
 import transition_attr from "./attr.js";
 import transition_attrTween from "./attrTween.js";

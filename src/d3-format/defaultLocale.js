@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import formatLocale from "./locale.js";
 
 var locale;

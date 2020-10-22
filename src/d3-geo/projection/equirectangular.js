@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import projection from "./index.js";
 
 export function equirectangularRaw(lambda, phi) {

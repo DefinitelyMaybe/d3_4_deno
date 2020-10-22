@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for d3JS d3-timer module 2.0
 // Project: https://github.com/d3/d3-timer/, https://d3js.org/d3-timer
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { childMatcher } from "../matcher.js";
 
 var find = Array.prototype.find;

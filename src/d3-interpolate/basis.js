@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export function basis(t1, v0, v1, v2, v3) {
   var t2 = t1 * t1, t3 = t2 * t1;
   return ((1 - 3 * t1 + 3 * t2 - t3) * v0 +

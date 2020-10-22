@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (d) {
   if (
     isNaN(x = +this._x.call(null, d)) || isNaN(y = +this._y.call(null, d))

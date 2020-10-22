@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import pointEqual from "../pointEqual.js";
 import { epsilon } from "../math.js";
 

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import number from "./number.js";
 
 var reA = /[-+]?(?:\d+\.?\d*|\.?\d+)(?:[eE][-+]?\d+)?/g,

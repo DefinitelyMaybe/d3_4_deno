@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import define, { extend } from "./define.js";
 import { Color, Rgb, rgbConvert } from "./color.js";
 import { degrees, radians } from "./math.js";

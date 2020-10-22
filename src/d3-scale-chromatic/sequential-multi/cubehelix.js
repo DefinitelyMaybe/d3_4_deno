@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { cubehelix } from "../../d3-color/mod.js";
 import { interpolateCubehelixLong } from "../../d3-interpolate/mod.js";
 

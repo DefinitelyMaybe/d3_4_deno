@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { default as value } from "./value.js";
 
 export default function piecewise(interpolate, values) {

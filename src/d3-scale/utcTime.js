@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { calendar } from "./time.js";
 import { utcFormat } from "../d3-time-format/mod.js";
 import {

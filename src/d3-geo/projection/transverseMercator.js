@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { atan, exp, halfPi, log, tan } from "../math.js";
 import { mercatorProjection } from "./mercator.js";
 

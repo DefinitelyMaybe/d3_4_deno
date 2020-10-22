@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { atan, exp, halfPi, log, pi, tan, tau } from "../math.js";
 import rotation from "../rotation.js";
 import projection from "./index.js";

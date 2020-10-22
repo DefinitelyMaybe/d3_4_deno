@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import ascending from "./ascending.js";
 import maxIndex from "./maxIndex.js";
 

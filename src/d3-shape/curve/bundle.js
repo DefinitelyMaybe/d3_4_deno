@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Basis } from "./basis.js";
 
 function Bundle(context, beta) {

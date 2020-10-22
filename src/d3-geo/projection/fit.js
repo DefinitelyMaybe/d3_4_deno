@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { default as geoStream } from "../stream.js";
 import boundsStream from "../path/bounds.js";
 

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { abs, epsilon } from "../math.js";
 import clipBuffer from "./buffer.js";
 import clipLine from "./line.js";

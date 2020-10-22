@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { interpolateTransformSvg as interpolateTransform } from "../../d3-interpolate/mod.js";
 import { namespace } from "../../d3-selection/mod.js";
 import { tweenValue } from "./tween.js";

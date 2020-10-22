@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { initRange } from "./init.js";
 
 export const implicit = Symbol("implicit");

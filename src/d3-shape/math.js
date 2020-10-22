@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export var abs = Math.abs;
 export var atan2 = Math.atan2;
 export var cos = Math.cos;

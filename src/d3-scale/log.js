@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { ticks } from "../d3-array/mod.js";
 import { format } from "../d3-format/mod.js";
 import nice from "./nice.js";

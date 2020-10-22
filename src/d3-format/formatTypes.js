@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import formatDecimal from "./formatDecimal.js";
 import formatPrefixAuto from "./formatPrefixAuto.js";
 import formatRounded from "./formatRounded.js";

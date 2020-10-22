@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Selection } from "./index.js";
 import array from "../array.js";
 import selectorAll from "../selectorAll.js";

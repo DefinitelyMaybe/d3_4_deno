@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 var t0 = new Date(),
   t1 = new Date();
 

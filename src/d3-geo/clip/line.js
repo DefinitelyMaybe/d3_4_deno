@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (a, b, x0, y0, x1, y1) {
   var ax = a[0],
     ay = a[1],

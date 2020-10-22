@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import interval from "./interval.js";
 
 var utcYear = interval(function (date) {

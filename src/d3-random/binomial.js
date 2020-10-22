@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import defaultSource from "./defaultSource.js";
 import beta from "./beta.js";
 import geometric from "./geometric.js";

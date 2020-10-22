@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { packEnclose } from "./siblings.js";
 import { optional } from "../accessors.js";
 import constant, { constantZero } from "../constant.js";

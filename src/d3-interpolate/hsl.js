@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { hsl as colorHsl } from "../d3-color/mod.js";
 import color, { hue } from "./color.js";
 

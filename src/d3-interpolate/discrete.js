@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (range) {
   var n = range.length;
   return function (t) {

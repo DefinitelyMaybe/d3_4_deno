@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { ENDED, ENDING, STARTING } from "./transition/schedule.js";
 
 export default function (node, name) {

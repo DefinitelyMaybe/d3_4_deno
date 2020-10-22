@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { path } from "../d3-path/mod.js";
 import circle from "./symbol/circle.js";
 import cross from "./symbol/cross.js";

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import appearance from "./appearance.js";
 import { sum } from "./ascending.js";
 

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export function constantZero() {
   return 0;
 }

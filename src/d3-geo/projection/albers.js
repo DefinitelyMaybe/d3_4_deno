@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import conicEqualArea from "./conicEqualArea.js";
 
 export default function () {

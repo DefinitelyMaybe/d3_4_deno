@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (ring, hole) {
   var i = -1, n = hole.length, c;
   while (++i < n) if (c = ringContains(ring, hole[i])) return c;

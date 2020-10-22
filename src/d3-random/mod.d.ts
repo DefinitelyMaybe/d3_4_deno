@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for D3JS d3-random module 2.2
 // Project: https://github.com/d3/d3-random/, https://d3js.org/d3-random
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>

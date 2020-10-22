@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function textInterpolate(i) {
   return function (t) {
     this.textContent = i.call(this, t);

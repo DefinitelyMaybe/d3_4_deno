@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { get, init, set } from "./schedule.js";
 
 function start(name) {

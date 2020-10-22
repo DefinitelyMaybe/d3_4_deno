@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (callback, that) {
   let index = -1;
   for (const node of this) {

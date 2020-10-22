@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { tpmt } from "./math.js";
 
 export function expIn(t) {

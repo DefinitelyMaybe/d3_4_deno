@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export function initRange(domain, range) {
   switch (arguments.length) {
     case 0:

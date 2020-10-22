@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function pairs(values, pairof = pair) {
   const pairs = [];
   let previous;

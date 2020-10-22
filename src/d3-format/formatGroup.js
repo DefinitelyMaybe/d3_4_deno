@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (grouping, thousands) {
   return function (value, width) {
     var i = value.length,

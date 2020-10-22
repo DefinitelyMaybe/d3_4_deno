@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { tweenValue } from "./tween.js";
 
 function textConstant(value) {

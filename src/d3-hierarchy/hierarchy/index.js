@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import node_count from "./count.js";
 import node_each from "./each.js";
 import node_eachBefore from "./eachBefore.js";

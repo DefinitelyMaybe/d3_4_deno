@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import length from "./length.js";
 
 var coordinates = [null, null],

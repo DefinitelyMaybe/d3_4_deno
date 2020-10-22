@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import defaultSource from "./defaultSource.js";
 import irwinHall from "./irwinHall.js";
 

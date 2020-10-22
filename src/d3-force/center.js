@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (x, y) {
   var nodes, strength = 1;
 

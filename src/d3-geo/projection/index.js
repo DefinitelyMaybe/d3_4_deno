@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import clipAntimeridian from "../clip/antimeridian.js";
 import clipCircle from "../clip/circle.js";
 import clipRectangle from "../clip/rectangle.js";
@@ -101,11 +102,13 @@ export function projectionMutator(projectAt) {
   }
 
   projection.stream = function (stream) {
-    return cache && cacheStream === stream ? cache : cache = transformRadians(
-      transformRotate(rotate)(
-        preclip(projectResample(postclip(cacheStream = stream))),
-      ),
-    );
+    return cache && cacheStream === stream
+      ? cache
+      : cache = transformRadians(
+        transformRotate(rotate)(
+          preclip(projectResample(postclip(cacheStream = stream))),
+        ),
+      );
   };
 
   projection.preclip = function (_) {

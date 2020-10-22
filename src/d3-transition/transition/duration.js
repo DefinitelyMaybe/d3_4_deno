@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { get, set } from "./schedule.js";
 
 function durationFunction(id, value) {

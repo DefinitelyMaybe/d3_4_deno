@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for D3JS d3-force module 2.1
 // Project: https://github.com/d3/d3-force/, https://d3js.org/d3-force
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>

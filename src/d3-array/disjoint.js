@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function disjoint(values, other) {
   const iterator = other[Symbol.iterator](), set = new Set();
   for (const v of values) {

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { dispatch } from "../d3-dispatch/mod.js";
 import { dragDisable, dragEnable } from "../d3-drag/mod.js";
 import { interpolate } from "../d3-interpolate/mod.js";

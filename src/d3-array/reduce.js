@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function reduce(values, reducer, value) {
   if (typeof reducer !== "function") {
     throw new TypeError("reducer is not a function");

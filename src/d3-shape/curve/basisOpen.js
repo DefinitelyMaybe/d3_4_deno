@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { point } from "./basis.js";
 
 function BasisOpen(context) {

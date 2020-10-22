@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { newId, Transition } from "./index.js";
 import schedule, { get } from "./schedule.js";
 

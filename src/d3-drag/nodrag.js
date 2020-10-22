@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { select } from "../d3-selection/mod.js";
 import noevent from "./noevent.js";
 

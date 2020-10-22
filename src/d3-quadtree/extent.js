@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (_) {
   return arguments.length
     ? this.cover(+_[0][0], +_[0][1]).cover(+_[1][0], +_[1][1])

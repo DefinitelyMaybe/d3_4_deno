@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import dsv from "./dsv.js";
 
 var tsv = dsv("\t");

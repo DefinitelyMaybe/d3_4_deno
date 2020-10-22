@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import defaultView from "../window.js";
 
 function dispatchEvent(node, type, params) {

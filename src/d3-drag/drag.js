@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { dispatch } from "../d3-dispatch/mod.js";
 import { pointer, select } from "../d3-selection/mod.js";
 import nodrag, { yesdrag } from "./nodrag.js";

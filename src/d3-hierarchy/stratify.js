@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { required } from "./accessors.js";
 import { computeHeight, Node } from "./hierarchy/index.js";
 

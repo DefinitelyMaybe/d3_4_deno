@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Transition } from "./transition/index.js";
 import { SCHEDULED } from "./transition/schedule.js";
 

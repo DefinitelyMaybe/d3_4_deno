@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import clipRectangle from "../clip/rectangle.js";
 import identity from "../identity.js";
 import { transformer } from "../transform.js";

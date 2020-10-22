@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { csvParse, dsvFormat, tsvParse } from "../d3-dsv/mod.js";
 import text from "./text.js";
 

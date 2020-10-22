@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function Step(context, t) {
   this._context = context;
   this._t = t;

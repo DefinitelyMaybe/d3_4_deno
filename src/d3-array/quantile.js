@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import max from "./max.js";
 import min from "./min.js";
 import quickselect from "./quickselect.js";

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { range as sequence } from "../d3-array/mod.js";
 import { initRange } from "./init.js";
 import ordinal from "./ordinal.js";

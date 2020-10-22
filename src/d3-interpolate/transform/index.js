@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import number from "../number.js";
 import { parseCss, parseSvg } from "./parse.js";
 

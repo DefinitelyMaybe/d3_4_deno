@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import quantile from "./quantile.js";
 
 export default function (values, valueof) {

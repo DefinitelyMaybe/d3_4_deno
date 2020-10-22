@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { ascending, bisect, quantile } from "../d3-array/mod.js";
 import { identity } from "./continuous.js";
 import { initInterpolator } from "./init.js";

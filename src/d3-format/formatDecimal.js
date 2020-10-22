@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (x) {
   return Math.abs(x = Math.round(x)) >= 1e21
     ? x.toLocaleString("en").replace(/,/g, "")

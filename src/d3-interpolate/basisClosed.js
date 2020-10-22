@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { basis } from "./basis.js";
 
 export default function (values) {

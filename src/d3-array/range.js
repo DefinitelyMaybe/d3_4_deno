@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (start, stop, step) {
   start = +start,
     stop = +stop,

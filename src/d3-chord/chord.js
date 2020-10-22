@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { max, tau } from "./math.js";
 
 function range(i, j) {

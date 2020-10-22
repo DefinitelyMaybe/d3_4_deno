@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { set } from "./schedule.js";
 
 function easeVarying(id, value) {

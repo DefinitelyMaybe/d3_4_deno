@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import interval from "./interval.js";
 import { durationHour, durationMinute, durationSecond } from "./duration.js";
 

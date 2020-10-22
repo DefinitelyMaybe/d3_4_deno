@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function ZoomEvent(type, {
   sourceEvent,
   target,

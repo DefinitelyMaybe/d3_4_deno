@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Adder } from "../d3-array/mod.js";
 import { abs, atan2, cos, radians, sin, sqrt } from "./math.js";
 import noop from "./noop.js";

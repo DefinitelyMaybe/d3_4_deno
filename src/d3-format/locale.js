@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import exponent from "./exponent.js";
 import formatGroup from "./formatGroup.js";
 import formatNumerals from "./formatNumerals.js";

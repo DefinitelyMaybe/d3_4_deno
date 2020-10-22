@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function length(array) {
   return array.length | 0;
 }

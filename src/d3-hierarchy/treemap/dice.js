@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (parent, x0, y0, x1, y1) {
   var nodes = parent.children,
     node,

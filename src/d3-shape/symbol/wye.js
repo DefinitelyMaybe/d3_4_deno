@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 var c = -0.5,
   s = Math.sqrt(3) / 2,
   k = 1 / Math.sqrt(12),

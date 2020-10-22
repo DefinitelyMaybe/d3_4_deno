@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Selection } from "./index.js";
 import selector from "../selector.js";
 

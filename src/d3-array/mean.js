@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function mean(values, valueof) {
   let count = 0;
   let sum = 0;

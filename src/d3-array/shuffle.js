@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default shuffler(Math.random);
 
 export function shuffler(random) {

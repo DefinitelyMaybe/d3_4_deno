@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function () {
   for (var groups = this._groups, j = -1, m = groups.length; ++j < m;) {
     for (

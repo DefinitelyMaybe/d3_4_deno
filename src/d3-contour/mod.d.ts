@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for d3-contour 2.0
 // Project: https://d3js.org/d3-contour/
 // Definitions by: Tom Wanzek <https://github.com/tomwanzek>

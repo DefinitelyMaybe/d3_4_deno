@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { acos, sin } from "../math.js";
 import { azimuthalInvert, azimuthalRaw } from "./azimuthal.js";
 import projection from "./index.js";

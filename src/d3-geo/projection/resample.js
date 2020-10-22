@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { cartesian } from "../cartesian.js";
 import { abs, asin, atan2, cos, epsilon, radians, sqrt } from "../math.js";
 import { transformer } from "../transform.js";

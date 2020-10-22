@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 var overshoot = 1.70158;
 
 export var backIn = (function custom(s) {

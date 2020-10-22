@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (a, b) {
   if (!b) b = [];
   var n = a ? Math.min(b.length, a.length) : 0,

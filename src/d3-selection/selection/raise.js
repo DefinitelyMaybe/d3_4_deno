@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function raise() {
   if (this.nextSibling) this.parentNode.appendChild(this);
 }

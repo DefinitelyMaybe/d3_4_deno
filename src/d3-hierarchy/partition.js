@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import roundNode from "./treemap/round.js";
 import treemapDice from "./treemap/dice.js";
 

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function minIndex(values, valueof) {
   let min;
   let minIndex = -1;

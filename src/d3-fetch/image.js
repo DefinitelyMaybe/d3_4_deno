@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (input, init) {
   return new Promise(function (resolve, reject) {
     var image = new Image();

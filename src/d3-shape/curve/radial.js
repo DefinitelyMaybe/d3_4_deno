@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import curveLinear from "./linear.js";
 
 export var curveRadialLinear = curveRadial(curveLinear);

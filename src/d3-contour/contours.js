@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { extent, range, thresholdSturges, tickStep } from "../d3-array/mod.js";
 import { slice } from "./array.js";
 import ascending from "./ascending.js";

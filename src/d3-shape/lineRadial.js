@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import curveRadial, { curveRadialLinear } from "./curve/radial.js";
 import line from "./line.js";
 

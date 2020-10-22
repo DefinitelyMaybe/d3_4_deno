@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { CardinalOpen } from "./cardinalOpen.js";
 import { point } from "./catmullRom.js";
 

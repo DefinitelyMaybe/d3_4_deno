@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export function circleIn(t) {
   return 1 - Math.sqrt(1 - t * t);
 }

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function min(values, valueof) {
   let min;
   if (valueof === undefined) {

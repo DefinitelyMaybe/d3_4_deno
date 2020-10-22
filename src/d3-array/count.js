@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function count(values, valueof) {
   let count = 0;
   if (valueof === undefined) {

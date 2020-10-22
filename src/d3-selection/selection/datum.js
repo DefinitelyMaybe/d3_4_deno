@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (value) {
   return arguments.length
     ? this.property("__data__", value)

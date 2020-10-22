@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (callback, that) {
   var node = this, nodes = [node], children, i, index = -1;
   while (node = nodes.pop()) {

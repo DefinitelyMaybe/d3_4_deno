@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import defaultSource from "./defaultSource.js";
 import binomial from "./binomial.js";
 import gamma from "./gamma.js";

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Type definitions for d3-fetch 2.0
 // Project: https://d3js.org/d3-fetch/
 // Definitions by: Hugues Stefanski <https://github.com/ledragon>

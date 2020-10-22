@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { default as polygonContains } from "./polygonContains.js";
 import { default as distance } from "./distance.js";
 import { epsilon2, radians } from "./math.js";

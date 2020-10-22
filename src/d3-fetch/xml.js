@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import text from "./text.js";
 
 function parser(type) {

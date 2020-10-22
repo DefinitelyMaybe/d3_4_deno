@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import creator from "../creator.js";
 
 export default function (name) {

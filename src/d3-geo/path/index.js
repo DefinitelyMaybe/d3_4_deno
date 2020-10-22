@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import identity from "../identity.js";
 import stream from "../stream.js";
 import pathArea from "./area.js";

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import tree_add, { addAll as tree_addAll } from "./add.js";
 import tree_cover from "./cover.js";
 import tree_data from "./data.js";

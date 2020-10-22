@@ -1,3 +1,4 @@
+/// <reference lib="do./variance.js.js
 import variance from "./variance.js";
 
 export default function deviation(values, valueof) {

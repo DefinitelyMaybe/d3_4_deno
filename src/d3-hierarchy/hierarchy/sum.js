@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (value) {
   return this.eachAfter(function (node) {
     var sum = +value(node.data) || 0,

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function defaultSeparation(a, b) {
   return a.parent === b.parent ? 1 : 2;
 }

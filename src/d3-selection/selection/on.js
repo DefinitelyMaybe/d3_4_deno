@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function contextListener(listener) {
   return function (event) {
     listener.call(this, event, this.__data__);

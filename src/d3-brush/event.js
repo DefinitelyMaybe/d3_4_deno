@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function BrushEvent(type, {
   sourceEvent,
   target,

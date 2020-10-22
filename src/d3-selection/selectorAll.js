@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function empty() {
   return [];
 }

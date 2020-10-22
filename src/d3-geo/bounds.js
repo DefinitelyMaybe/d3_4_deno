@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Adder } from "../d3-array/mod.js";
 import { areaRingSum, areaStream } from "./area.js";
 import {

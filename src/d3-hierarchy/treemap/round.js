@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (node) {
   node.x0 = Math.round(node.x0);
   node.y0 = Math.round(node.y0);

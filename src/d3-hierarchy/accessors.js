@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export function optional(f) {
   return f == null ? null : required(f);
 }

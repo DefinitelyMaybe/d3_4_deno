@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 const epsilon = 1e-6;
 
 export default class Path {

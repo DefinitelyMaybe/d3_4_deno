@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function propertyRemove(name) {
   return function () {
     delete this[name];
@@ -21,7 +22,9 @@ function propertyFunction(name, value) {
 export default function (name, value) {
   return arguments.length > 1
     ? this.each(
-      (value == null ? propertyRemove : typeof value === "function"
+      (value == null
+        ? propertyRemove
+        : typeof value === "function"
         ? propertyFunction
         : propertyConstant)(name, value),
     )

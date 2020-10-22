@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export default function (ring) {
   var i = 0,
     n = ring.length,

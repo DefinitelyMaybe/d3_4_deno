@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export function x(p) {
   return p[0];
 }

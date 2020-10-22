@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 export function defaultX(d) {
   return d[0];
 }

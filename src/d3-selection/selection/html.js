@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 function htmlRemove() {
   this.innerHTML = "";
 }

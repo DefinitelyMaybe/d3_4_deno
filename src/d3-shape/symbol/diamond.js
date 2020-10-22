@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 var tan30 = Math.sqrt(1 / 3),
   tan30_2 = tan30 * 2;
 

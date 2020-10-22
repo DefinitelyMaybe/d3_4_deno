@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 var b1 = 4 / 11,
   b2 = 6 / 11,
   b3 = 8 / 11,
