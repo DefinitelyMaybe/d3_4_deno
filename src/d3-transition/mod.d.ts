@@ -21,7 +21,7 @@ import {
 /**
  * Extend interface 'Selection' by declaration merging with 'd3-selection'
  */
-declare module "d3-selection" {
+declare module "../d3-selection/mod.d.ts" {
   /**
      * A D3 Selection of elements.
      *

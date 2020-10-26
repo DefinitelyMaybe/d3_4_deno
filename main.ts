@@ -319,6 +319,7 @@ const delaunayTypesURL =
 const d3geoFile = `${d3Dir}d3-geo/mod.d.ts`;
 const d3contourFile = `${d3Dir}d3-contour/mod.d.ts`;
 const delaunayFile = `${d3Dir}d3-delaunay/delaunay.js`;
+const transitionFile = `${d3Dir}d3-transition/mod.d.ts`;
 
 let src = Deno.readTextFileSync(d3geoFile);
 src = src.replace(/import \* as GeoJSON from 'geojson';/g, (m) => {
@@ -353,7 +354,12 @@ src = src.replace(/import Delaunator from "delaunator";/g, (m) => {
 Deno.writeTextFileSync(delaunayFile, src);
 
 const p = Deno.run({
-  cmd: ["deno", "fmt", d3Dir],
+  cmd: ["deno", "fmt", "--quiet", d3Dir],
 });
 
 await p.status();
+
+// update the tranistion mod file
+src = Deno.readTextFileSync(transitionFile)
+src = src.replace('declare module "d3-selection"', 'declare module "../d3-selection/mod.d.ts"')
+Deno.writeTextFileSync(transitionFile, src)
