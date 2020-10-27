@@ -1,4 +1,4 @@
-/// <reference types="./geoJSON.d.ts" />
+/// <reference types="./geojson.d.ts" />
 (function (GeoJSON) {
   GeoJSON.version = "0.4.1";
 

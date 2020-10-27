@@ -11,8 +11,8 @@
 
 // Last module patch version validated against: 2.0.1
 
-/// <reference types="./geoJSON.d.ts" />
-import * as GeoJSON from "./geoJSON.js";
+/// <reference types="./geojson.d.ts" />
+import * as GeoJSON from "./geojson.js";
 
 // ----------------------------------------------------------------------
 // Shared Interfaces and Types

@@ -323,25 +323,25 @@ const transitionFile = `${d3Dir}d3-transition/mod.d.ts`;
 
 let res = await fetch(geoJsonURL)
 let resSRC = await res.text();
-resSRC = resSRC.replace(/^/g, '/// <reference types="./geoJSON.d.ts" />\n')
-Deno.writeTextFileSync(`${d3Dir}/d3-geo/geoJSON.js`, resSRC)
+resSRC = resSRC.replace(/^/g, '/// <reference types="./geojson.d.ts" />\n')
+Deno.writeTextFileSync(`${d3Dir}/d3-geo/geojson.js`, resSRC)
 
 res = await fetch(geoJsonTypesURL)
 resSRC = await res.text();
-Deno.writeTextFileSync(`${d3Dir}/d3-geo/geoJSON.d.ts`, resSRC)
+Deno.writeTextFileSync(`${d3Dir}/d3-geo/geojson.d.ts`, resSRC)
 
 let src = Deno.readTextFileSync(d3geoFile);
 src = src.replace(/import \* as GeoJSON from 'geojson';/g, (m) => {
-  m = m.replace(/'geojson'/g, `'./geoJSON.js'`);
-  m = m.replace(/^/g, `/// <reference types="./geoJSON.d.ts" />\n`);
+  m = m.replace(/'geojson'/g, `'./geojson.js'`);
+  m = m.replace(/^/g, `/// <reference types="./geojson.d.ts" />\n`);
   return m;
 });
 Deno.writeTextFileSync(d3geoFile, src);
 
 src = Deno.readTextFileSync(d3contourFile);
 src = src.replace(/import { MultiPolygon } from 'geojson';/g, (m) => {
-  m = m.replace(/geojson/g, `../d3-geo/geoJSON.js`);
-  m = m.replace(/^/g, `/// <reference types="../d3-geo/geoJSON.d.ts" />\n`);
+  m = m.replace(/geojson/g, `../d3-geo/geojson.js`);
+  m = m.replace(/^/g, `/// <reference types="../d3-geo/geojson.d.ts" />\n`);
   return m;
 });
 Deno.writeTextFileSync(d3contourFile, src);
