@@ -9,8 +9,8 @@
 
 // Last module patch version validated against: 2.0.0
 
-/// <reference types="https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/geojson/index.d.ts" />
-import { MultiPolygon } from "https://raw.githubusercontent.com/caseycesari/GeoJSON.js/master/geojson.js";
+/// <reference types="../d3-geo/geoJSON.d.ts" />
+import { MultiPolygon } from "../d3-geo/geoJSON.js";
 import {
   ThresholdCountGenerator,
   ThresholdNumberArrayGenerator,

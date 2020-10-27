@@ -321,18 +321,27 @@ const d3contourFile = `${d3Dir}d3-contour/mod.d.ts`;
 const delaunayFile = `${d3Dir}d3-delaunay/delaunay.js`;
 const transitionFile = `${d3Dir}d3-transition/mod.d.ts`;
 
+let res = await fetch(geoJsonURL)
+let resSRC = await res.text();
+resSRC = resSRC.replace(/^/g, '/// <reference types="./geoJSON.d.ts" />\n')
+Deno.writeTextFileSync(`${d3Dir}/d3-geo/geoJSON.js`, resSRC)
+
+res = await fetch(geoJsonTypesURL)
+resSRC = await res.text();
+Deno.writeTextFileSync(`${d3Dir}/d3-geo/geoJSON.d.ts`, resSRC)
+
 let src = Deno.readTextFileSync(d3geoFile);
 src = src.replace(/import \* as GeoJSON from 'geojson';/g, (m) => {
-  m = m.replace(/'geojson'/g, `'${geoJsonURL}'`);
-  m = m.replace(/^/g, `/// <reference types="${geoJsonTypesURL}" />\n`);
+  m = m.replace(/'geojson'/g, `'./geoJSON.js'`);
+  m = m.replace(/^/g, `/// <reference types="./geoJSON.d.ts" />\n`);
   return m;
 });
 Deno.writeTextFileSync(d3geoFile, src);
 
 src = Deno.readTextFileSync(d3contourFile);
 src = src.replace(/import { MultiPolygon } from 'geojson';/g, (m) => {
-  m = m.replace(/'geojson'/g, `'${geoJsonURL}'`);
-  m = m.replace(/^/g, `/// <reference types="${geoJsonTypesURL}" />\n`);
+  m = m.replace(/geojson/g, `../d3-geo/geoJSON.js`);
+  m = m.replace(/^/g, `/// <reference types="../d3-geo/geoJSON.d.ts" />\n`);
   return m;
 });
 Deno.writeTextFileSync(d3contourFile, src);
@@ -342,8 +351,8 @@ Deno.writeTextFileSync(d3contourFile, src);
 // if someone wanted to use this part of d3 within their script they
 // couldn't use delaunay and would run into troubles trying to import
 // directly from src/mod.js
-const res = await fetch(delaunayURL);
-const resSRC = await res.text();
+res = await fetch(delaunayURL);
+resSRC = await res.text();
 Deno.writeTextFileSync(`${d3Dir}d3-delaunay/delaunator.js`, resSRC);
 src = Deno.readTextFileSync(delaunayFile);
 src = src.replace(/import Delaunator from "delaunator";/g, (m) => {
